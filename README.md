@@ -9,7 +9,7 @@
 ## Development
 ### step 1:
 ```sh
-pnpm setup
+pnpm install:all
 ```
 
 ## Run Backend
