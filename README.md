@@ -9,7 +9,7 @@
 ## Development
 ### step 1:
 ```sh
-pnpm install:all
+bun install:all
 ```
 
 ## Run Backend
@@ -21,7 +21,7 @@ pnpm install:all
 ## Run Frontend
 ### step 1:
 ```sh
-pnpm frontend
+bun frontend
 ```
 then the frontend will run on port 5713
 
