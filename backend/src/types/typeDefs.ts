@@ -26,7 +26,7 @@ const typeDefs = `#graphql
   }
 
   type Mutation {
-    AddAnnouncement(announcementInput: AnnouncementInput!): Announcement
+    CreateAnnouncement(announcementInput: AnnouncementInput!): Announcement
     DeleteAnnouncement(id: Int!): Announcement
     UpdateAnnouncement(id: Int!, announcementInput: AnnouncementInput!): Announcement
   }
