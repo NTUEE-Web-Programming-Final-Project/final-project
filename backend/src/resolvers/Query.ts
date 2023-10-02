@@ -7,6 +7,10 @@ const Query ={
     return announcements;
   },
   // Announcement End
+
+  // User Start
+
+  // User End
 }
 
 export { Query };

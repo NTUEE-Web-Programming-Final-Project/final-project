@@ -4,7 +4,7 @@ import { AnnouncementInput } from "../types/types.ts";
 
 const Mutation ={
   // Announcement Start
-  AddAnnouncement: async (parent, args: { announcementInput: AnnouncementInput }, context) => {
+  CreateAnnouncement: async (parent, args: { announcementInput: AnnouncementInput }, context) => {
     const { title, content } = args.announcementInput;
     const date = new Date().toUTCString();
     const newAnnouncement = await prisma.announcement.create({
