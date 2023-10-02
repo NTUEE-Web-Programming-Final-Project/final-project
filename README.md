@@ -43,6 +43,8 @@ pnpm migrate
 cd ..
 pnpm backend
 ```
+This will run apollo graphql playground at port 5000
+you can then use adminer at port 8070
 
 ## Run Frontend
 ### Step 1:
