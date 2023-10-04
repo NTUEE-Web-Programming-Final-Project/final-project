@@ -54,9 +54,11 @@ model QuestionComment {
   id              Int       @id @default(autoincrement())
   commenter       User      @relation(fields: [commenterId], references: [id])
   commenterId     Int
+  date            String
   content         String
   rootQuestion    Question  @relation(fields: [rootQuesitonId], references: [id])
   rootQuesitonId  Int
+  like            Int
 }
 
 model Solution {
@@ -87,7 +89,9 @@ model ArticleComment {
   id              Int       @id @default(autoincrement())
   commenter       User      @relation(fields: [commenterId], references: [id])
   commenterId     Int
+  date            String
   content         String
   rootArticle     Article   @relation(fields: [rootArticleId], references: [id])
   rootArticleId   Int
+  like            Int
 }

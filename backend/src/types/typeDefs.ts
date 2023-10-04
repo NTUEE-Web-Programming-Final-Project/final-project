@@ -12,17 +12,52 @@ const typeDefs = `#graphql
     content: String!
   }
 
+  type Article {
+    id            Int!
+    writerId      Int!
+    date          String!
+    title         String!
+    content       String!
+    tags          [String!]!
+    likes         [Int!]!
+    topic         String!
+  }
+
+  type ArticleComment {
+    id              Int!
+    commenterId     Int!
+    date            String!
+    content         String!
+    rootArticleId   Int!
+    like            Int!
+  }
+
   ### input def #####
 
   input AnnouncementInput {
     title: String!
     content: String!
   }
+
+  input ArticleInput {
+    title           String!
+    content         String!
+    tags            [String!]!
+    likes           [Int!]!
+    topic           String!
+  }
+
+  input ArticleCommentInput {
+    content         String!
+    like            Int!
+  }
   
   ### Define Resolvers ###
 
   type Query {
     AllAnnouncements: [Announcement]
+    AllArticles: [Article]
+    AllArticleComments: [ArticleComment]
   }
 
   type Mutation {
