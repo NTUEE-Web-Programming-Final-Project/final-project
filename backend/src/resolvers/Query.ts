@@ -9,8 +9,12 @@ const Query ={
   // Announcement End
 
   // User Start
-
+  AllUsers: async (parents, args, context) => {
+    const users = await prisma.user.findMany();
+    return users;
+  },
   // User End
+  
 }
 
 export { Query };

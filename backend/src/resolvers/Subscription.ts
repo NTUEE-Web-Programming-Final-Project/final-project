@@ -16,7 +16,17 @@ const Subscription = {
   // Announcement End
 
   // User Start
+  UserCreated: {
+    subscribe: () => pubsub.asyncIterator(["USER_CREATED"])
+  },
 
+  UserDeleted: {
+    subscribe: () => pubsub.asyncIterator(["USER_DELETED"])
+  },
+
+  UserUpdated: {
+    subscribe: () => pubsub.asyncIterator(["USER_UPDATED"])
+  },
   // User End
 }
 
