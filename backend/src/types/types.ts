@@ -39,3 +39,24 @@ export interface ArticleCommentLikeInput {
   likerId: number;
   articleCommentId: number;
 }
+
+
+export interface QuestionInput {
+  askerId: number
+  title: string
+  content: string
+  topic: string
+  tags: string[]
+}
+
+export interface QuestionCommentInput {
+  commenterId: number
+  rootQuestionId: number
+  content: string
+}
+
+export interface SolutionInput {
+  solverId: number
+  rootQuestionId: number
+  content: string
+}

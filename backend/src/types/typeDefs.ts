@@ -64,6 +64,40 @@ const typeDefs = `#graphql
     articleCommentId: Int!
   }
 
+  type Question {
+    id: Int!
+    askerId: Int!
+    title: String!
+    date: String!
+    content: String!
+    topic: String!
+    zap: Int!
+    isMe: Int!
+    bombFish: Int!
+    tags: [String]
+    commentsId: [Int]
+    solutionsId: [Int]
+  }
+
+  type QuestionComment {
+    id: Int!
+    commenterId: Int!
+    rootQuestionId: Int!
+    content: String!
+    date: String!
+  }
+
+  type Solution {
+    id: Int!
+    solverId: Int!
+    rootQuestionId: Int!
+    content: String!
+    date: String!
+    zap: Int!
+    isMe: Int!
+    bombFish: Int!
+  }
+
   ### input def #####
 
   input AnnouncementInput {
@@ -104,7 +138,27 @@ const typeDefs = `#graphql
 
   input ArticleCommentLikeInput {
     likerId: Int!
-    articleCommentId: Int!
+    articleId: Int!
+  }
+
+  input QuestionInput {
+    askerId: Int!
+    title: String!
+    content: String!
+    topic: String!
+    tags: [String]
+  }
+
+  input QuestionCommentInput {
+    commenterId: Int!
+    rootQuestionId: Int!
+    content: String!
+  }
+
+  input SolutionInput {
+    solverId: Int!
+    rootQuestionId: Int!
+    content: String!
   }
 
   ### Define Resolvers ###

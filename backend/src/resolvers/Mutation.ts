@@ -1,3 +1,4 @@
+import { withFilter } from "graphql-subscriptions";
 import { prisma } from "../../prisma/client.ts";
 import { pubsub } from "../PubSub/pubsub.ts";
 import {
@@ -8,6 +9,9 @@ import {
   UserPasswordInput,
   ArticleLikeInput,
   ArticleCommentLikeInput,
+  QuestionInput,
+  QuestionCommentInput,
+  SolutionInput,
 } from "../types/types.ts";
 
 const Mutation = {
@@ -185,6 +189,310 @@ const Mutation = {
     return updatedUserPassword;
   },
   // User End
+  
+  // Question Start
+  CreateQuestion: async (parent, args: { questionInput: QuestionInput }, context) => {
+    const { askerId, title, content, topic, tags } = args.questionInput;
+    const newQuestion = await prisma.question.create({
+      data: {
+        askerId: askerId,
+        title: title,
+        date: new Date().toUTCString(),
+        content: content,
+        topic: topic, 
+        zap: 0,
+        isMe: 0,
+        bombFish: 0,
+        tags: tags,
+      }
+    });
+    await prisma.user.update({
+      where: {
+        id: askerId,
+      },
+      data: {
+        questionsId: {push: newQuestion.id}
+      }
+    });
+    pubsub.publish("QUESTION_CREATED", { QuestionCreated: newQuestion });
+    return newQuestion;
+  },
+
+  DeleteQuestion: async (parent, args: {id: number}, context) => {
+    const id = args.id;
+    const existingQuestion = await prisma.question.findFirst({
+      where: {
+        id: id
+      }
+    });
+    if (!existingQuestion) {
+      throw new Error("question not found!");
+    }
+    const deletedQuestion = await prisma.question.delete({
+      where: {
+        id: id
+      }
+    });
+    const updateUser = await prisma.user.findFirst({
+      where: {
+        id: deletedQuestion.askerId,
+      },
+    });
+    await prisma.user.update({
+      where: {
+        id: updateUser.id,
+      }, 
+      data: {
+        questionsId: updateUser.questionsId.filter((id) => id !== deletedQuestion.id)
+      }
+    })
+    pubsub.publish("QUESTION_DELETED", { QuestionDeleted: deletedQuestion });
+    return deletedQuestion;
+  },
+
+  UpdateQuestion: async (parent, args: { id: number, questionInput: QuestionInput }, context) => {
+    const id = args.id;
+    const { askerId, title, content, topic, tags } = args.questionInput;
+    const existingQuestion = await prisma.question.findFirst({
+      where: {
+        id: id
+      }
+    });
+    if (!existingQuestion) {
+      throw new Error("question not found!");
+    }
+    if (existingQuestion.askerId !== askerId) {
+      throw new Error("Asker changed, this is not supposed to happen...")
+    }
+    const updatedQuestion = await prisma.question.update({
+      where: {
+        id: id
+      }, 
+      data: {
+        title: title,
+        // date need to update?
+        content: content,
+        topic: topic, 
+        tags: tags,
+      }
+    });
+    pubsub.publish("QUESTION_UPDATED", { QuestionUpdated: updatedQuestion });
+    return updatedQuestion;
+  },
+
+  CreateQuestionComment:  async (parent, args: { questionCommentInput: QuestionCommentInput }, context) => {
+    const { commenterId, rootQuestionId, content } = args.questionCommentInput;
+    const newQuestionComment = await prisma.questionComment.create({
+      data: {
+        date: new Date().toUTCString(),
+        commenterId: commenterId,
+        rootQuesitonId: rootQuestionId,
+        content: content,
+      }
+    });
+    await prisma.user.update({
+      where: {
+        id: commenterId,
+      },
+      data: {
+        questionCommentsId: {push: newQuestionComment.id}
+      }
+    });
+    await prisma.question.update({
+      where: {
+        id: rootQuestionId
+      }, 
+      data: {
+        commentsId: {push: newQuestionComment.id}
+      }
+    })
+    pubsub.publish("QUESTION_COMMENT_CREATED", { QuestionCommentCreated: newQuestionComment });
+    return newQuestionComment;
+  }, 
+
+  DeleteQuestionComment: async (parent, args: {id: number}, context) => {
+    const id = args.id;
+    const existingQuestionComment = await prisma.questionComment.findFirst({
+      where: {
+        id: id
+      }
+    });
+    if (!existingQuestionComment) {
+      throw new Error("question comment not found!");
+    }
+    const deletedQuestionComment = await prisma.questionComment.delete({
+      where: {
+        id: id
+      }
+    });
+    const updateUser = await prisma.user.findFirst({
+      where: {
+        id: deletedQuestionComment.commenterId,
+      },
+    });
+    await prisma.user.update({
+      where: {
+        id: updateUser.id,
+      }, 
+      data: {
+        questionCommentsId: updateUser.questionCommentsId.filter((id) => id !== deletedQuestionComment.id)
+      }
+    })
+    const updateQuestion = await prisma.question.findFirst({
+      where: {
+        id: deletedQuestionComment.rootQuesitonId
+      }
+    });
+    await prisma.question.update({
+      where: {
+        id: updateQuestion.id
+      }, 
+      data: {
+        commentsId: updateQuestion.commentsId.filter((id) => id !== deletedQuestionComment.id)
+      }
+    })
+    pubsub.publish("QUESTION_COMMENT_DELETED", { QuestionCommentDeleted: deletedQuestionComment });
+    return deletedQuestionComment;
+  },
+
+  UpdateQuestionComment: async (parent, args: { id: number, questionCommentInput: QuestionCommentInput }, context) => {
+    const id = args.id;
+    const { commenterId, rootQuestionId, content } = args.questionCommentInput;
+    const existingQuestionComment = await prisma.questionComment.findFirst({
+      where: {
+        id: id
+      }
+    });
+    if (!existingQuestionComment) {
+      throw new Error("question not found!");
+    }
+    if (existingQuestionComment.commenterId !== commenterId) {
+      throw new Error("Commenter changed, this is not supposed to happen...")
+    }
+    if (existingQuestionComment.rootQuesitonId !== rootQuestionId) {
+      throw new Error("Root question changed, this is not supposed to happen...")
+    }
+    const updatedQuestionComment = await prisma.questionComment.update({
+      where: {
+        id: id
+      }, 
+      data: {
+        // date need to update?
+        content: content,
+      }
+    });
+    pubsub.publish("QUESTION_COMMENT_UPDATED", { QuestionCommentUpdated: updatedQuestionComment });
+    return updatedQuestionComment;
+  },
+
+  CreateSolution: async (parent, args: { solutionInput: SolutionInput }, context) => {
+    const { solverId, rootQuestionId, content } = args.solutionInput;
+    const newSolution = await prisma.solution.create({
+      data: {
+        date: new Date().toUTCString(),
+        solverId: solverId,
+        content: content,
+        rootQuesitonId: rootQuestionId,
+        zap: 0, 
+        isMe: 0, 
+        bombFish: 0,
+      }
+    });
+    await prisma.user.update({
+      where: {
+        id: solverId,
+      },
+      data: {
+        solutionsId: {push: newSolution.id}
+      }
+    });
+    await prisma.question.update({
+      where: {
+        id: rootQuestionId
+      }, 
+      data: {
+        solutionsId: {push: newSolution.id}
+      }
+    })
+    pubsub.publish("SOLUTION_CREATED", { SolutionCreated: newSolution });
+    return newSolution;
+  }, 
+
+  DeleteSolution: async (parent, args: {id: number}, context) => {
+    const id = args.id;
+    const existingSolution = await prisma.solution.findFirst({
+      where: {
+        id: id
+      }
+    });
+    if (!existingSolution) {
+      throw new Error("solution not found!");
+    }
+    const deletedSolution = await prisma.solution.delete({
+      where: {
+        id: id
+      }
+    });
+    const updateUser = await prisma.user.findFirst({
+      where: {
+        id: deletedSolution.solverId,
+      },
+    });
+    await prisma.user.update({
+      where: {
+        id: updateUser.id,
+      }, 
+      data: {
+        solutionsId: updateUser.solutionsId.filter((id) => id !== deletedSolution.id)
+      }
+    })
+    const updateQuestion = await prisma.question.findFirst({
+      where: {
+        id: deletedSolution.rootQuesitonId
+      }
+    });
+    await prisma.question.update({
+      where: {
+        id: updateQuestion.id
+      }, 
+      data: {
+        solutionsId: updateQuestion.solutionsId.filter((id) => id !== deletedSolution.id)
+      }
+    })
+    pubsub.publish("SOLUTION_DELETED", { SolutionDeleted: deletedSolution });
+    return deletedSolution;
+  },
+
+  UpdateSolution: async (parent, args: { id: number, solutionInput: SolutionInput }, context) => {
+    const id = args.id;
+    const { solverId, rootQuestionId, content } = args.solutionInput;
+    const existingSolution = await prisma.solution.findFirst({
+      where: {
+        id: id
+      }
+    });
+    if (!existingSolution) {
+      throw new Error("solution not found!");
+    }
+    if (existingSolution.solverId !== solverId) {
+      throw new Error("Solver changed, this is not supposed to happen...")
+    }
+    if (existingSolution.rootQuesitonId !== rootQuestionId) {
+      throw new Error("Root question changed, this is not supposed to happen...")
+    }
+    const updatedSolution = await prisma.solution.update({
+      where: {
+        id: id
+      }, 
+      data: {
+        // date need to update?
+        content: content,
+      }
+    });
+    pubsub.publish("SOLUTION_UPDATED", { SolutionUpdated: updatedSolution });
+    return updatedSolution;
+  },
+  // Question End
 
   // Article Start
   CreateArticle: async (

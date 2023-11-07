@@ -29,6 +29,45 @@ const Subscription = {
   },
   // User End
 
+  // Question Start
+  QuestionCreated: {
+    subscribe: () => pubsub.asyncIterator(["QUESTION_CREATED"])
+  }, 
+
+  QuestionDeleted: {
+    subscribe: () => pubsub.asyncIterator(["QUESTION_DELETED"])
+  }, 
+
+  QuestionUpdated: {
+    subscribe: () => pubsub.asyncIterator(["QUESTION_UPDATED"])
+  },
+
+  QuestionCommentCreated: {
+    subscribe: () => pubsub.asyncIterator(["QUESTION_COMMENT_CREATED"])
+  }, 
+
+  QuestionCommentDeleted: {
+    subscribe: () => pubsub.asyncIterator(["QUESTION_COMMENT_DELETED"])
+  }, 
+
+  QuestionCommentUpdated: {
+    subscribe: () => pubsub.asyncIterator(["QUESTION_COMMENT_UPDATED"])
+  }, 
+
+  SolutionCreated: {
+    subscribe: () => pubsub.asyncIterator(["SOLUTION_CREATED"])
+  }, 
+
+  SolutionDeleted: {
+    subscribe: () => pubsub.asyncIterator(["SOLUTION_DELETED"])
+  }, 
+
+  SolutionUpdated: {
+    subscribe: () => pubsub.asyncIterator(["SOLUTION_UPDATED"])
+  }, 
+  // QuestionEnd
+  
+
   // Article Start
   ArticleCreated: {
     subscribe: () => pubsub.asyncIterator(["ARTICLE_CREATED"]),

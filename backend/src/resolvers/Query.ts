@@ -81,4 +81,21 @@ const Query = {
   // Liked ArticleComments End
 };
 
+  // Question Start
+  AllQuestions: async (parents, args, context) => {
+    const questions = await prisma.question.findMany();
+    return questions;
+  }, 
+  AllQuestionComments: async (parents, args, context) => {
+    const questionComments = await prisma.questionComment.findMany();
+    return questionComments;
+  }, 
+  AllSolutions: async (parents, args, context) => {
+    const solutions = await prisma.solution.findMany();
+    return solutions;
+  }, 
+  // Question End
+  
+}
+
 export { Query };
