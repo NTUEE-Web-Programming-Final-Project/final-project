@@ -11,4 +11,8 @@ module.exports = {
     tsconfigRootDir: __dirname,
   },
   root: true,
+  rules: {
+    "no-unused-vars": "off",
+  },
+  ignorePatterns: ["index.ts"],
 };

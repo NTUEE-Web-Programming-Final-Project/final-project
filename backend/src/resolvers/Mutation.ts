@@ -1,29 +1,39 @@
 import { prisma } from "../../prisma/client.ts";
 import { pubsub } from "../PubSub/pubsub.ts";
-import { AnnouncementInput, UserInput, UserPasswordInput } from "../types/types.ts";
+import {
+  AnnouncementInput,
+  UserInput,
+  UserPasswordInput,
+} from "../types/types.ts";
 
-const Mutation ={
+const Mutation = {
   // Announcement Start
-  CreateAnnouncement: async (parent, args: { announcementInput: AnnouncementInput }, context) => {
+  CreateAnnouncement: async (
+    _parent,
+    args: { announcementInput: AnnouncementInput },
+    _context,
+  ) => {
     const { title, content } = args.announcementInput;
     const date = new Date().toUTCString();
     const newAnnouncement = await prisma.announcement.create({
       data: {
         title: title,
         content: content,
-        date: date
-      }
+        date: date,
+      },
     });
-    pubsub.publish("ANNOUNCEMENT_CREATED", { AnnouncementCreated: newAnnouncement });
+    pubsub.publish("ANNOUNCEMENT_CREATED", {
+      AnnouncementCreated: newAnnouncement,
+    });
     return newAnnouncement;
   },
 
-  DeleteAnnouncement: async (parent, args: { id: number }, context) => {
+  DeleteAnnouncement: async (_parent, args: { id: number }, _context) => {
     const id = args.id;
     const existingAnnouncement = await prisma.announcement.findFirst({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
     if (!existingAnnouncement) {
       throw new Error("announcement not found!");
@@ -31,20 +41,26 @@ const Mutation ={
 
     const deletedAnnouncement = await prisma.announcement.delete({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
-    pubsub.publish("ANNOUNCEMENT_DELETED", { AnnouncementDeleted: deletedAnnouncement });
+    pubsub.publish("ANNOUNCEMENT_DELETED", {
+      AnnouncementDeleted: deletedAnnouncement,
+    });
     return deletedAnnouncement;
   },
 
-  UpdateAnnouncement: async (parent, args: { id: number, announcementInput: AnnouncementInput }, context) => {
+  UpdateAnnouncement: async (
+    _parent,
+    args: { id: number; announcementInput: AnnouncementInput },
+    _context,
+  ) => {
     const id = args.id;
     const { title, content } = args.announcementInput;
     const existingAnnouncement = await prisma.announcement.findFirst({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
     if (!existingAnnouncement) {
       throw new Error("announcement not found!");
@@ -52,40 +68,43 @@ const Mutation ={
 
     const updatedAnnouncement = await prisma.announcement.update({
       where: {
-        id: id
+        id: id,
       },
       data: {
         title: title,
-        content: content
-      }
+        content: content,
+      },
     });
-    pubsub.publish("ANNOUNCEMENT_UPDATED", { AnnouncementUpdated: updatedAnnouncement });
+    pubsub.publish("ANNOUNCEMENT_UPDATED", {
+      AnnouncementUpdated: updatedAnnouncement,
+    });
     return updatedAnnouncement;
   },
   // Announcement End
 
   // User Start
-  CreateUser: async (parent, args: { userInput: UserInput }, context) => {
-    const { name, studentID, password, photoLink, introduction } = args.userInput;
+  CreateUser: async (_parent, args: { userInput: UserInput }, _context) => {
+    const { name, studentID, password, photoLink, introduction } =
+      args.userInput;
     const newUser = await prisma.user.create({
       data: {
         name: name,
         studentID: studentID,
         password: password,
         photoLink: photoLink,
-        introduction: introduction
-      }
+        introduction: introduction,
+      },
     });
     pubsub.publish("USER_CREATED", { UserCreated: newUser });
     return newUser;
   },
 
-  DeleteUser: async (parent, args: { id: number }, context) => {
+  DeleteUser: async (_parent, args: { id: number }, _context) => {
     const id = args.id;
     const existingUser = await prisma.user.findFirst({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
     if (!existingUser) {
       throw new Error("user not found!");
@@ -93,20 +112,25 @@ const Mutation ={
 
     const deletedUser = await prisma.user.delete({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
     pubsub.publish("USER_DELETED", { UserDeleted: deletedUser });
     return deletedUser;
   },
 
-  UpdateUser: async (parent, args: { id: number, userInput: UserInput }, context) => {
+  UpdateUser: async (
+    _parent,
+    args: { id: number; userInput: UserInput },
+    _context,
+  ) => {
     const id = args.id;
-    const { name, studentID, password, photoLink, introduction } = args.userInput;
+    const { name, studentID, password, photoLink, introduction } =
+      args.userInput;
     const existingUser = await prisma.user.findFirst({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
     if (!existingUser) {
       throw new Error("user not found!");
@@ -114,27 +138,31 @@ const Mutation ={
 
     const updatedUser = await prisma.user.update({
       where: {
-        id: id
+        id: id,
       },
       data: {
         name: name,
         studentID: studentID,
         password: password,
         photoLink: photoLink,
-        introduction: introduction
-      }
+        introduction: introduction,
+      },
     });
     pubsub.publish("USER_UPDATED", { UserUpdated: updatedUser });
     return updatedUser;
   },
 
-  UpdateUserPassword: async (parent, args: { id: number, userPasswordInput: UserPasswordInput }, context) => {
+  UpdateUserPassword: async (
+    _parent,
+    args: { id: number; userPasswordInput: UserPasswordInput },
+    _context,
+  ) => {
     const id = args.id;
     const { password } = args.userPasswordInput;
     const existingUser = await prisma.user.findFirst({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
     if (!existingUser) {
       throw new Error("user not found!");
@@ -142,16 +170,16 @@ const Mutation ={
 
     const updatedUserPassword = await prisma.user.update({
       where: {
-        id: id
+        id: id,
       },
       data: {
-        password: password
-      }
+        password: password,
+      },
     });
     pubsub.publish("USER_UPDATED", { UserUpdated: updatedUserPassword });
     return updatedUserPassword;
   },
   // User End
-}
+};
 
 export { Mutation };
