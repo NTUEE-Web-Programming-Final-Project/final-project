@@ -11,94 +11,94 @@ datasource db {
 }
 
 model Announcement {
-  id        Int       @id @default(autoincrement())
-  title     String
-  date      String
-  content   String
+  id      Int    @id @default(autoincrement())
+  title   String
+  date    String
+  content String
 }
 
 model User {
-  id                    Int             @id @default(autoincrement())
-  name                  String
-  studentID             String
-  password              String
-  photoLink             String
-  introduction          String?
-  questions             Question[]
-  questionsId           Int[]
-  questionComments      QuestionComment[]
-  questionCommentsId    Int[]
-  solutions             Solution[]
-  solutionsId           Int[]
-  atricles              Article[]
-  articlesId            Int[]
-  articleComments       ArticleComment[]
-  articleCommentsId     Int[]
+  id                 Int               @id @default(autoincrement())
+  name               String
+  studentID          String
+  password           String
+  photoLink          String
+  introduction       String?
+  questions          Question[]
+  questionsId        Int[]
+  questionComments   QuestionComment[]
+  questionCommentsId Int[]
+  solutions          Solution[]
+  solutionsId        Int[]
+  atricles           Article[]
+  articlesId         Int[]
+  articleComments    ArticleComment[]
+  articleCommentsId  Int[]
 }
 
 model Question {
-  id             Int               @id @default(autoincrement())
-  asker          User              @relation(fields: [askerId], references: [id])
-  askerId        Int
-  title          String
-  date           String
-  content        String
-  topic          String
-  zap            Int
-  isMe           Int
-  bombFish       Int
-  tags           String[]
-  comments       QuestionComment[]
-  commentsId     Int[]
-  solutions      Solution[]
-  solutionsId    Int[]
+  id          Int               @id @default(autoincrement())
+  asker       User              @relation(fields: [askerId], references: [id])
+  askerId     Int
+  title       String
+  date        String
+  content     String
+  topic       String
+  zap         Int
+  isMe        Int
+  bombFish    Int
+  tags        String[]
+  comments    QuestionComment[]
+  commentsId  Int[]
+  solutions   Solution[]
+  solutionsId Int[]
 }
 
 model QuestionComment {
-  id              Int       @id @default(autoincrement())
-  commenter       User      @relation(fields: [commenterId], references: [id])
-  commenterId     Int
-  content         String
-  rootQuestion    Question  @relation(fields: [rootQuesitonId], references: [id])
-  rootQuesitonId  Int
-  date            String
+  id             Int      @id @default(autoincrement())
+  commenter      User     @relation(fields: [commenterId], references: [id])
+  commenterId    Int
+  content        String
+  rootQuestion   Question @relation(fields: [rootQuesitonId], references: [id])
+  rootQuesitonId Int
+  date           String
 }
 
 model Solution {
-  id              Int       @id @default(autoincrement())
-  date            String
-  solver          User      @relation(fields: [solverId], references: [id])
-  solverId        Int
-  rootQuestion    Question  @relation(fields: [rootQuesitonId], references: [id])
-  rootQuesitonId  Int
-  content         String
-  zap             Int
-  isMe            Int
-  bombFish        Int
+  id             Int      @id @default(autoincrement())
+  date           String
+  solver         User     @relation(fields: [solverId], references: [id])
+  solverId       Int
+  rootQuestion   Question @relation(fields: [rootQuesitonId], references: [id])
+  rootQuesitonId Int
+  content        String
+  zap            Int
+  isMe           Int
+  bombFish       Int
 }
 
 model Article {
-  id            Int               @id @default(autoincrement())
-  writer        User              @relation(fields: [writerId], references: [id])
-  writerId      Int
-  date          String
-  title         String
-  content       String
-  tags          String[]
-  zap           Int
-  isMe          Int
-  bombFish      Int
-  topic         String
-  comments      ArticleComment[]
-  commentsId    Int[]
+  id         Int              @id @default(autoincrement())
+  writer     User             @relation(fields: [writerId], references: [id])
+  writerId   Int
+  date       String
+  title      String
+  content    String
+  tags       String[]
+  zap        Int
+  isMe       Int
+  bombFish   Int
+  topic      String
+  comments   ArticleComment[]
+  commentsId Int[]
 }
 
 model ArticleComment {
-  id              Int       @id @default(autoincrement())
-  commenter       User      @relation(fields: [commenterId], references: [id])
-  commenterId     Int
-  content         String
-  date            String
-  rootArticle     Article   @relation(fields: [rootArticleId], references: [id])
-  rootArticleId   Int
+  id            Int     @id @default(autoincrement())
+  commenter     User    @relation(fields: [commenterId], references: [id])
+  commenterId   Int
+  content       String
+  date          String
+  rootArticle   Article @relation(fields: [rootArticleId], references: [id])
+  rootArticleId Int
 }

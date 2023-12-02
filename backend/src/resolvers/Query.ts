@@ -1,20 +1,19 @@
-import { prisma } from '../../prisma/client.ts'
+import { prisma } from "../../prisma/client.ts";
 
-const Query ={
+const Query = {
   // Announcement Start
-  AllAnnouncements: async (parents, args, context) => {
+  AllAnnouncements: async (_parents, _args, _context) => {
     const announcements = await prisma.announcement.findMany();
     return announcements;
   },
   // Announcement End
 
   // User Start
-  AllUsers: async (parents, args, context) => {
+  AllUsers: async (_parents, _args, _context) => {
     const users = await prisma.user.findMany();
     return users;
   },
   // User End
-  
-}
+};
 
 export { Query };
