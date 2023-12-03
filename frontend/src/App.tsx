@@ -1,6 +1,5 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-// import { useState, useEffect } from "react";
 import NavBar from "./components/Common/NavBar.tsx";
 // import NotFound from "./components/Common/NotFound.tsx";
 import HomePage from "./containers/HomePage.tsx";
@@ -22,7 +21,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
 
         <Route
-          path="/LoginPage"
+          path="/login"
           element={
             <Suspense fallback={<div>Loading...</div>}>
               <LoginPage />
@@ -31,7 +30,7 @@ function App() {
         />
 
         <Route
-          path="/Article"
+          path="/article"
           element={
             <Suspense fallback={<div>Loading...</div>}>
               <ArticleMainPage />
@@ -40,15 +39,15 @@ function App() {
         />
 
         <Route
-          path="/Forum"
+          path="/forum"
           element={
             <Suspense fallback={<div>Loading...</div>}>
               <ForumMainPage />
             </Suspense>
           }
         />
-        <Footer />
       </Routes>
+      <Footer />
     </>
   );
 }
