@@ -30,5 +30,6 @@ export interface ArticleInput {
 export interface ArticleCommentInput {
   commenterId: number,
   content: string,
-  rootArticleId: number
+  rootArticleId: number,
+  zap: number,
 }
