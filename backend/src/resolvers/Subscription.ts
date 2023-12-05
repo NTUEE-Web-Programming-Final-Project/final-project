@@ -28,6 +28,34 @@ const Subscription = {
     subscribe: () => pubsub.asyncIterator(["USER_UPDATED"]),
   },
   // User End
-};
+
+  // Article Start
+  ArticleCreated: {
+    subscribe: () => pubsub.asyncIterator(["ARTICLE_CREATED"])
+  },
+
+  ArticleDeleted: {
+    subscribe: () => pubsub.asyncIterator(["ARTICLE_DELETED"])
+  },
+
+  ArticleUpdated: {
+    subscribe: () => pubsub.asyncIterator(["ARTICLE_UPDATED"])
+  },
+  // Article End
+
+  // ArticleComment Start
+  ArticleCommentCreated: {
+    subscribe: () => pubsub.asyncIterator(["ARTICLECOMMENT_CREATED"])
+  },
+
+  ArticleCommentDeleted: {
+    subscribe: () => pubsub.asyncIterator(["ARTICLECOMMENT_DELETED"])
+  },
+
+  ArticleCommentUpdated: {
+    subscribe: () => pubsub.asyncIterator(["ARTICLECOMMENT_UPDATED"])
+  },
+  // Article End
+}
 
 export { Subscription };
