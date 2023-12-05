@@ -8,7 +8,6 @@ services :
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: WPFP
-    restart: always
   admin:
     image: adminer
     restart: always
