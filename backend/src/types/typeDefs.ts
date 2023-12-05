@@ -27,21 +27,21 @@ const typeDefs = `#graphql
   }
 
   type Article {
-  id: Int!
-  writerId: Int!
-  date: String!
-  title:  String!
-  content:  String!
-  tags: [String]
-  zap:  Int!
-  isMe: Int!
-  bombFish: Int!
-  topic:  String!
-  commentsId: [Int]
+    id: Int!
+    writerId: Int!
+    date: String!
+    title:  String!
+    content:  String!
+    tags: [String]
+    zap:  Int!
+    isMe: Int!
+    bombFish: Int!
+    topic:  String!
+    commentsId: [Int]
   }
 
   type ArticleComment {
-    id: Int!       
+    id: Int!
     commenterId:  Int!
     content:  String!
     date: String!

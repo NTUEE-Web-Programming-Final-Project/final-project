@@ -76,6 +76,35 @@ model Solution {
   zap            Int
   isMe           Int
   bombFish       Int
+  tags           String[]
+  comments       QuestionComment[]
+  commentsId     Int[]
+  solutions      Solution[]
+  solutionsId    Int[]
+}
+
+model QuestionComment {
+  id              Int       @id @default(autoincrement())
+  commenter       User      @relation(fields: [commenterId], references: [id])
+  commenterId     Int
+  content         String
+  rootQuestion    Question  @relation(fields: [rootQuesitonId], references: [id])
+  rootQuesitonId  Int
+  date            String
+  zap             Int
+}
+
+model Solution {
+  id              Int       @id @default(autoincrement())
+  date            String
+  solver          User      @relation(fields: [solverId], references: [id])
+  solverId        Int
+  rootQuestion    Question  @relation(fields: [rootQuesitonId], references: [id])
+  rootQuesitonId  Int
+  content         String
+  zap             Int
+  isMe            Int
+  bombFish        Int
 }
 
 model Article {
@@ -103,4 +132,19 @@ model ArticleComment {
   rootArticle   Article @relation(fields: [rootArticleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   rootArticleId Int
   zap           Int
+  isMe          Int
+  bombFish      Int
+  topic         String
+  comments      ArticleComment[]
+  commentsId    Int[]
+}
+
+model ArticleComment {
+  id              Int       @id @default(autoincrement())
+  commenter       User      @relation(fields: [commenterId], references: [id])
+  commenterId     Int
+  content         String
+  date            String
+  rootArticle     Article   @relation(fields: [rootArticleId], references: [id])
+  rootArticleId   Int
 }
