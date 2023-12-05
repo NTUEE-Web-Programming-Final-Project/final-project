@@ -360,14 +360,31 @@ const Mutation = {
         }
     });
     const articleCommentsId = writer.articlesId;
-    const index = articleCommentsId.indexOf(id);
-    articleCommentsId.splice(index, 1);
+    articleCommentsId.splice(articleCommentsId.indexOf(id), 1);
     const updateWriter = await prisma.user.update({
         where: {
             id: userId
         },
         data: {
             articleCommentsId: articleCommentsId
+        }
+    });
+
+    // delete commentId in Article.commentsId
+    const articleId = existingArticleComment.rootArticleId;
+    const article = await prisma.article.findFirst({
+        where: {
+            id: articleId
+        }
+    });
+    const commentsId = article.commentsId;
+    commentsId.splice(commentsId.indexOf(id), 1);
+    const updateArticle = await prisma.article.update({
+        where: {
+            id: articleId
+        },
+        data: {
+            commentsId: commentsId
         }
     });
 
