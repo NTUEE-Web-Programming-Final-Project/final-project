@@ -1,6 +1,6 @@
 import { prisma } from "../../prisma/client.ts";
 import { pubsub } from "../PubSub/pubsub.ts";
-import { 
+import {
   AnnouncementInput,
   ArticleCommentInput,
   ArticleInput,
@@ -184,13 +184,17 @@ const Mutation = {
   // User End
 
   // Article Start
-  CreateArticle: async (parent, args: { articleInput: ArticleInput }, context) => {
+  CreateArticle: async (
+    parent,
+    args: { articleInput: ArticleInput },
+    context,
+  ) => {
     const { writerId, title, content, tags, topic } = args.articleInput;
     const findWriter = await prisma.user.findFirst({
       where: {
-        id: writerId
-      }
-    })
+        id: writerId,
+      },
+    });
     if (!findWriter) {
       throw new Error("Writer not found!");
     }
@@ -207,7 +211,7 @@ const Mutation = {
         isMe: 0,
         bombFish: 0,
         topic: topic,
-      }
+      },
     });
 
     const updateUser = await prisma.user.update({
@@ -215,8 +219,8 @@ const Mutation = {
         id: writerId,
       },
       data: {
-        articlesId: {push: newArticle.id}
-      }
+        articlesId: { push: newArticle.id },
+      },
     });
 
     pubsub.publish("ARTICLE_CREATED", { ArticleCreated: newArticle });
@@ -227,8 +231,8 @@ const Mutation = {
     const id = args.id;
     const existingArticle = await prisma.article.findFirst({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
     if (!existingArticle) {
       throw new Error("article not found!");
@@ -237,38 +241,43 @@ const Mutation = {
     // delete article in User.articlesId
     const userId = existingArticle.writerId;
     const writer = await prisma.user.findFirst({
-        where: {
-            id: userId
-        }
+      where: {
+        id: userId,
+      },
     });
     const articlesId = writer.articlesId;
     const index = articlesId.indexOf(id);
     articlesId.splice(index, 1);
     const updateWriter = await prisma.user.update({
-        where: {
-            id: userId
-        },
-        data: {
-            articlesId: articlesId
-        }
+      where: {
+        id: userId,
+      },
+      data: {
+        articlesId: articlesId,
+      },
     });
 
     const deletedArticle = await prisma.article.delete({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
     pubsub.publish("ARTICLE_DELETED", { ArticleDeleted: deletedArticle });
     return deletedArticle;
   },
 
-  UpdateArticle: async (parent, args: { id: number, articleInput: ArticleInput }, context) => {
+  UpdateArticle: async (
+    parent,
+    args: { id: number; articleInput: ArticleInput },
+    context,
+  ) => {
     const id = args.id;
-    const { writerId, title, content, tags, topic, zap, isMe, bombFish } = args.articleInput;
+    const { writerId, title, content, tags, topic, zap, isMe, bombFish } =
+      args.articleInput;
     const existingArticle = await prisma.article.findFirst({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
     if (!existingArticle) {
       throw new Error("article not found!");
@@ -277,7 +286,7 @@ const Mutation = {
     const date = new Date().toUTCString();
     const updatedArticle = await prisma.article.update({
       where: {
-        id: id
+        id: id,
       },
       data: {
         writerId: writerId,
@@ -289,21 +298,25 @@ const Mutation = {
         isMe: isMe,
         bombFish: bombFish,
         topic: topic,
-      }
+      },
     });
     pubsub.publish("ARTICLE_UPDATED", { ArticleUpdated: updatedArticle });
     return updatedArticle;
   },
   // Article End
 
-   // ArticleComment Start
-   CreateArticleComment: async (parent, args: { articleCommentInput: ArticleCommentInput }, context) => {
+  // ArticleComment Start
+  CreateArticleComment: async (
+    parent,
+    args: { articleCommentInput: ArticleCommentInput },
+    context,
+  ) => {
     const { commenterId, content, rootArticleId } = args.articleCommentInput;
     const findCommenter = await prisma.user.findFirst({
       where: {
-        id: commenterId
-      }
-    })
+        id: commenterId,
+      },
+    });
     if (!findCommenter) {
       throw new Error("Commenter not found!");
     }
@@ -316,7 +329,7 @@ const Mutation = {
         content: content,
         rootArticleId: rootArticleId,
         zap: 0,
-      }
+      },
     });
 
     const updateUser = await prisma.user.update({
@@ -324,8 +337,8 @@ const Mutation = {
         id: commenterId,
       },
       data: {
-        articleCommentsId: {push: newArticleComment.id}
-      }
+        articleCommentsId: { push: newArticleComment.id },
+      },
     });
 
     const UpdateArticle = await prisma.article.update({
@@ -333,11 +346,13 @@ const Mutation = {
         id: rootArticleId,
       },
       data: {
-        commentsId: {push: newArticleComment.id}
-      }
+        commentsId: { push: newArticleComment.id },
+      },
     });
 
-    pubsub.publish("ARTICLECOMMENT_CREATED", { ArticleCommentCreated: newArticleComment });
+    pubsub.publish("ARTICLECOMMENT_CREATED", {
+      ArticleCommentCreated: newArticleComment,
+    });
     return newArticleComment;
   },
 
@@ -345,8 +360,8 @@ const Mutation = {
     const id = args.id;
     const existingArticleComment = await prisma.articleComment.findFirst({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
     if (!existingArticleComment) {
       throw new Error("articleComment not found!");
@@ -355,55 +370,62 @@ const Mutation = {
     // delete article in User.articlesId
     const userId = existingArticleComment.commenterId;
     const writer = await prisma.user.findFirst({
-        where: {
-            id: userId
-        }
+      where: {
+        id: userId,
+      },
     });
     const articleCommentsId = writer.articlesId;
     articleCommentsId.splice(articleCommentsId.indexOf(id), 1);
     const updateWriter = await prisma.user.update({
-        where: {
-            id: userId
-        },
-        data: {
-            articleCommentsId: articleCommentsId
-        }
+      where: {
+        id: userId,
+      },
+      data: {
+        articleCommentsId: articleCommentsId,
+      },
     });
 
     // delete commentId in Article.commentsId
     const articleId = existingArticleComment.rootArticleId;
     const article = await prisma.article.findFirst({
-        where: {
-            id: articleId
-        }
+      where: {
+        id: articleId,
+      },
     });
     const commentsId = article.commentsId;
     commentsId.splice(commentsId.indexOf(id), 1);
     const updateArticle = await prisma.article.update({
-        where: {
-            id: articleId
-        },
-        data: {
-            commentsId: commentsId
-        }
+      where: {
+        id: articleId,
+      },
+      data: {
+        commentsId: commentsId,
+      },
     });
 
     const deletedArticleComment = await prisma.articleComment.delete({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
-    pubsub.publish("ARTICLECOMMENT_DELETED", { ArticleCommentDeleted: deletedArticleComment });
+    pubsub.publish("ARTICLECOMMENT_DELETED", {
+      ArticleCommentDeleted: deletedArticleComment,
+    });
     return deletedArticleComment;
   },
 
-  UpdateArticleComment: async (parent, args: { id: number, articleCommentInput: ArticleCommentInput }, context) => {
+  UpdateArticleComment: async (
+    parent,
+    args: { id: number; articleCommentInput: ArticleCommentInput },
+    context,
+  ) => {
     const id = args.id;
-    const { commenterId, content, rootArticleId, zap } = args.articleCommentInput;
+    const { commenterId, content, rootArticleId, zap } =
+      args.articleCommentInput;
     const existingArticleComment = await prisma.articleComment.findFirst({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
     if (!existingArticleComment) {
       throw new Error("articleComment not found!");
@@ -412,7 +434,7 @@ const Mutation = {
     const date = new Date().toUTCString();
     const updatedArticleComment = await prisma.articleComment.update({
       where: {
-        id: id
+        id: id,
       },
       data: {
         commenterId: commenterId,
@@ -420,12 +442,14 @@ const Mutation = {
         content: content,
         rootArticleId: rootArticleId,
         zap: zap,
-      }
+      },
     });
-    pubsub.publish("ARTICLECOMMENT_UPDATED", { ArticleCommentUpdated: updatedArticleComment });
+    pubsub.publish("ARTICLECOMMENT_UPDATED", {
+      ArticleCommentUpdated: updatedArticleComment,
+    });
     return updatedArticleComment;
   },
   // ArticleComment End
-}
+};
 
 export { Mutation };

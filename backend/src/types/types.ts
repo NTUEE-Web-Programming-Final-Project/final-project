@@ -17,19 +17,19 @@ export interface UserPasswordInput {
 }
 
 export interface ArticleInput {
-  writerId: number,
-  title: string,
-  content: string,
-  tags: string[],
-  topic: string
-  zap: number,
-  isMe: number,
-  bombFish: number,
+  writerId: number;
+  title: string;
+  content: string;
+  tags: string[];
+  topic: string;
+  zap: number;
+  isMe: number;
+  bombFish: number;
 }
 
 export interface ArticleCommentInput {
-  commenterId: number,
-  content: string,
-  rootArticleId: number,
-  zap: number,
+  commenterId: number;
+  content: string;
+  rootArticleId: number;
+  zap: number;
 }
