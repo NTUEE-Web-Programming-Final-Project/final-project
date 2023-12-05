@@ -20,8 +20,8 @@ model Announcement {
 model User {
   id                 Int               @id @default(autoincrement())
   name               String
-  studentID          String
-  password           String
+  studentID          String            @unique
+  password           String            @unique
   photoLink          String
   introduction       String?
   questions          Question[]
@@ -38,7 +38,7 @@ model User {
 
 model Question {
   id          Int               @id @default(autoincrement())
-  asker       User              @relation(fields: [askerId], references: [id])
+  asker       User              @relation(fields: [askerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   askerId     Int
   title       String
   date        String
@@ -56,10 +56,10 @@ model Question {
 
 model QuestionComment {
   id             Int      @id @default(autoincrement())
-  commenter      User     @relation(fields: [commenterId], references: [id])
+  commenter      User     @relation(fields: [commenterId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   commenterId    Int
   content        String
-  rootQuestion   Question @relation(fields: [rootQuesitonId], references: [id])
+  rootQuestion   Question @relation(fields: [rootQuesitonId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   rootQuesitonId Int
   date           String
 }
@@ -67,9 +67,9 @@ model QuestionComment {
 model Solution {
   id             Int      @id @default(autoincrement())
   date           String
-  solver         User     @relation(fields: [solverId], references: [id])
+  solver         User     @relation(fields: [solverId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   solverId       Int
-  rootQuestion   Question @relation(fields: [rootQuesitonId], references: [id])
+  rootQuestion   Question @relation(fields: [rootQuesitonId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   rootQuesitonId Int
   content        String
   zap            Int
@@ -79,7 +79,7 @@ model Solution {
 
 model Article {
   id         Int              @id @default(autoincrement())
-  writer     User             @relation(fields: [writerId], references: [id])
+  writer     User             @relation(fields: [writerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   writerId   Int
   date       String
   title      String
@@ -95,10 +95,10 @@ model Article {
 
 model ArticleComment {
   id            Int     @id @default(autoincrement())
-  commenter     User    @relation(fields: [commenterId], references: [id])
+  commenter     User    @relation(fields: [commenterId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   commenterId   Int
   content       String
   date          String
-  rootArticle   Article @relation(fields: [rootArticleId], references: [id])
+  rootArticle   Article @relation(fields: [rootArticleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   rootArticleId Int
 }
