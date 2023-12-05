@@ -5,8 +5,8 @@ const ArticleMainPage = () => {
 
   return (
     <>
-      <h1>Article Main Page</h1>
-      <button onClick={() => navigate("/")}>back</button>
+      <h1 className="text-3xl m-2">Article Main Page</h1>
+      <button onClick={() => navigate("/")} className="border-2 border-black px-3 m-1">home</button>
     </>
   );
 };
