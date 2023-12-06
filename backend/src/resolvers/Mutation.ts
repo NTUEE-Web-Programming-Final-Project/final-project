@@ -226,7 +226,7 @@ const Mutation = {
     pubsub.publish("ARTICLE_CREATED", { ArticleCreated: newArticle });
     return newArticle;
   },
-
+  
   DeleteArticle: async (_parent, args: { id: number }, _context) => {
     const id = args.id;
     const existingArticle = await prisma.article.findFirst({
@@ -267,6 +267,7 @@ const Mutation = {
   },
 
   UpdateArticle: async (
+
     _parent,
     args: { id: number; articleInput: ArticleInput },
     _context,
@@ -351,6 +352,7 @@ const Mutation = {
     });
     return newArticleComment;
   },
+
 
   DeleteArticleComment: async (_parent, args: { id: number }, _context) => {
     const id = args.id;

@@ -16,6 +16,7 @@ const Query = {
   // User End
 
   // Article Start
+
   AllArticles: async (_parents, _args, _context) => {
     const articles = await prisma.article.findMany();
     return articles;
