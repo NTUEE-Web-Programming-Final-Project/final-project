@@ -185,9 +185,9 @@ const Mutation = {
 
   // Article Start
   CreateArticle: async (
-    parent,
+    _parent,
     args: { articleInput: ArticleInput },
-    context,
+    _context,
   ) => {
     const { writerId, title, content, tags, topic } = args.articleInput;
     const findWriter = await prisma.user.findFirst({
@@ -226,8 +226,8 @@ const Mutation = {
     pubsub.publish("ARTICLE_CREATED", { ArticleCreated: newArticle });
     return newArticle;
   },
-
-  DeleteArticle: async (parent, args: { id: number }, context) => {
+  
+  DeleteArticle: async (_parent, args: { id: number }, _context) => {
     const id = args.id;
     const existingArticle = await prisma.article.findFirst({
       where: {
@@ -267,13 +267,13 @@ const Mutation = {
   },
 
   UpdateArticle: async (
-    parent,
+
+    _parent,
     args: { id: number; articleInput: ArticleInput },
-    context,
+    _context,
   ) => {
     const id = args.id;
-    const { writerId, title, content, tags, topic, zap, isMe, bombFish } =
-      args.articleInput;
+    const { writerId, title, content, tags, topic } = args.articleInput;
     const existingArticle = await prisma.article.findFirst({
       where: {
         id: id,
@@ -294,9 +294,6 @@ const Mutation = {
         title: title,
         content: content,
         tags: tags,
-        zap: zap,
-        isMe: isMe,
-        bombFish: bombFish,
         topic: topic,
       },
     });
@@ -307,9 +304,9 @@ const Mutation = {
 
   // ArticleComment Start
   CreateArticleComment: async (
-    parent,
+    _parent,
     args: { articleCommentInput: ArticleCommentInput },
-    context,
+    _context,
   ) => {
     const { commenterId, content, rootArticleId } = args.articleCommentInput;
     const findCommenter = await prisma.user.findFirst({
@@ -356,7 +353,8 @@ const Mutation = {
     return newArticleComment;
   },
 
-  DeleteArticleComment: async (parent, args: { id: number }, context) => {
+
+  DeleteArticleComment: async (_parent, args: { id: number }, _context) => {
     const id = args.id;
     const existingArticleComment = await prisma.articleComment.findFirst({
       where: {
@@ -415,13 +413,12 @@ const Mutation = {
   },
 
   UpdateArticleComment: async (
-    parent,
+    _parent,
     args: { id: number; articleCommentInput: ArticleCommentInput },
-    context,
+    _context,
   ) => {
     const id = args.id;
-    const { commenterId, content, rootArticleId, zap } =
-      args.articleCommentInput;
+    const { commenterId, content, rootArticleId } = args.articleCommentInput;
     const existingArticleComment = await prisma.articleComment.findFirst({
       where: {
         id: id,
@@ -441,7 +438,6 @@ const Mutation = {
         date: date,
         content: content,
         rootArticleId: rootArticleId,
-        zap: zap,
       },
     });
     pubsub.publish("ARTICLECOMMENT_UPDATED", {
