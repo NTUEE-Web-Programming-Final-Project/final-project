@@ -14,6 +14,20 @@ const Query = {
     return users;
   },
   // User End
+
+  // Article Start
+  AllArticles: async (_parents, _args, _context) => {
+    const articles = await prisma.article.findMany();
+    return articles;
+  },
+  // Article End
+
+  // ArticleComment Start
+  AllArticleComments: async (_parents, _args, _context) => {
+    const articleComments = await prisma.articleComment.findMany();
+    return articleComments;
+  },
+  // ArticleComment End
 };
 
 export { Query };
