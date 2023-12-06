@@ -74,16 +74,16 @@ const typeDefs = `#graphql
     content:  String!
     tags:     [String]!
     topic:    String!
-    zap: Int!
-    isMe: Int!
-    bombFish: Int!
+    # zap: Int!
+    # isMe: Int!
+    # bombFish: Int!
   }
 
   input ArticleCommentInput {
     commenterId: Int!
     content: String!
     rootArticleId: Int!
-    zap: Int!
+    # zap: Int!
   }
 
   ### Define Resolvers ###

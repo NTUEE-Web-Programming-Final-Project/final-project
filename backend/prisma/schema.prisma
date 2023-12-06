@@ -44,9 +44,9 @@ model Question {
   date        String
   content     String
   topic       String
-  zap         Int
-  isMe        Int
-  bombFish    Int
+  zap         Int               @default(0)
+  isMe        Int               @default(0)
+  bombFish    Int               @default(0)
   tags        String[]
   comments    QuestionComment[]
   commentsId  Int[]
@@ -62,7 +62,7 @@ model QuestionComment {
   rootQuestion   Question @relation(fields: [rootQuesitonId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   rootQuesitonId Int
   date           String
-  zap            Int
+  zap            Int      @default(0)
 }
 
 model Solution {
@@ -73,9 +73,9 @@ model Solution {
   rootQuestion   Question @relation(fields: [rootQuesitonId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   rootQuesitonId Int
   content        String
-  zap            Int
-  isMe           Int
-  bombFish       Int
+  zap            Int      @default(0)
+  isMe           Int      @default(0)
+  bombFish       Int      @default(0)
 }
 
 model Article {
@@ -86,9 +86,9 @@ model Article {
   title      String
   content    String
   tags       String[]
-  zap        Int
-  isMe       Int
-  bombFish   Int
+  zap        Int              @default(0)
+  isMe       Int              @default(0)
+  bombFish   Int              @default(0)
   topic      String
   comments   ArticleComment[]
   commentsId Int[]
@@ -102,5 +102,5 @@ model ArticleComment {
   date          String
   rootArticle   Article @relation(fields: [rootArticleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   rootArticleId Int
-  zap           Int
+  zap           Int     @default(0)
 }
