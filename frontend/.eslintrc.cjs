@@ -40,5 +40,5 @@ module.exports = {
       version: "detect",
     },
   },
-  ignorePatterns: ["dist", "gql-generated/*.ts"],
+  ignorePatterns: ["dist", "gql-generated"],
 };

@@ -6,10 +6,10 @@
   "scripts": {
     "setup": "npm install -g dotenv-cli && npm install ts-node",
     "generate": "npx prisma generate",
-    "migrate": "dotenv -e .env.development -- npx prisma migrate dev --name init",
-    "studio": "dotenv -e .env.development -- npx prisma studio",
-    "start": "dotenv -e .env.development -- npx tsx ./src/index.ts",
-    "initData": "cd utils && dotenv -e ../.env.development -- npx tsx ./initDB.ts",
+    "migrate": "dotenv -e .env -- npx prisma migrate dev --name init",
+    "studio": "dotenv -e .env -- npx prisma studio",
+    "start": "dotenv -e .env -- npx tsx ./src/index.ts",
+    "initData": "cd utils && dotenv -e ../.env -- npx tsx ./initDB.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:prisma": "prettier --write ./prisma/schema.prisma"
