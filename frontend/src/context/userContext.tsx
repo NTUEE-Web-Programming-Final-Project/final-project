@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import type { User } from "@lib/shared_types";
+import type { User } from "../../../shared/shared_types";
 
 export type UserContext = {
   user: User | null;
