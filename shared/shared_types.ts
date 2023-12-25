@@ -1,61 +1,55 @@
 export type User = {
-  id: string;
+  id: number;
   name: string;
-  studentID: string;
+  studentid: number;
   password: string;
   photoLink: string;
   introduction?: string;
 };
 
 export type Question = {
-  id: string;
+  id: number;
   asker: string;
   date: string;
   title: string;
   content: string;
   topic: string;
   tags: string[];
-  zap: number;
-  isMe: number;
-  bombFish: number;
+  likes: number[];
 };
 
 export type QuestionComment = {
-  id: string;
+  id: number;
   commenter: string;
   date: string;
   content: string;
   tags: string[];
-  zap: number;
+  likes: number[];
 };
 
 export type Solution = {
-  id: string;
+  id: number;
   solver: string;
   date: string;
   content: string;
-  zap: number;
-  isMe: number;
-  bombFish: number;
+  likes: number[];
 };
 
 export type Article = {
-  id: string;
+  id: number;
   writer: string;
   date: string;
   title: string;
   content: string;
   topic: string;
   tags: string[];
-  zap: number;
-  isMe: number;
-  bombFish: number;
+  likes: number[];
 };
 
 export type ArticleComment = {
-  id: string;
+  id: number;
   commenter: string;
   date: string;
   content: string;
-  zap: number;
+  likes: number[];
 };
