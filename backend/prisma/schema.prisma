@@ -18,22 +18,34 @@ model Announcement {
 }
 
 model User {
-  id                 Int               @id @default(autoincrement())
-  name               String
-  studentID          String            @unique
-  password           String            @unique
-  photoLink          String
-  introduction       String?
-  questions          Question[]
-  questionsId        Int[]
-  questionComments   QuestionComment[]
-  questionCommentsId Int[]
-  solutions          Solution[]
-  solutionsId        Int[]
-  atricles           Article[]
-  articlesId         Int[]
-  articleComments    ArticleComment[]
-  articleCommentsId  Int[]
+  id                      Int                    @id @default(autoincrement())
+  name                    String
+  studentID               String
+  password                String
+  photoLink               String
+  introduction            String?
+  questions               Question[]
+  questionsId             Int[]
+  questionComments        QuestionComment[]
+  questionCommentsId      Int[]
+  solutions               Solution[]
+  solutionsId             Int[]
+  atricles                Article[]
+  articlesId              Int[]
+  articleComments         ArticleComment[]
+  articleCommentsId       Int[]
+  likedQuestion           LikedQuestion[] // to store the history of liked questions
+  likedQuestionsId        Int[]
+  likedQuestionComments   LikedQuestionComment[] // to store the history of liked question comments
+  likedQuestionCommentsId Int[]
+  likedSolutions          LikedSolution[] // to store the history of liked solutions
+  likedSolutionsId        Int[]
+  likedArticles           LikedArticle[] // to store the history of liked articles
+  likedArticlesId         Int[]
+  likedArticleComments    LikedArticleComment[] // to store the history of liked article comments
+  likedArticleCommentsId  Int[]
+
+  @@unique([studentID, password]) // unique pair
 }
 
 model Question {
@@ -44,38 +56,37 @@ model Question {
   date        String
   content     String
   topic       String
-  zap         Int               @default(0)
-  isMe        Int               @default(0)
-  bombFish    Int               @default(0)
   tags        String[]
   comments    QuestionComment[]
   commentsId  Int[]
   solutions   Solution[]
   solutionsId Int[]
+  likes       LikedQuestion[]
+  likesId     Int[]
 }
 
 model QuestionComment {
-  id             Int      @id @default(autoincrement())
-  commenter      User     @relation(fields: [commenterId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id             Int                    @id @default(autoincrement())
+  commenter      User                   @relation(fields: [commenterId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   commenterId    Int
   content        String
-  rootQuestion   Question @relation(fields: [rootQuesitonId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  rootQuestion   Question               @relation(fields: [rootQuesitonId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   rootQuesitonId Int
   date           String
-  zap            Int      @default(0)
+  likes          LikedQuestionComment[]
+  likesId        Int[]
 }
 
 model Solution {
-  id             Int      @id @default(autoincrement())
+  id             Int             @id @default(autoincrement())
   date           String
-  solver         User     @relation(fields: [solverId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  solver         User            @relation(fields: [solverId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   solverId       Int
-  rootQuestion   Question @relation(fields: [rootQuesitonId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  rootQuestion   Question        @relation(fields: [rootQuesitonId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   rootQuesitonId Int
   content        String
-  zap            Int      @default(0)
-  isMe           Int      @default(0)
-  bombFish       Int      @default(0)
+  likes          LikedSolution[]
+  likesId        Int[]
 }
 
 model Article {
@@ -86,21 +97,67 @@ model Article {
   title      String
   content    String
   tags       String[]
-  zap        Int              @default(0)
-  isMe       Int              @default(0)
-  bombFish   Int              @default(0)
+  like       Int              @default(0)
   topic      String
   comments   ArticleComment[]
   commentsId Int[]
+  likes      LikedArticle[]
+  likesId    Int[]
 }
 
 model ArticleComment {
-  id            Int     @id @default(autoincrement())
-  commenter     User    @relation(fields: [commenterId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id            Int                   @id @default(autoincrement())
+  commenter     User                  @relation(fields: [commenterId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   commenterId   Int
   content       String
   date          String
-  rootArticle   Article @relation(fields: [rootArticleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  rootArticle   Article               @relation(fields: [rootArticleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   rootArticleId Int
-  zap           Int     @default(0)
+  likes         LikedArticleComment[]
+  likesId       Int[]
+}
+
+// to store questions an user liked
+model LikedQuestion {
+  id         Int      @id @default(autoincrement())
+  liker      User     @relation(fields: [likerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  likerId    Int
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId Int
+}
+
+// to store question comments an user liked
+model LikedQuestionComment {
+  id                Int             @id @default(autoincrement())
+  liker             User            @relation(fields: [likerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  likerId           Int
+  questionComment   QuestionComment @relation(fields: [questionCommentId], references: [id])
+  questionCommentId Int
+}
+
+// to store solutions an user liked
+model LikedSolution {
+  id         Int      @id @default(autoincrement())
+  liker      User     @relation(fields: [likerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  likerId    Int
+  solution   Solution @relation(fields: [solutionId], references: [id])
+  solutionId Int
+}
+
+// to store articles an user liked
+model LikedArticle {
+  id        Int     @id @default(autoincrement())
+  liker     User    @relation(fields: [likerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  likerId   Int
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  articleId Int
+}
+
+// to store article comments an user liked
+model LikedArticleComment {
+  id               Int            @id @default(autoincrement())
+  liker            User           @relation(fields: [likerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  likerId          Int
+  articleComment   ArticleComment @relation(fields: [articleCommentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  articleCommentId Int
 }

@@ -6,6 +6,7 @@ import {
   ArticleInput,
   UserInput,
   UserPasswordInput,
+  ArticleLikeInput,
 } from "../types/types.ts";
 
 const Mutation = {
@@ -24,7 +25,7 @@ const Mutation = {
         date: date,
       },
     });
-    pubsub.publish("ANNOUNCEMENT_CREATED", {
+    await pubsub.publish("ANNOUNCEMENT_CREATED", {
       AnnouncementCreated: newAnnouncement,
     });
     return newAnnouncement;
@@ -46,7 +47,7 @@ const Mutation = {
         id: id,
       },
     });
-    pubsub.publish("ANNOUNCEMENT_DELETED", {
+    await pubsub.publish("ANNOUNCEMENT_DELETED", {
       AnnouncementDeleted: deletedAnnouncement,
     });
     return deletedAnnouncement;
@@ -77,7 +78,7 @@ const Mutation = {
         content: content,
       },
     });
-    pubsub.publish("ANNOUNCEMENT_UPDATED", {
+    await pubsub.publish("ANNOUNCEMENT_UPDATED", {
       AnnouncementUpdated: updatedAnnouncement,
     });
     return updatedAnnouncement;
@@ -97,7 +98,7 @@ const Mutation = {
         introduction: introduction,
       },
     });
-    pubsub.publish("USER_CREATED", { UserCreated: newUser });
+    await pubsub.publish("USER_CREATED", { UserCreated: newUser });
     return newUser;
   },
 
@@ -117,7 +118,7 @@ const Mutation = {
         id: id,
       },
     });
-    pubsub.publish("USER_DELETED", { UserDeleted: deletedUser });
+    await pubsub.publish("USER_DELETED", { UserDeleted: deletedUser });
     return deletedUser;
   },
 
@@ -150,7 +151,7 @@ const Mutation = {
         introduction: introduction,
       },
     });
-    pubsub.publish("USER_UPDATED", { UserUpdated: updatedUser });
+    await pubsub.publish("USER_UPDATED", { UserUpdated: updatedUser });
     return updatedUser;
   },
 
@@ -178,7 +179,8 @@ const Mutation = {
         password: password,
       },
     });
-    pubsub.publish("USER_UPDATED", { UserUpdated: updatedUserPassword });
+
+    await pubsub.publish("USER_UPDATED", { UserUpdated: updatedUserPassword });
     return updatedUserPassword;
   },
   // User End
@@ -207,14 +209,12 @@ const Mutation = {
         title: title,
         content: content,
         tags: tags,
-        zap: 0,
-        isMe: 0,
-        bombFish: 0,
         topic: topic,
       },
     });
 
-    const updateUser = await prisma.user.update({
+    // update writer.articlesId
+    await prisma.user.update({
       where: {
         id: writerId,
       },
@@ -223,10 +223,10 @@ const Mutation = {
       },
     });
 
-    pubsub.publish("ARTICLE_CREATED", { ArticleCreated: newArticle });
+    await pubsub.publish("ARTICLE_CREATED", { ArticleCreated: newArticle });
     return newArticle;
   },
-  
+
   DeleteArticle: async (_parent, args: { id: number }, _context) => {
     const id = args.id;
     const existingArticle = await prisma.article.findFirst({
@@ -248,7 +248,9 @@ const Mutation = {
     const articlesId = writer.articlesId;
     const index = articlesId.indexOf(id);
     articlesId.splice(index, 1);
-    const updateWriter = await prisma.user.update({
+
+    // update user.articlesId
+    await prisma.user.update({
       where: {
         id: userId,
       },
@@ -262,12 +264,11 @@ const Mutation = {
         id: id,
       },
     });
-    pubsub.publish("ARTICLE_DELETED", { ArticleDeleted: deletedArticle });
+    await pubsub.publish("ARTICLE_DELETED", { ArticleDeleted: deletedArticle });
     return deletedArticle;
   },
 
   UpdateArticle: async (
-
     _parent,
     args: { id: number; articleInput: ArticleInput },
     _context,
@@ -297,7 +298,7 @@ const Mutation = {
         topic: topic,
       },
     });
-    pubsub.publish("ARTICLE_UPDATED", { ArticleUpdated: updatedArticle });
+    await pubsub.publish("ARTICLE_UPDATED", { ArticleUpdated: updatedArticle });
     return updatedArticle;
   },
   // Article End
@@ -325,11 +326,11 @@ const Mutation = {
         date: date,
         content: content,
         rootArticleId: rootArticleId,
-        zap: 0,
       },
     });
 
-    const updateUser = await prisma.user.update({
+    // update commenter.articleCommentsId
+    await prisma.user.update({
       where: {
         id: commenterId,
       },
@@ -338,7 +339,8 @@ const Mutation = {
       },
     });
 
-    const UpdateArticle = await prisma.article.update({
+    // update article.commentsId
+    await prisma.article.update({
       where: {
         id: rootArticleId,
       },
@@ -347,12 +349,11 @@ const Mutation = {
       },
     });
 
-    pubsub.publish("ARTICLECOMMENT_CREATED", {
+    await pubsub.publish("ARTICLECOMMENT_CREATED", {
       ArticleCommentCreated: newArticleComment,
     });
     return newArticleComment;
   },
-
 
   DeleteArticleComment: async (_parent, args: { id: number }, _context) => {
     const id = args.id;
@@ -373,8 +374,10 @@ const Mutation = {
       },
     });
     const articleCommentsId = writer.articlesId;
-    articleCommentsId.splice(articleCommentsId.indexOf(id), 1);
-    const updateWriter = await prisma.user.update({
+    articleCommentsId.splice(articleCommentsId.indexOf(id), 1); // what?
+
+    // update user.articleCommentsId
+    await prisma.user.update({
       where: {
         id: userId,
       },
@@ -391,8 +394,10 @@ const Mutation = {
       },
     });
     const commentsId = article.commentsId;
-    commentsId.splice(commentsId.indexOf(id), 1);
-    const updateArticle = await prisma.article.update({
+    commentsId.splice(commentsId.indexOf(id), 1); // what?
+
+    // update article.commentsId
+    await prisma.article.update({
       where: {
         id: articleId,
       },
@@ -406,7 +411,7 @@ const Mutation = {
         id: id,
       },
     });
-    pubsub.publish("ARTICLECOMMENT_DELETED", {
+    await pubsub.publish("ARTICLECOMMENT_DELETED", {
       ArticleCommentDeleted: deletedArticleComment,
     });
     return deletedArticleComment;
@@ -440,12 +445,73 @@ const Mutation = {
         rootArticleId: rootArticleId,
       },
     });
-    pubsub.publish("ARTICLECOMMENT_UPDATED", {
+    await pubsub.publish("ARTICLECOMMENT_UPDATED", {
       ArticleCommentUpdated: updatedArticleComment,
     });
     return updatedArticleComment;
   },
   // ArticleComment End
+
+  // Liked Articles Start
+  LikeArticle: async (
+    _parent,
+    args: { articleLikeInput: ArticleLikeInput },
+    _context,
+  ) => {
+    const { likerId, articleId } = args.articleLikeInput;
+    const findLiker = await prisma.user.findFirst({
+      where: {
+        id: likerId,
+      },
+    });
+    if (!findLiker) {
+      throw new Error("Liker not found!");
+    }
+
+    const findArticle = await prisma.article.findFirst({
+      where: {
+        id: articleId,
+      },
+    });
+    if (!findArticle) {
+      throw new Error("Article not found!");
+    }
+
+    const newLike = await prisma.likedArticle.create({
+      data: {
+        likerId: likerId,
+        articleId: articleId,
+      },
+    });
+
+    // update liker.likeId
+    await prisma.user.update({
+      where: {
+        id: likerId,
+      },
+      data: {
+        likedArticlesId: { push: newLike.id },
+      },
+    });
+
+    // update article.likeId
+    await prisma.article.update({
+      where: {
+        id: articleId,
+      },
+      data: {
+        likesId: { push: newLike.id },
+      },
+    });
+
+    await pubsub.publish("ARTICLE_LIKED", { ArticleLiked: newLike });
+    return newLike;
+  },
+  // Liked Articles End
+
+  // Unliked Articles Start
+
+  // Unliked Articles End
 };
 
 export { Mutation };

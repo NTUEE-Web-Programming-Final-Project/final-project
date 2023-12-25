@@ -29,3 +29,13 @@ export interface ArticleCommentInput {
   content: string;
   rootArticleId: number;
 }
+
+export interface ArticleLikeInput {
+  likerId: number;
+  articleId: number;
+}
+
+export interface ArticleCommentLikeInput {
+  likerId: number;
+  articleCommentId: number;
+}
