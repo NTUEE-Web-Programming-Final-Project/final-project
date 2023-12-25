@@ -24,6 +24,11 @@ const typeDefs = `#graphql
     solutionsId: [Int]!
     articlesId: [Int]!
     articleCommentsId: [Int]!
+    likedQuestionsId: [Int]!
+    likedQuestionCommentsId: [Int]!
+    likedSolutionsId: [Int]!
+    likedArticlesId: [Int]!
+    likedArticleCommentsId: [Int]!
   }
 
   type Article {
@@ -32,12 +37,10 @@ const typeDefs = `#graphql
     date: String!
     title:  String!
     content:  String!
-    tags: [String]
-    zap:  Int!
-    isMe: Int!
-    bombFish: Int!
+    tags: [String]!
     topic:  String!
-    commentsId: [Int]
+    commentsId: [Int]!
+    likesId: [Int]!
   }
 
   type ArticleComment {
@@ -46,7 +49,19 @@ const typeDefs = `#graphql
     content:  String!
     date: String!
     rootArticleId: Int!
-    zap: Int!
+    likesId: [Int]!
+  }
+
+  type LikedArticle {
+    id: Int!
+    likerId: Int!
+    articleId: Int!
+  }
+
+  type LikedArticleComment {
+    id: Int!
+    likerId: Int!
+    articleCommentId: Int!
   }
 
   ### input def #####
@@ -67,7 +82,7 @@ const typeDefs = `#graphql
   input UserPasswordInput {
     password: String!
   }
-  
+
   input ArticleInput {
     writerId: Int! 
     title:    String!
@@ -82,6 +97,16 @@ const typeDefs = `#graphql
     rootArticleId: Int!
   }
 
+  input ArticleLikeInput {
+    likerId: Int!
+    articleId: Int!
+  }
+
+  input ArticleCommentLikeInput {
+    likerId: Int!
+    articleId: Int!
+  }
+
   ### Define Resolvers ###
 
   type Query {
@@ -89,37 +114,59 @@ const typeDefs = `#graphql
     AllUsers: [User]
     AllArticles: [Article]
     AllArticleComments: [ArticleComment]
+    AllLikedArticles(likerId: Int!): [Article]
+    AllLikedArticleComments(likerId: Int!): [ArticleComment]
   }
 
   type Mutation {
+    # Announcement
     CreateAnnouncement(announcementInput: AnnouncementInput!): Announcement
     DeleteAnnouncement(id: Int!): Announcement
     UpdateAnnouncement(id: Int!, announcementInput: AnnouncementInput!): Announcement
+    # User
     CreateUser(userInput: UserInput!): User
     DeleteUser(id: Int!): User
     UpdateUser(id: Int!, userInput: UserInput!): User
     UpdateUserPassword(id: Int!, userPasswordInput: UserPasswordInput!): User
+    # Article
     CreateArticle(articleInput: ArticleInput!): Article
     DeleteArticle(id: Int!): Article
     UpdateArticle(id: Int!, articleInput: ArticleInput!): Article
+    # ArticleComment
     CreateArticleComment(articleCommentInput: ArticleCommentInput!): ArticleComment
     DeleteArticleComment(id: Int!): ArticleComment
     UpdateArticleComment(id: Int!, articleCommentInput: ArticleCommentInput!): ArticleComment
+    # LikeArticle
+    LikeArticle(articleLikeInput: ArticleLikeInput!): LikedArticle # just like "create"
+    UnlikeArticle(id: Int!, articleUnlikeInput: ArticleLikeInput!): LikedArticle # just like "delete"
+    # LikeArticleComment
+    LikeArticleComment(articleCommentLikeInput: ArticleCommentLikeInput!): LikedArticleComment # just like "create"
+    UnlikeArticleComment(id: Int!, articleCommentUnlikeInput: ArticleCommentLikeInput!): LikedArticleComment # just like "delete"
   }
 
   type Subscription {
+    # Announcement
     AnnouncementCreated: Announcement
     AnnouncementDeleted: Announcement
     AnnouncementUpdated: Announcement
+    # User
     UserCreated: User
     UserDeleted: User
     UserUpdated: User
+    # Article
     ArticleCreated: Article
     ArticleDeleted: Article
     ArticleUpdated: Article
+    # ArticleComment
     ArticleCommentCreated: ArticleComment
     ArticleCommentDeleted: ArticleComment
     ArticleCommentUpdated: ArticleComment
+    # LikeArticle
+    ArticleLiked: LikedArticle
+    ArticleUnLiked: LikedArticle
+    # LikeArticleComment
+    ArticleCommentLiked: LikedArticleComment
+    ArticleCommentUnLiked: LikedArticleComment
   }
 `;
 
