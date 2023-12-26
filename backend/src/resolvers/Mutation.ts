@@ -7,6 +7,7 @@ import {
   UserInput,
   UserPasswordInput,
   ArticleLikeInput,
+  ArticleCommentLikeInput,
 } from "../types/types.ts";
 
 const Mutation = {
@@ -574,6 +575,134 @@ const Mutation = {
     });
     await pubsub.publish("ARTICLE_UNLIKED", { ArticleUnliked: deletedLike });
     return deletedLike;
+  },
+  // Unliked Articles End
+
+  // Liked Articles Start
+  LikeArticleComment: async (
+    _parent,
+    args: { articleCommentLikeInput: ArticleCommentLikeInput },
+    _context,
+  ) => {
+    const { likerId, articleCommentId } = args.articleCommentLikeInput;
+    const findLiker = await prisma.user.findFirst({
+      where: {
+        id: likerId,
+      },
+    });
+    if (!findLiker) {
+      throw new Error("Liker not found!");
+    }
+
+    const findArticleComment = await prisma.articleComment.findFirst({
+      where: {
+        id: articleCommentId,
+      },
+    });
+    if (!findArticleComment) {
+      throw new Error("ArticleComment not found!");
+    }
+
+    const newLike = await prisma.likedArticleComment.create({
+      data: {
+        likerId: likerId,
+        articleCommentId: articleCommentId,
+      },
+    });
+
+    // update liker.likeId
+    await prisma.user.update({
+      where: {
+        id: likerId,
+      },
+      data: {
+        likedArticleCommentsId: { push: newLike.id },
+      },
+    });
+
+    // update articleComment.likeId
+    await prisma.articleComment.update({
+      where: {
+        id: articleCommentId,
+      },
+      data: {
+        likesId: { push: newLike.id },
+      },
+    });
+
+    await pubsub.publish("ARTICLECOMMENT_LIKED", {
+      ArticleCommentLiked: newLike,
+    });
+    return newLike;
+  },
+  // Liked Articles End
+
+  // UnLiked Articles Start
+  UnlikeArticleComment: async (_parent, args: { id: number }, _context) => {
+    const id = args.id;
+    const existingLikedArticleComment =
+      await prisma.likedArticleComment.findFirst({
+        where: {
+          id: id,
+        },
+      });
+    if (!existingLikedArticleComment) {
+      throw new Error("Like not found!");
+    }
+
+    // delete like in User.likedArticleCommentsId
+    const likerId = existingLikedArticleComment.likerId;
+    const liker = await prisma.user.findFirst({
+      where: {
+        id: likerId,
+      },
+    });
+    const likedArticleCommentIds = liker.likedArticleCommentsId;
+    // find the specific like and delete it
+    likedArticleCommentIds.splice(likedArticleCommentIds.indexOf(id), 1);
+
+    // update user.likedArticleCommentsId
+    await prisma.user.update({
+      where: {
+        id: likerId,
+      },
+      data: {
+        likedArticleCommentsId: likedArticleCommentIds,
+      },
+    });
+
+    // delete likerId in ArticleComment.likesId
+    const articleCommentId = existingLikedArticleComment.articleCommentId;
+    const articleComment = await prisma.articleComment.findFirst({
+      where: {
+        id: articleCommentId,
+      },
+    });
+    const likesId = articleComment.likesId;
+    // find the specific like and delete it
+    likesId.splice(likesId.indexOf(id), 1);
+
+    // update articleComment.likesId
+    await prisma.articleComment.update({
+      where: {
+        id: articleCommentId,
+      },
+      data: {
+        likesId: likesId,
+      },
+    });
+
+    // Unlike
+    const UnlikeArticleComment = await prisma.likedArticleComment.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    await pubsub.publish("ARTICLECOMMENT_UNLIKED", {
+      ArticleCommentUnliked: UnlikeArticleComment,
+    });
+    return UnlikeArticleComment;
   },
   // Unliked Articles End
 };

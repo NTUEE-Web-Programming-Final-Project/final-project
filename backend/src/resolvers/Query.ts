@@ -52,6 +52,33 @@ const Query = {
     return likedArticles;
   },
   // Liked Articles End
+
+  // Liked ArticleComments Start
+  AllLikedArticleComments: async (
+    _parents,
+    args: { likerId: number },
+    _context,
+  ) => {
+    const likerId = args.likerId;
+    const likes = await prisma.likedArticleComment.findMany({
+      where: {
+        likerId: likerId,
+      },
+    });
+
+    const likedArticleCommentIds = likes.map((like) => {
+      return like.articleCommentId;
+    });
+    const likedArticleComments = await prisma.articleComment.findMany({
+      where: {
+        id: {
+          in: likedArticleCommentIds,
+        },
+      },
+    });
+    return likedArticleComments;
+  },
+  // Liked ArticleComments End
 };
 
 export { Query };

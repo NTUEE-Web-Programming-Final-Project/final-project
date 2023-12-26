@@ -44,7 +44,7 @@ export default function useZap() {
       method: "DELETE",
       body: JSON.stringify({
         articleId,
-        username
+        username,
       }),
     });
 

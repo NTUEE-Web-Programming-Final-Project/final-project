@@ -29,13 +29,84 @@ export type AnnouncementInput = {
   title: Scalars['String']['input'];
 };
 
+export type Article = {
+  __typename?: 'Article';
+  commentsId: Array<Maybe<Scalars['Int']['output']>>;
+  content: Scalars['String']['output'];
+  date: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  likesId: Array<Maybe<Scalars['Int']['output']>>;
+  tags: Array<Maybe<Scalars['String']['output']>>;
+  title: Scalars['String']['output'];
+  topic: Scalars['String']['output'];
+  writerId: Scalars['Int']['output'];
+};
+
+export type ArticleComment = {
+  __typename?: 'ArticleComment';
+  commenterId: Scalars['Int']['output'];
+  content: Scalars['String']['output'];
+  date: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  likesId: Array<Maybe<Scalars['Int']['output']>>;
+  rootArticleId: Scalars['Int']['output'];
+};
+
+export type ArticleCommentInput = {
+  commenterId: Scalars['Int']['input'];
+  content: Scalars['String']['input'];
+  rootArticleId: Scalars['Int']['input'];
+};
+
+export type ArticleCommentLikeInput = {
+  articleCommentId: Scalars['Int']['input'];
+  likerId: Scalars['Int']['input'];
+};
+
+export type ArticleInput = {
+  content: Scalars['String']['input'];
+  tags: Array<InputMaybe<Scalars['String']['input']>>;
+  title: Scalars['String']['input'];
+  topic: Scalars['String']['input'];
+  writerId: Scalars['Int']['input'];
+};
+
+export type ArticleLikeInput = {
+  articleId: Scalars['Int']['input'];
+  likerId: Scalars['Int']['input'];
+};
+
+export type LikedArticle = {
+  __typename?: 'LikedArticle';
+  articleId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  likerId: Scalars['Int']['output'];
+};
+
+export type LikedArticleComment = {
+  __typename?: 'LikedArticleComment';
+  articleCommentId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  likerId: Scalars['Int']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   CreateAnnouncement?: Maybe<Announcement>;
+  CreateArticle?: Maybe<Article>;
+  CreateArticleComment?: Maybe<ArticleComment>;
   CreateUser?: Maybe<User>;
   DeleteAnnouncement?: Maybe<Announcement>;
+  DeleteArticle?: Maybe<Article>;
+  DeleteArticleComment?: Maybe<ArticleComment>;
   DeleteUser?: Maybe<User>;
+  LikeArticle?: Maybe<LikedArticle>;
+  LikeArticleComment?: Maybe<LikedArticleComment>;
+  UnlikeArticle?: Maybe<LikedArticle>;
+  UnlikeArticleComment?: Maybe<LikedArticleComment>;
   UpdateAnnouncement?: Maybe<Announcement>;
+  UpdateArticle?: Maybe<Article>;
+  UpdateArticleComment?: Maybe<ArticleComment>;
   UpdateUser?: Maybe<User>;
   UpdateUserPassword?: Maybe<User>;
 };
@@ -43,6 +114,16 @@ export type Mutation = {
 
 export type MutationCreateAnnouncementArgs = {
   announcementInput: AnnouncementInput;
+};
+
+
+export type MutationCreateArticleArgs = {
+  articleInput: ArticleInput;
+};
+
+
+export type MutationCreateArticleCommentArgs = {
+  articleCommentInput: ArticleCommentInput;
 };
 
 
@@ -56,13 +137,56 @@ export type MutationDeleteAnnouncementArgs = {
 };
 
 
+export type MutationDeleteArticleArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteArticleCommentArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type MutationDeleteUserArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationLikeArticleArgs = {
+  articleLikeInput: ArticleLikeInput;
+};
+
+
+export type MutationLikeArticleCommentArgs = {
+  articleCommentLikeInput: ArticleCommentLikeInput;
+};
+
+
+export type MutationUnlikeArticleArgs = {
+  articleUnlikeInput: ArticleLikeInput;
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationUnlikeArticleCommentArgs = {
   id: Scalars['Int']['input'];
 };
 
 
 export type MutationUpdateAnnouncementArgs = {
   announcementInput: AnnouncementInput;
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationUpdateArticleArgs = {
+  articleInput: ArticleInput;
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationUpdateArticleCommentArgs = {
+  articleCommentInput: ArticleCommentInput;
   id: Scalars['Int']['input'];
 };
 
@@ -81,7 +205,21 @@ export type MutationUpdateUserPasswordArgs = {
 export type Query = {
   __typename?: 'Query';
   AllAnnouncements?: Maybe<Array<Maybe<Announcement>>>;
+  AllArticleComments?: Maybe<Array<Maybe<ArticleComment>>>;
+  AllArticles?: Maybe<Array<Maybe<Article>>>;
+  AllLikedArticleComments?: Maybe<Array<Maybe<ArticleComment>>>;
+  AllLikedArticles?: Maybe<Array<Maybe<Article>>>;
   AllUsers?: Maybe<Array<Maybe<User>>>;
+};
+
+
+export type QueryAllLikedArticleCommentsArgs = {
+  likerId: Scalars['Int']['input'];
+};
+
+
+export type QueryAllLikedArticlesArgs = {
+  likerId: Scalars['Int']['input'];
 };
 
 export type Subscription = {
@@ -89,6 +227,16 @@ export type Subscription = {
   AnnouncementCreated?: Maybe<Announcement>;
   AnnouncementDeleted?: Maybe<Announcement>;
   AnnouncementUpdated?: Maybe<Announcement>;
+  ArticleCommentCreated?: Maybe<ArticleComment>;
+  ArticleCommentDeleted?: Maybe<ArticleComment>;
+  ArticleCommentLiked?: Maybe<LikedArticleComment>;
+  ArticleCommentUnliked?: Maybe<LikedArticleComment>;
+  ArticleCommentUpdated?: Maybe<ArticleComment>;
+  ArticleCreated?: Maybe<Article>;
+  ArticleDeleted?: Maybe<Article>;
+  ArticleLiked?: Maybe<LikedArticle>;
+  ArticleUnLiked?: Maybe<LikedArticle>;
+  ArticleUpdated?: Maybe<Article>;
   UserCreated?: Maybe<User>;
   UserDeleted?: Maybe<User>;
   UserUpdated?: Maybe<User>;
@@ -100,6 +248,11 @@ export type User = {
   articlesId: Array<Maybe<Scalars['Int']['output']>>;
   id: Scalars['Int']['output'];
   introduction?: Maybe<Scalars['String']['output']>;
+  likedArticleCommentsId: Array<Maybe<Scalars['Int']['output']>>;
+  likedArticlesId: Array<Maybe<Scalars['Int']['output']>>;
+  likedQuestionCommentsId: Array<Maybe<Scalars['Int']['output']>>;
+  likedQuestionsId: Array<Maybe<Scalars['Int']['output']>>;
+  likedSolutionsId: Array<Maybe<Scalars['Int']['output']>>;
   name: Scalars['String']['output'];
   password: Scalars['String']['output'];
   photoLink: Scalars['String']['output'];
