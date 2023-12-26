@@ -55,7 +55,16 @@ const Subscription = {
   ArticleCommentUpdated: {
     subscribe: () => pubsub.asyncIterator(["ARTICLECOMMENT_UPDATED"]),
   },
-  // Article End
+  // ArticleComment End
+
+  // ArticleLike Start
+  ArticleLiked: {
+    subscribe: () => pubsub.asyncIterator(["ARTICLE_LIKED"]),
+  },
+  ArticleUnliked: {
+    subscribe: () => pubsub.asyncIterator(["ARTICLE_UNLIKED"]),
+  },
+  // ArticleLike End
 };
 
 export { Subscription };

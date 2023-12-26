@@ -510,7 +510,52 @@ const Mutation = {
   // Liked Articles End
 
   // Unliked Articles Start
+  UnlikeArticle: async (
+    _parent,
+    args: { articleUnlikeInput: ArticleLikeInput },
+    _context,
+  ) => {
+    const { likerId, articleId } = args.articleUnlikeInput;
 
+    const existingLike = await prisma.likedArticle.findFirst({
+      where: {
+        likerId: likerId,
+      },
+    });
+    if (!existingLike) {
+      throw new Error("like not found!");
+    }
+
+    const liker = await prisma.user.findFirst({
+      where: {
+        id: likerId,
+      },
+    });
+    if (!liker) {
+      throw new Error("Liker not found!");
+    }
+    liker.likedArticlesId.splice(
+      liker.likedArticlesId.indexOf(existingLike.id),
+      1,
+    );
+    const article = await prisma.article.findFirst({
+      where: {
+        id: articleId,
+      },
+    });
+    if (!article) {
+      throw new Error("Article not found!");
+    }
+    article.likesId.splice(article.likesId.indexOf(existingLike.id), 1);
+
+    const deletedLike = await prisma.likedArticle.delete({
+      where: {
+        id: existingLike.id,
+      },
+    });
+    await pubsub.publish("ARTICLE_UNLIKED", { ArticleUnliked: deletedLike });
+    return deletedLike;
+  },
   // Unliked Articles End
 };
 

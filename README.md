@@ -21,7 +21,7 @@ pnpm install:all
 
 ```sh
 # final-project/backend
-cp .env.example .env
+cp .env.development .env
 ```
 
 and paste `DATABASE_URL="postgresql://user:password@localhost:5400/WPFP?schema=public"`
@@ -78,7 +78,7 @@ It will update files in gql-generated dir.
 ### Step 1:
 
 ```sh
-# final-project/frontend
+# final-project
 pnpm frontend
 ```
 
