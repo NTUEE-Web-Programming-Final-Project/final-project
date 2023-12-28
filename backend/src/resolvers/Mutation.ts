@@ -649,6 +649,7 @@ const Mutation = {
     const existingLike = await prisma.likedArticleComment.findFirst({
       where: {
         likerId: likerId,
+        articleCommentId: articleCommentId
       },
     });
     if (!existingLike) {
