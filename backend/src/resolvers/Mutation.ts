@@ -526,7 +526,7 @@ const Mutation = {
     if (!existingLike) {
       throw new Error("like not found!");
     }
-    
+
     // update liker
     const liker = await prisma.user.findFirst({
       where: {
