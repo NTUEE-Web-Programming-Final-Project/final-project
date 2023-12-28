@@ -26,7 +26,6 @@ const ArticleItem = ({
   content,
   tags,
 }: ArticleItemProps) => {
-
   return (
     <>
       <div className="flex flex-row border-2 border-black m-3">
@@ -68,7 +67,10 @@ const ArticleItem = ({
               <p className="flex self-center px-2">{`${likes}`} likes</p>
             </div>
           </div>
-          <Link to={`/article/${id}`} className="flex grow bg-gray-100 hover:bg-gray-200">
+          <Link
+            to={`/article/${id}`}
+            className="flex grow bg-gray-100 hover:bg-gray-200"
+          >
             <div className="flex flex-wrap text-balance">
               <p className="self-center px-2">{`${content}`}</p>
             </div>
