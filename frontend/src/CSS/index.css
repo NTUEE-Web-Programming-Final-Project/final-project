@@ -24,12 +24,9 @@ h6 {
   @apply text-base;
   @apply font-bold;
 }
-h7 {
-  @apply text-sm;
-  @apply font-bold;
-}
+
 p {
-  @apply text-xl;
+  @apply text-lg;
 }
 
 @tailwind components;
