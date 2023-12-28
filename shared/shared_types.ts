@@ -37,13 +37,13 @@ export type Solution = {
 
 export type Article = {
   id: number;
-  writer: string;
+  writerId: number;
   date: string;
   title: string;
   content: string;
   topic: string;
   tags: string[];
-  likes: number[];
+  likesId: number[];
 };
 
 export type ArticleComment = {

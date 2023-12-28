@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import ArticleList from "../../components/Article/ArticleList";
 
 const ArticleMainPage = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const ArticleMainPage = () => {
       >
         發文
       </button>
+      <ArticleList />
     </>
   );
 };
