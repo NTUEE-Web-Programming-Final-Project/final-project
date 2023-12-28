@@ -327,10 +327,10 @@ const typeDefs = `#graphql
     QuestionCommentUpdated: QuestionComment
     # LikeQuestion
     QuestionLiked: LikedQuestion
-    QuestionUnLiked: LikedQuestion
+    QuestionUnliked: LikedQuestion
     # LikeQuestionComment
     QuestionCommentLiked: LikedQuestionComment
-    QuestionCommentUnLiked: LikedQuestionComment
+    QuestionCommentUnliked: LikedQuestionComment
     # Solution
     SolutionCreated: Solution
     SolutionDeleted: Solution
@@ -341,10 +341,10 @@ const typeDefs = `#graphql
     SolutionCommentUpdated: SolutionComment
     # LikeSolution
     SolutionLiked: LikedSolution
-    SolutionUnLiked: LikedSolution
+    SolutionUnliked: LikedSolution
     # LikeSolutionComment
     SolutionCommentLiked: LikedSolutionComment
-    SolutionCommentUnLiked: LikedSolutionComment
+    SolutionCommentUnliked: LikedSolutionComment
   }
 `;
 

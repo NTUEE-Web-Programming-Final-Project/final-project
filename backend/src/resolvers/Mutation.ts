@@ -499,7 +499,7 @@ const Mutation = {
       },
     });
 
-    await pubsub.publish("QUESTION_UNLIKED", { QuestionUnliked: deletedLike });
+    await pubsub.publish("QUESTION_Unliked", { QuestionUnliked: deletedLike });
     return deletedLike;
   },
   // Like Question Comment
@@ -615,7 +615,7 @@ const Mutation = {
       },
     });
 
-    await pubsub.publish("QUESTION_COMMENT_UNLIKED", { QuestionCommentUnliked: deletedLike });
+    await pubsub.publish("QUESTION_COMMENT_Unliked", { QuestionCommentUnliked: deletedLike });
     return deletedLike;
   },
   // Question End
@@ -943,7 +943,7 @@ const Mutation = {
       },
     });
 
-    await pubsub.publish("SOLUTION_UNLIKED", { SolutionUnliked: deletedLike });
+    await pubsub.publish("SOLUTION_Unliked", { SolutionUnliked: deletedLike });
     return deletedLike;
   },
   // Like Solution Comment
@@ -1059,7 +1059,7 @@ const Mutation = {
       },
     });
 
-    await pubsub.publish("SOLUTION_COMMENT_UNLIKED", { SolutionCommentUnliked: deletedLike });
+    await pubsub.publish("SOLUTION_COMMENT_Unliked", { SolutionCommentUnliked: deletedLike });
     return deletedLike;
   },
   // Solution End
@@ -1451,7 +1451,7 @@ const Mutation = {
         id: existingLike.id,
       },
     });
-    await pubsub.publish("ARTICLE_UNLIKED", { ArticleUnliked: deletedLike });
+    await pubsub.publish("ARTICLE_Unliked", { ArticleUnliked: deletedLike });
     return deletedLike;
   },
 
@@ -1516,7 +1516,7 @@ const Mutation = {
   },
   // Liked Articles End
 
-  // UnLiked Articles Start
+  // Unliked Articles Start
   UnlikeArticleComment: async (
     _parent,
     args: { articleCommentUnlikeInput: ArticleCommentLikeInput },
@@ -1590,7 +1590,7 @@ const Mutation = {
       },
     });
 
-    await pubsub.publish("ARTICLECOMMENT_UNLIKED", {
+    await pubsub.publish("ARTICLECOMMENT_Unliked", {
       ArticleCommentUnliked: deletedLike,
     });
     return deletedLike;
