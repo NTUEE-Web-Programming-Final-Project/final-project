@@ -199,10 +199,7 @@ const Mutation = {
         title: title,
         date: new Date().toUTCString(),
         content: content,
-        topic: topic, 
-        zap: 0,
-        isMe: 0,
-        bombFish: 0,
+        topic: topic,
         tags: tags,
       }
     });
@@ -270,7 +267,7 @@ const Mutation = {
       }, 
       data: {
         title: title,
-        // date need to update?
+        date: new Date().toUTCString(),
         content: content,
         topic: topic, 
         tags: tags,
@@ -286,7 +283,7 @@ const Mutation = {
       data: {
         date: new Date().toUTCString(),
         commenterId: commenterId,
-        rootQuesitonId: rootQuestionId,
+        rootQuestionId: rootQuestionId,
         content: content,
       }
     });
@@ -340,7 +337,7 @@ const Mutation = {
     })
     const updateQuestion = await prisma.question.findFirst({
       where: {
-        id: deletedQuestionComment.rootQuesitonId
+        id: deletedQuestionComment.rootQuestionId
       }
     });
     await prisma.question.update({
@@ -369,7 +366,7 @@ const Mutation = {
     if (existingQuestionComment.commenterId !== commenterId) {
       throw new Error("Commenter changed, this is not supposed to happen...")
     }
-    if (existingQuestionComment.rootQuesitonId !== rootQuestionId) {
+    if (existingQuestionComment.rootQuestionId !== rootQuestionId) {
       throw new Error("Root question changed, this is not supposed to happen...")
     }
     const updatedQuestionComment = await prisma.questionComment.update({
@@ -377,7 +374,7 @@ const Mutation = {
         id: id
       }, 
       data: {
-        // date need to update?
+        date: new Date().toUTCString(),
         content: content,
       }
     });
@@ -392,10 +389,7 @@ const Mutation = {
         date: new Date().toUTCString(),
         solverId: solverId,
         content: content,
-        rootQuesitonId: rootQuestionId,
-        zap: 0, 
-        isMe: 0, 
-        bombFish: 0,
+        rootQuestionId: rootQuestionId,
       }
     });
     await prisma.user.update({
@@ -448,7 +442,7 @@ const Mutation = {
     })
     const updateQuestion = await prisma.question.findFirst({
       where: {
-        id: deletedSolution.rootQuesitonId
+        id: deletedSolution.rootQuestionId
       }
     });
     await prisma.question.update({
@@ -477,7 +471,7 @@ const Mutation = {
     if (existingSolution.solverId !== solverId) {
       throw new Error("Solver changed, this is not supposed to happen...")
     }
-    if (existingSolution.rootQuesitonId !== rootQuestionId) {
+    if (existingSolution.rootQuestionId !== rootQuestionId) {
       throw new Error("Root question changed, this is not supposed to happen...")
     }
     const updatedSolution = await prisma.solution.update({
@@ -485,7 +479,7 @@ const Mutation = {
         id: id
       }, 
       data: {
-        // date need to update?
+        date: new Date().toUTCString(),
         content: content,
       }
     });
