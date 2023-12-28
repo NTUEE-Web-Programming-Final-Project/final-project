@@ -138,10 +138,10 @@ const typeDefs = `#graphql
     UpdateArticleComment(id: Int!, articleCommentInput: ArticleCommentInput!): ArticleComment
     # LikeArticle
     LikeArticle(articleLikeInput: ArticleLikeInput!): LikedArticle # just like "create"
-    UnlikeArticle(id: Int!, articleUnlikeInput: ArticleLikeInput!): LikedArticle # just like "delete"
+    UnlikeArticle(articleUnlikeInput: ArticleLikeInput!): LikedArticle # just like "delete"
     # LikeArticleComment
-    LikeArticleComment(articleCommentLikeInput: ArticleCommentLikeInput!): LikedArticleComment # just like "create"
-    UnlikeArticleComment(id: Int!, articleCommentUnlikeInput: ArticleCommentLikeInput!): LikedArticleComment # just like "delete"
+    LikeArticleComment(articleCommentLikeInput: ArticleCommentLikeInput!): LikedArticleComment
+    UnlikeArticleComment(articleCommentUnlikeInput: ArticleCommentLikeInput!): LikedArticleComment
   }
 
   type Subscription {
@@ -163,10 +163,10 @@ const typeDefs = `#graphql
     ArticleCommentUpdated: ArticleComment
     # LikeArticle
     ArticleLiked: LikedArticle
-    ArticleUnLiked: LikedArticle
+    ArticleUnliked: LikedArticle
     # LikeArticleComment
     ArticleCommentLiked: LikedArticleComment
-    ArticleCommentUnLiked: LikedArticleComment
+    ArticleCommentUnliked: LikedArticleComment
   }
 `;
 
