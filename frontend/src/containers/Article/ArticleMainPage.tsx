@@ -12,16 +12,10 @@ const ArticleMainPage = () => {
         home
       </button>
       <button
-        onClick={() => navigate("/article/1")}
+        onClick={() => navigate("/article/draft")}
         className="border-2 border-black px-3 m-1"
       >
-        article 1
-      </button>
-      <button
-        onClick={() => navigate("/article/2")}
-        className="border-2 border-black px-3 m-1"
-      >
-        article 2
+        發文
       </button>
     </>
   );
