@@ -639,28 +639,37 @@ const Mutation = {
   // Liked Articles End
 
   // UnLiked Articles Start
-  UnlikeArticleComment: async (_parent, args: { id: number }, _context) => {
-    const id = args.id;
-    const existingLikedArticleComment =
-      await prisma.likedArticleComment.findFirst({
-        where: {
-          id: id,
-        },
-      });
-    if (!existingLikedArticleComment) {
+  UnlikeArticleComment: async (
+    _parent,
+    args: { articleCommentUnlikeInput: ArticleCommentLikeInput },
+    _context,
+  ) => {
+    const { likerId, articleCommentId } = args.articleCommentUnlikeInput;
+
+    const existingLike = await prisma.likedArticleComment.findFirst({
+      where: {
+        likerId: likerId,
+      },
+    });
+    if (!existingLike) {
       throw new Error("Like not found!");
     }
 
     // delete like in User.likedArticleCommentsId
-    const likerId = existingLikedArticleComment.likerId;
     const liker = await prisma.user.findFirst({
       where: {
         id: likerId,
       },
     });
+    if (!liker) {
+      throw new Error("Liker not found!");
+    }
     const likedArticleCommentIds = liker.likedArticleCommentsId;
     // find the specific like and delete it
-    likedArticleCommentIds.splice(likedArticleCommentIds.indexOf(id), 1);
+    likedArticleCommentIds.splice(
+      likedArticleCommentIds.indexOf(existingLike.id),
+      1,
+    );
 
     // update user.likedArticleCommentsId
     await prisma.user.update({
@@ -673,15 +682,17 @@ const Mutation = {
     });
 
     // delete likerId in ArticleComment.likesId
-    const articleCommentId = existingLikedArticleComment.articleCommentId;
     const articleComment = await prisma.articleComment.findFirst({
       where: {
         id: articleCommentId,
       },
     });
+    if (!articleComment) {
+      throw new Error("Article not found!");
+    }
     const likesId = articleComment.likesId;
     // find the specific like and delete it
-    likesId.splice(likesId.indexOf(id), 1);
+    likesId.splice(likesId.indexOf(existingLike.id), 1);
 
     // update articleComment.likesId
     await prisma.articleComment.update({
@@ -694,16 +705,16 @@ const Mutation = {
     });
 
     // Unlike
-    const UnlikeArticleComment = await prisma.likedArticleComment.delete({
+    const deletedLike = await prisma.likedArticleComment.delete({
       where: {
-        id: id,
+        id: existingLike.id,
       },
     });
 
     await pubsub.publish("ARTICLECOMMENT_UNLIKED", {
-      ArticleCommentUnliked: UnlikeArticleComment,
+      ArticleCommentUnliked: deletedLike,
     });
-    return UnlikeArticleComment;
+    return deletedLike;
   },
   // Unliked Articles End
 };
