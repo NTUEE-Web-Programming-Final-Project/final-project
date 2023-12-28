@@ -39,3 +39,50 @@ export interface ArticleCommentLikeInput {
   likerId: number;
   articleCommentId: number;
 }
+
+
+export interface QuestionInput {
+  askerId: number
+  title: string
+  content: string
+  topic: string
+  tags: string[]
+}
+
+export interface QuestionCommentInput {
+  commenterId: number
+  rootQuestionId: number
+  content: string
+}
+
+export interface QuestionLikeInput {
+  likerId: number;
+  questionId: number;
+}
+
+export interface QuestionCommentLikeInput {
+  likerId: number;
+  questionCommentId: number;
+}
+
+export interface SolutionInput {
+  solverId: number
+  rootQuestionId: number
+  content: string
+}
+
+export interface SolutionCommentInput {
+  commenterId: number
+  rootSolutionId: number
+  content: string
+}
+
+export interface SolutionLikeInput {
+  likerId: number;
+  solutionId: number;
+}
+
+export interface SolutionCommentLikeInput {
+  likerId: number;
+  solutionCommentId: number;
+}

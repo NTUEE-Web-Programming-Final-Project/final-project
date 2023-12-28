@@ -30,6 +30,8 @@ model User {
   questionCommentsId      Int[]
   solutions               Solution[]
   solutionsId             Int[]
+  solutionComments        SolutionComment[]
+  solutionCommentsId      Int[]
   articles                Article[]
   articlesId              Int[]
   articleComments         ArticleComment[]
@@ -40,6 +42,8 @@ model User {
   likedQuestionCommentsId Int[]
   likedSolutions          LikedSolution[] // to store the history of liked solutions
   likedSolutionsId        Int[]
+  likedSolutionComments   LikedSolutionComment[]
+  likedSolutionCommentsId Int[]
   likedArticles           LikedArticle[] // to store the history of liked articles
   likedArticlesId         Int[]
   likedArticleComments    LikedArticleComment[] // to store the history of liked article comments
@@ -70,8 +74,8 @@ model QuestionComment {
   commenter      User                   @relation(fields: [commenterId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   commenterId    Int
   content        String
-  rootQuestion   Question               @relation(fields: [rootQuesitonId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  rootQuesitonId Int
+  rootQuestion   Question               @relation(fields: [rootQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  rootQuestionId Int
   date           String
   likes          LikedQuestionComment[]
   likesId        Int[]
@@ -82,10 +86,24 @@ model Solution {
   date           String
   solver         User            @relation(fields: [solverId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   solverId       Int
-  rootQuestion   Question        @relation(fields: [rootQuesitonId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  rootQuesitonId Int
+  rootQuestion   Question        @relation(fields: [rootQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  rootQuestionId Int
   content        String
   likes          LikedSolution[]
+  likesId        Int[]
+  comments       SolutionComment[]
+  commentsId     Int[]
+}
+
+model SolutionComment {
+  id             Int                    @id @default(autoincrement())
+  commenter      User                   @relation(fields: [commenterId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  commenterId    Int
+  content        String
+  rootSolution   Solution               @relation(fields: [rootSolutionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  rootSolutionId Int
+  date           String
+  likes          LikedSolutionComment[]
   likesId        Int[]
 }
 
@@ -141,6 +159,15 @@ model LikedSolution {
   likerId    Int
   solution   Solution @relation(fields: [solutionId], references: [id])
   solutionId Int
+}
+
+// to store solution comments an user liked
+model LikedSolutionComment {
+  id                Int             @id @default(autoincrement())
+  liker             User            @relation(fields: [likerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  likerId           Int
+  solutionComment   SolutionComment @relation(fields: [solutionCommentId], references: [id])
+  solutionCommentId Int
 }
 
 // to store articles an user liked

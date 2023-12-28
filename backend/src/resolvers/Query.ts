@@ -79,6 +79,113 @@ const Query = {
     return likedArticleComments;
   },
   // Liked ArticleComments End
+
+  // Question & Solution Start
+  AllQuestions: async (parents, args, context) => {
+    const questions = await prisma.question.findMany();
+    return questions;
+  },
+
+  AllQuestionComments: async (parents, args, context) => {
+    const questionComments = await prisma.questionComment.findMany();
+    return questionComments;
+  },
+
+  AllLikedQuestions: async (_parents, args: { likerId: number }, _context) => {
+    const likerId = args.likerId;
+    const likes = await prisma.likedQuestion.findMany({
+      where: {
+        likerId: likerId,
+      },
+    });
+
+    const likedQuestionIds = likes.map((like) => {
+      return like.questionId;
+    });
+    const likedQuestions = await prisma.question.findMany({
+      where: {
+        id: {
+          in: likedQuestionIds,
+        },
+      },
+    });
+    return likedQuestions;
+  },
+
+  AllLikedQuestionComments: async (_parents, args: { likerId: number }, _context) => {
+    const likerId = args.likerId;
+    const likes = await prisma.likedQuestionComment.findMany({
+      where: {
+        likerId: likerId,
+      },
+    });
+
+    const likedQuestionCommentIds = likes.map((like) => {
+      return like.questionCommentId;
+    });
+    const likedQuestionComments = await prisma.questionComment.findMany({
+      where: {
+        id: {
+          in: likedQuestionCommentIds,
+        },
+      },
+    });
+    return likedQuestionComments;
+  },
+
+  AllSolutions: async (parents, args, context) => {
+    const solutions = await prisma.solution.findMany();
+    return solutions;
+  },
+
+  AllSolutionComments: async (parents, args, context) => {
+    const solutionComments = await prisma.solutionComment.findMany();
+    return solutionComments;
+  },
+
+  AllLikedSolutions: async (_parents, args: { likerId: number }, _context) => {
+    const likerId = args.likerId;
+    const likes = await prisma.likedSolution.findMany({
+      where: {
+        likerId: likerId,
+      },
+    });
+
+    const likedSolutionIds = likes.map((like) => {
+      return like.solutionId;
+    });
+    const likedSolutions = await prisma.solution.findMany({
+      where: {
+        id: {
+          in: likedSolutionIds,
+        },
+      },
+    });
+    return likedSolutions;
+  },
+
+  AllLikedSolutionComments: async (_parents, args: { likerId: number }, _context) => {
+    const likerId = args.likerId;
+    const likes = await prisma.likedSolutionComment.findMany({
+      where: {
+        likerId: likerId,
+      },
+    });
+
+    const likedSolutionCommentIds = likes.map((like) => {
+      return like.solutionCommentId;
+    });
+    const likedSolutionComments = await prisma.solutionComment.findMany({
+      where: {
+        id: {
+          in: likedSolutionCommentIds,
+        },
+      },
+    });
+    return likedSolutionComments;
+  },
+
+  // Question & Solution end
 };
 
 export { Query };

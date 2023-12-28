@@ -22,11 +22,13 @@ const typeDefs = `#graphql
     questionsId: [Int]!
     questionCommentsId: [Int]!
     solutionsId: [Int]!
+    solutionCommentsId: [Int]!
     articlesId: [Int]!
     articleCommentsId: [Int]!
     likedQuestionsId: [Int]!
     likedQuestionCommentsId: [Int]!
     likedSolutionsId: [Int]!
+    likedSolutionCommentsId: [Int]!
     likedArticlesId: [Int]!
     likedArticleCommentsId: [Int]!
   }
@@ -62,6 +64,69 @@ const typeDefs = `#graphql
     id: Int!
     likerId: Int!
     articleCommentId: Int!
+  }
+
+  type Question {
+    id: Int!
+    askerId: Int!
+    title: String!
+    date: String!
+    content: String!
+    topic: String!
+    tags: [String]!
+    commentsId: [Int]!
+    solutionsId: [Int]!
+    likesId: [Int]!
+  }
+
+  type QuestionComment {
+    id: Int!
+    commenterId: Int!
+    rootQuestionId: Int!
+    content: String!
+    date: String!
+  }
+
+  type LikedQuestion {
+    id: Int!
+    likerId: Int!
+    questionId: Int!
+  }
+
+  type LikedQuestionComment {
+    id: Int!
+    likerId: Int!
+    questionCommentId: Int!
+  }
+
+  type Solution {
+    id: Int!
+    solverId: Int!
+    rootQuestionId: Int!
+    content: String!
+    date: String!
+    likesId: [Int]!
+    commentsId: [Int]!
+  }
+
+  type SolutionComment {
+    id: Int!
+    commenterId: Int!
+    rootSolutionId: Int!
+    content: String!
+    date: String!
+  }
+
+  type LikedSolution {
+    id: Int!
+    likerId: Int!
+    solutionId: Int!
+  }
+
+  type LikedSolutionComment {
+    id: Int!
+    likerId: Int!
+    solutionCommentId: Int!
   }
 
   ### input def #####
@@ -107,15 +172,72 @@ const typeDefs = `#graphql
     articleCommentId: Int!
   }
 
+  input QuestionInput {
+    askerId: Int!
+    title: String!
+    content: String!
+    topic: String!
+    tags: [String]!
+  }
+
+  input QuestionCommentInput {
+    commenterId: Int!
+    rootQuestionId: Int!
+    content: String!
+  }
+  
+  input QuestionLikeInput {
+    likerId: Int!
+    questionId: Int!
+  }
+
+  input QuestionCommentLikeInput {
+    likerId: Int!
+    questionCommentId: Int!
+  }
+
+  input SolutionInput {
+    solverId: Int!
+    rootQuestionId: Int!
+    content: String!
+  }
+
+  input SolutionCommentInput {
+    commenterId: Int!
+    rootSolutionId: Int!
+    content: String!
+  }
+
+  input SolutionLikeInput {
+    likerId: Int!
+    solutionId: Int!
+  }
+
+  input SolutionCommentLikeInput {
+    likerId: Int!
+    solutionCommentId: Int!
+  }
+
   ### Define Resolvers ###
 
   type Query {
     AllAnnouncements: [Announcement]
     AllUsers: [User]
+    # Article
     AllArticles: [Article]
     AllArticleComments: [ArticleComment]
     AllLikedArticles(likerId: Int!): [Article]
     AllLikedArticleComments(likerId: Int!): [ArticleComment]
+    # Question
+    AllQuestions: [Question]
+    AllQuestionComments: [QuestionComment]
+    AllLikedQuestions(likerId: Int!): [Question]
+    AllLikedQuestionComments(likerId: Int!): [QuestionComment]
+    # Solution
+    AllSolutions: [Solution]
+    AllSolutionComments: [SolutionComment]
+    AllLikedSolutions(likerId: Int!): [Solution]
+    AllLikedSolutionComments(likerId: Int!): [SolutionComment]
   }
 
   type Mutation {
@@ -142,6 +264,34 @@ const typeDefs = `#graphql
     # LikeArticleComment
     LikeArticleComment(articleCommentLikeInput: ArticleCommentLikeInput!): LikedArticleComment # just like "create"
     UnlikeArticleComment(articleCommentUnlikeInput: ArticleCommentLikeInput!): LikedArticleComment # just like "delete"
+    # Question
+    CreateQuestion(questionInput: QuestionInput!): Question
+    DeleteQuestion(id: Int!): Question
+    UpdateQuestion(id: Int!, questionInput: QuestionInput!): Question
+    # QuestionComment
+    CreateQuestionComment(questionCommentInput: QuestionCommentInput!): QuestionComment
+    DeleteQuestionComment(id: Int!): QuestionComment
+    UpdateQuestionComment(id: Int!, questionCommentInput: QuestionCommentInput!): QuestionComment
+    # LikeQuestion
+    LikeQuestion(questionLikeInput: QuestionLikeInput!): LikedQuestion
+    UnlikeQuestion(questionUnlikeInput: QuestionLikeInput!): LikedQuestion
+    # LikeQuestionComment
+    LikeQuestionComment(questionCommentLikeInput: QuestionCommentLikeInput!): LikedQuestionComment
+    UnlikeQuestionComment(questionCommentUnlikeInput: QuestionCommentLikeInput!): LikedQuestionComment
+    # Solution
+    CreateSolution(solutionInput: SolutionInput!): Solution
+    DeleteSolution(id: Int!): Solution
+    UpdateSolution(id: Int!, solutionInput: SolutionInput!): Solution
+    # SolutionComment
+    CreateSolutionComment(solutionCommentInput: SolutionCommentInput!): SolutionComment
+    DeleteSolutionComment(id: Int!): SolutionComment
+    UpdateSolutionComment(id: Int!, solutionCommentInput: SolutionCommentInput!): SolutionComment
+    # LikeSolution
+    LikeSolution(solutionLikeInput: SolutionLikeInput!): LikedSolution
+    UnlikeSolution(solutionUnlikeInput: SolutionLikeInput!): LikedSolution
+    # LikeSolutionComment
+    LikeSolutionComment(solutionCommentLikeInput: SolutionCommentLikeInput!): LikedSolutionComment
+    UnlikeSolutionComment(solutionCommentUnlikeInput: SolutionCommentLikeInput!): LikedSolutionComment
   }
 
   type Subscription {
@@ -167,6 +317,34 @@ const typeDefs = `#graphql
     # LikeArticleComment
     ArticleCommentLiked: LikedArticleComment
     ArticleCommentUnliked: LikedArticleComment
+    # Question
+    QuestionCreated: Question
+    QuestionDeleted: Question
+    QuestionUpdated: Question
+    # QuestionComment
+    QuestionCommentCreated: QuestionComment
+    QuestionCommentDeleted: QuestionComment
+    QuestionCommentUpdated: QuestionComment
+    # LikeQuestion
+    QuestionLiked: LikedQuestion
+    QuestionUnLiked: LikedQuestion
+    # LikeQuestionComment
+    QuestionCommentLiked: LikedQuestionComment
+    QuestionCommentUnLiked: LikedQuestionComment
+    # Solution
+    SolutionCreated: Solution
+    SolutionDeleted: Solution
+    SolutionUpdated: Solution
+    # SolutionComment
+    SolutionCommentCreated: SolutionComment
+    SolutionCommentDeleted: SolutionComment
+    SolutionCommentUpdated: SolutionComment
+    # LikeSolution
+    SolutionLiked: LikedSolution
+    SolutionUnLiked: LikedSolution
+    # LikeSolutionComment
+    SolutionCommentLiked: LikedSolutionComment
+    SolutionCommentUnLiked: LikedSolutionComment
   }
 `;
 
