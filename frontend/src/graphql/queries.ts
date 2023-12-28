@@ -11,4 +11,19 @@ const ALL_ANNOUNCEMENT_QUERY = graphql(`
   }
 `);
 
-export { ALL_ANNOUNCEMENT_QUERY };
+const ALL_ARTICLE_QUERY = graphql(`
+  query AllArticles {
+    AllArticles {
+      id
+      writerId
+      date
+      title
+      content
+      topic
+      tags
+      likesId
+    }
+  }
+`);
+
+export { ALL_ANNOUNCEMENT_QUERY, ALL_ARTICLE_QUERY };

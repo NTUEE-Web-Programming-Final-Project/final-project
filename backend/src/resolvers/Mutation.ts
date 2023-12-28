@@ -526,7 +526,7 @@ const Mutation = {
     if (!existingLike) {
       throw new Error("like not found!");
     }
-
+    
     // update liker
     const liker = await prisma.user.findFirst({
       where: {
@@ -576,6 +576,7 @@ const Mutation = {
     await pubsub.publish("ARTICLE_UNLIKED", { ArticleUnliked: deletedLike });
     return deletedLike;
   },
+
   // Unliked Articles End
 
   // Liked Articles Start

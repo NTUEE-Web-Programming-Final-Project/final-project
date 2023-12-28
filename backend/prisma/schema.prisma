@@ -30,7 +30,7 @@ model User {
   questionCommentsId      Int[]
   solutions               Solution[]
   solutionsId             Int[]
-  atricles                Article[]
+  articles                Article[]
   articlesId              Int[]
   articleComments         ArticleComment[]
   articleCommentsId       Int[]
@@ -97,7 +97,6 @@ model Article {
   title      String
   content    String
   tags       String[]
-  like       Int              @default(0)
   topic      String
   comments   ArticleComment[]
   commentsId Int[]

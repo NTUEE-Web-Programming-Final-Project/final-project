@@ -23,6 +23,6 @@
       "@shared/*": ["../shared/*"]
     }
   },
-  "include": ["src", "src/codegen/codegen.ts"],
+  "include": ["src", "src/codegen/codegen.ts", "../shared/env.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

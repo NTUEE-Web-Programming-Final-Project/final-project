@@ -65,8 +65,6 @@ const Subscription = {
     subscribe: () => pubsub.asyncIterator(["ARTICLE_UNLIKED"]),
   },
   // ArticleLike End
-  
-  // ArticleComment End
 
   // Like ArticleComment Start
   ArticleCommentLiked: {

@@ -140,8 +140,8 @@ const typeDefs = `#graphql
     LikeArticle(articleLikeInput: ArticleLikeInput!): LikedArticle # just like "create"
     UnlikeArticle(articleUnlikeInput: ArticleLikeInput!): LikedArticle # just like "delete"
     # LikeArticleComment
-    LikeArticleComment(articleCommentLikeInput: ArticleCommentLikeInput!): LikedArticleComment # just like "create"
-    UnlikeArticleComment(id: Int!): LikedArticleComment # just like "delete"
+    LikeArticleComment(articleCommentLikeInput: ArticleCommentLikeInput!): LikedArticleComment
+    UnlikeArticleComment(articleCommentUnlikeInput: ArticleCommentLikeInput!): LikedArticleComment
   }
 
   type Subscription {
