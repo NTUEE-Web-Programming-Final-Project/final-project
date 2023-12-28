@@ -1,9 +1,7 @@
-import Footer from "../components/Common/Footer.tsx";
-
 const HomePage = () => {
   return (
     <>
-      <Footer />
+      <h1 className="ml-3">Home Page</h1>
     </>
   );
 };

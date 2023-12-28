@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const NavBar = () => {
   return (
     <>
-      <div className="flex flex-row-reverse border-2 m-3 border-black">
+      <div className="flex flex-row-reverse flex-wrap border-2 m-3 border-black">
         <button className="border-2 border-black px-3 m-1">
           <Link to="/login">login</Link>
         </button>

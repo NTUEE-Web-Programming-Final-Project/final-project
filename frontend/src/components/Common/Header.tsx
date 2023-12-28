@@ -6,9 +6,9 @@ const Header = () => {
     <>
       <div className="flex flex-row mt-2">
         <Link to="/">
-          <img src={logoURL} alt="logo" className="w-20" />
+          <img src={logoURL} alt="logo" className="w-16" />
         </Link>
-        <p className="text-6xl m-2">Final Project</p>
+        <p className="text-5xl m-2">Final Project</p>
       </div>
     </>
   );

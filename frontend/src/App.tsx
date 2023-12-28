@@ -1,9 +1,11 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/Common/NavBar.tsx";
-// import NotFound from "./components/Common/NotFound.tsx";
+import NotFound from "./components/Common/NotFound.tsx";
 import HomePage from "./containers/HomePage.tsx";
 import Header from "./components/Common/Header.tsx";
+import Footer from "./components/Common/Footer.tsx";
+import ArticlePage from "./containers/Article/ArticlePage.tsx";
 
 const LoginPage = lazy(() => import("./containers/User/LoginPage.tsx"));
 const ArticleMainPage = lazy(
@@ -44,6 +46,15 @@ function App() {
           />
 
           <Route
+            path="/article/:id"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <ArticlePage />
+              </Suspense>
+            }
+          />
+
+          <Route
             path="/forum"
             element={
               <Suspense fallback={<div>Loading...</div>}>
@@ -59,7 +70,9 @@ function App() {
               </Suspense>
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer />
       </div>
     </>
   );

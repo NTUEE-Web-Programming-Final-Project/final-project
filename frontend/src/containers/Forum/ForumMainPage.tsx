@@ -6,7 +6,12 @@ const FourmMainPage = () => {
   return (
     <>
       <h1 className="text-3xl m-2">Fourm Main Page</h1>
-      <button onClick={() => navigate("/")} className="border-2 border-black px-3 m-1">home</button>
+      <button
+        onClick={() => navigate("/")}
+        className="border-2 border-black px-3 m-1"
+      >
+        home
+      </button>
     </>
   );
 };
