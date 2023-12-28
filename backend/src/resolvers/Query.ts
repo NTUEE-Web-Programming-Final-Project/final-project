@@ -79,7 +79,6 @@ const Query = {
     return likedArticleComments;
   },
   // Liked ArticleComments End
-};
 
   // Question & Solution Start
   AllQuestions: async (parents, args, context) => {
@@ -113,6 +112,27 @@ const Query = {
     return likedQuestions;
   },
 
+  AllLikedQuestionComments: async (_parents, args: { likerId: number }, _context) => {
+    const likerId = args.likerId;
+    const likes = await prisma.likedQuestionComment.findMany({
+      where: {
+        likerId: likerId,
+      },
+    });
+
+    const likedQuestionCommentIds = likes.map((like) => {
+      return like.questionCommentId;
+    });
+    const likedQuestionComments = await prisma.questionComment.findMany({
+      where: {
+        id: {
+          in: likedQuestionCommentIds,
+        },
+      },
+    });
+    return likedQuestionComments;
+  },
+
   AllSolutions: async (parents, args, context) => {
     const solutions = await prisma.solution.findMany();
     return solutions;
@@ -142,6 +162,27 @@ const Query = {
       },
     });
     return likedSolutions;
+  },
+
+  AllLikedSolutionComments: async (_parents, args: { likerId: number }, _context) => {
+    const likerId = args.likerId;
+    const likes = await prisma.likedSolutionComment.findMany({
+      where: {
+        likerId: likerId,
+      },
+    });
+
+    const likedSolutionCommentIds = likes.map((like) => {
+      return like.solutionCommentId;
+    });
+    const likedSolutionComments = await prisma.solutionComment.findMany({
+      where: {
+        id: {
+          in: likedSolutionCommentIds,
+        },
+      },
+    });
+    return likedSolutionComments;
   },
 
   // Question & Solution end

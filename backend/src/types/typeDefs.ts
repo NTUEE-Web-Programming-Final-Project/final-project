@@ -274,10 +274,10 @@ const typeDefs = `#graphql
     UpdateQuestionComment(id: Int!, questionCommentInput: QuestionCommentInput!): QuestionComment
     # LikeQuestion
     LikeQuestion(questionLikeInput: QuestionLikeInput!): LikedQuestion
-    UnlikeQuestion(id: Int!, questionUnlikeInput: QuestionLikeInput!): LikedQuestion
+    UnlikeQuestion(questionUnlikeInput: QuestionLikeInput!): LikedQuestion
     # LikeQuestionComment
     LikeQuestionComment(questionCommentLikeInput: QuestionCommentLikeInput!): LikedQuestionComment
-    UnlikeQuestionComment(id: Int!, questionCommentUnlikeInput: QuestionCommentLikeInput!): LikedQuestionComment
+    UnlikeQuestionComment(questionCommentUnlikeInput: QuestionCommentLikeInput!): LikedQuestionComment
     # Solution
     CreateSolution(solutionInput: SolutionInput!): Solution
     DeleteSolution(id: Int!): Solution
@@ -288,10 +288,10 @@ const typeDefs = `#graphql
     UpdateSolutionComment(id: Int!, solutionCommentInput: SolutionCommentInput!): SolutionComment
     # LikeSolution
     LikeSolution(solutionLikeInput: SolutionLikeInput!): LikedSolution
-    UnlikeSolution(id: Int!, solutionUnlikeInput: SolutionLikeInput!): LikedSolution
+    UnlikeSolution(solutionUnlikeInput: SolutionLikeInput!): LikedSolution
     # LikeSolutionComment
     LikeSolutionComment(solutionCommentLikeInput: SolutionCommentLikeInput!): LikedSolutionComment
-    UnlikeSolutionComment(id: Int!, solutionCommentUnlikeInput: SolutionCommentLikeInput!): LikedSolutionComment
+    UnlikeSolutionComment(solutionCommentUnlikeInput: SolutionCommentLikeInput!): LikedSolutionComment
   }
 
   type Subscription {

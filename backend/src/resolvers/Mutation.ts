@@ -11,7 +11,12 @@ import {
   ArticleCommentLikeInput,
   QuestionInput,
   QuestionCommentInput,
+  QuestionLikeInput,
+  QuestionCommentLikeInput,
   SolutionInput,
+  SolutionCommentInput,
+  SolutionLikeInput,
+  SolutionCommentLikeInput,
 } from "../types/types.ts";
 
 const Mutation = {
@@ -381,7 +386,241 @@ const Mutation = {
     pubsub.publish("QUESTION_COMMENT_UPDATED", { QuestionCommentUpdated: updatedQuestionComment });
     return updatedQuestionComment;
   },
+  // Like Question
+  LikeQuestion: async (
+    _parent,
+    args: { questionLikeInput: QuestionLikeInput },
+    _context,
+  ) => {
+    const { likerId, questionId } = args.questionLikeInput;
+    const findLiker = await prisma.user.findFirst({
+      where: {
+        id: likerId,
+      },
+    });
+    if (!findLiker) {
+      throw new Error("Liker not found!");
+    }
 
+    const findQuestion = await prisma.question.findFirst({
+      where: {
+        id: questionId,
+      },
+    });
+    if (!findQuestion) {
+      throw new Error("Question not found!");
+    }
+
+    const newLike = await prisma.likedQuestion.create({
+      data: {
+        likerId: likerId,
+        questionId: questionId,
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: likerId,
+      },
+      data: {
+        likedQuestionsId: { push: newLike.id },
+      },
+    });
+
+    await prisma.question.update({
+      where: {
+        id: questionId,
+      },
+      data: {
+        likesId: { push: newLike.id },
+      },
+    });
+
+    await pubsub.publish("QUESTION_LIKED", { QuestionLiked: newLike });
+    return newLike;
+  },
+  // Unlike Question
+  UnlikeQuestion: async (
+    _parent,
+    args: { questionUnlikeInput: QuestionLikeInput },
+    _context,
+  ) => {
+    const { likerId, questionId } = args.questionUnlikeInput;
+
+    const existingLike = await prisma.likedQuestion.findFirst({
+      where: {
+        likerId: likerId,
+        questionId: questionId,
+      },
+    });
+    if (!existingLike) {
+      throw new Error("like not found!");
+    }
+
+    const liker = await prisma.user.findFirst({
+      where: {
+        id: likerId,
+      },
+    });
+    if (!liker) {
+      throw new Error("Liker not found!");
+    }
+
+    const question = await prisma.question.findFirst({
+      where: {
+        id: questionId,
+      },
+    });
+    if (!question) {
+      throw new Error("Question not found!");
+    }
+
+    const deletedLike = await prisma.likedQuestion.delete({
+      where: {
+        id: existingLike.id,
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: likerId,
+      },
+      data: {
+        likedQuestionsId: liker.likedQuestionsId.filter((id) => id !== deletedLike.id),
+      },
+    });
+
+    await prisma.question.update({
+      where: {
+        id: questionId,
+      },
+      data: {
+        likesId: question.likesId.filter((id) => id !== deletedLike.id),
+      },
+    });
+
+    await pubsub.publish("QUESTION_UNLIKED", { QuestionUnliked: deletedLike });
+    return deletedLike;
+  },
+  // Like Question Comment
+  LikeQuestionComment: async (
+    _parent,
+    args: { questionCommentLikeInput: QuestionCommentLikeInput },
+    _context,
+  ) => {
+    const { likerId, questionCommentId } = args.questionCommentLikeInput;
+    const findLiker = await prisma.user.findFirst({
+      where: {
+        id: likerId,
+      },
+    });
+    if (!findLiker) {
+      throw new Error("Liker not found!");
+    }
+
+    const findQuestionComment = await prisma.questionComment.findFirst({
+      where: {
+        id: questionCommentId,
+      },
+    });
+    if (!findQuestionComment) {
+      throw new Error("Question Comment not found!");
+    }
+
+    const newLike = await prisma.likedQuestionComment.create({
+      data: {
+        likerId: likerId,
+        questionCommentId: questionCommentId,
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: likerId,
+      },
+      data: {
+        likedQuestionCommentsId: { push: newLike.id },
+      },
+    });
+
+    await prisma.questionComment.update({
+      where: {
+        id: questionCommentId,
+      },
+      data: {
+        likesId: { push: newLike.id },
+      },
+    });
+
+    await pubsub.publish("QUESTION_COMMENT_LIKED", { QuestionCommentLiked: newLike });
+    return newLike;
+  },
+  // Unlike Question Comment
+  UnlikeQuestionComment: async (
+    _parent,
+    args: { questionCommentUnlikeInput: QuestionCommentLikeInput },
+    _context,
+  ) => {
+    const { likerId, questionCommentId } = args.questionCommentUnlikeInput;
+
+    const existingLike = await prisma.likedQuestionComment.findFirst({
+      where: {
+        likerId: likerId,
+        questionCommentId: questionCommentId,
+      },
+    });
+    if (!existingLike) {
+      throw new Error("like not found!");
+    }
+
+    const liker = await prisma.user.findFirst({
+      where: {
+        id: likerId,
+      },
+    });
+    if (!liker) {
+      throw new Error("Liker not found!");
+    }
+
+    const questionComment = await prisma.questionComment.findFirst({
+      where: {
+        id: questionCommentId,
+      },
+    });
+    if (!questionComment) {
+      throw new Error("Question Comment not found!");
+    }
+
+    const deletedLike = await prisma.likedQuestionComment.delete({
+      where: {
+        id: existingLike.id,
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: likerId,
+      },
+      data: {
+        likedQuestionCommentsId: liker.likedQuestionCommentsId.filter((id) => id !== deletedLike.id),
+      },
+    });
+
+    await prisma.questionComment.update({
+      where: {
+        id: questionCommentId,
+      },
+      data: {
+        likesId: questionComment.likesId.filter((id) => id !== deletedLike.id),
+      },
+    });
+
+    await pubsub.publish("QUESTION_COMMENT_UNLIKED", { QuestionCommentUnliked: deletedLike });
+    return deletedLike;
+  },
+  // Question End
+
+  // Solution Start
   CreateSolution: async (parent, args: { solutionInput: SolutionInput }, context) => {
     const { solverId, rootQuestionId, content } = args.solutionInput;
     const newSolution = await prisma.solution.create({
@@ -486,7 +725,344 @@ const Mutation = {
     pubsub.publish("SOLUTION_UPDATED", { SolutionUpdated: updatedSolution });
     return updatedSolution;
   },
-  // Question End
+
+  CreateSolutionComment:  async (parent, args: { solutionCommentInput: SolutionCommentInput }, context) => {
+    const { commenterId, rootSolutionId, content } = args.solutionCommentInput;
+    const newSolutionComment = await prisma.solutionComment.create({
+      data: {
+        date: new Date().toUTCString(),
+        commenterId: commenterId,
+        rootSolutionId: rootSolutionId,
+        content: content,
+      }
+    });
+    await prisma.user.update({
+      where: {
+        id: commenterId,
+      },
+      data: {
+        solutionCommentsId: {push: newSolutionComment.id}
+      }
+    });
+    await prisma.solution.update({
+      where: {
+        id: rootSolutionId
+      }, 
+      data: {
+        commentsId: {push: newSolutionComment.id}
+      }
+    })
+    pubsub.publish("SOLUTION_COMMENT_CREATED", { SolutionCommentCreated: newSolutionComment });
+    return newSolutionComment;
+  }, 
+
+  DeleteSolutionComment: async (parent, args: {id: number}, context) => {
+    const id = args.id;
+    const existingSolutionComment = await prisma.solutionComment.findFirst({
+      where: {
+        id: id
+      }
+    });
+    if (!existingSolutionComment) {
+      throw new Error("solution comment not found!");
+    }
+    const deletedSolutionComment = await prisma.solutionComment.delete({
+      where: {
+        id: id
+      }
+    });
+    const updateUser = await prisma.user.findFirst({
+      where: {
+        id: deletedSolutionComment.commenterId,
+      },
+    });
+    await prisma.user.update({
+      where: {
+        id: updateUser.id,
+      }, 
+      data: {
+        solutionCommentsId: updateUser.solutionCommentsId.filter((id) => id !== deletedSolutionComment.id)
+      }
+    })
+    const updateSolution = await prisma.solution.findFirst({
+      where: {
+        id: deletedSolutionComment.rootSolutionId
+      }
+    });
+    await prisma.question.update({
+      where: {
+        id: updateSolution.id
+      }, 
+      data: {
+        commentsId: updateSolution.commentsId.filter((id) => id !== deletedSolutionComment.id)
+      }
+    })
+    pubsub.publish("SOLUTION_COMMENT_DELETED", { QuestionCommentDeleted: deletedSolutionComment });
+    return deletedSolutionComment;
+  },
+
+  UpdateSolutionComment: async (parent, args: { id: number, solutionCommentInput: SolutionCommentInput }, context) => {
+    const id = args.id;
+    const { commenterId, rootSolutionId, content } = args.solutionCommentInput;
+    const existingSolutionComment = await prisma.solutionComment.findFirst({
+      where: {
+        id: id
+      }
+    });
+    if (!existingSolutionComment) {
+      throw new Error("question not found!");
+    }
+    if (existingSolutionComment.commenterId !== commenterId) {
+      throw new Error("Commenter changed, this is not supposed to happen...")
+    }
+    if (existingSolutionComment.rootSolutionId !== rootSolutionId) {
+      throw new Error("Root solution changed, this is not supposed to happen...")
+    }
+    const updatedSolutionComment = await prisma.solutionComment.update({
+      where: {
+        id: id
+      }, 
+      data: {
+        date: new Date().toUTCString(),
+        content: content,
+      }
+    });
+    pubsub.publish("SOLUTION_COMMENT_UPDATED", { SolutionCommentUpdated: updatedSolutionComment });
+    return updatedSolutionComment;
+  },
+  // Like Solution
+  LikeSolution: async (
+    _parent,
+    args: { solutionLikeInput: SolutionLikeInput },
+    _context,
+  ) => {
+    const { likerId, solutionId } = args.solutionLikeInput;
+    const findLiker = await prisma.user.findFirst({
+      where: {
+        id: likerId,
+      },
+    });
+    if (!findLiker) {
+      throw new Error("Liker not found!");
+    }
+
+    const findSolution = await prisma.solution.findFirst({
+      where: {
+        id: solutionId,
+      },
+    });
+    if (!findSolution) {
+      throw new Error("Solution not found!");
+    }
+
+    const newLike = await prisma.likedSolution.create({
+      data: {
+        likerId: likerId,
+        solutionId: solutionId,
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: likerId,
+      },
+      data: {
+        likedSolutionsId: { push: newLike.id },
+      },
+    });
+
+    await prisma.solution.update({
+      where: {
+        id: solutionId,
+      },
+      data: {
+        likesId: { push: newLike.id },
+      },
+    });
+
+    await pubsub.publish("SOLUTION_LIKED", { SolutionLiked: newLike });
+    return newLike;
+  },
+  // Unlike Solution
+  UnlikeSolution: async (
+    _parent,
+    args: { solutionUnlikeInput: SolutionLikeInput },
+    _context,
+  ) => {
+    const { likerId, solutionId } = args.solutionUnlikeInput;
+
+    const existingLike = await prisma.likedSolution.findFirst({
+      where: {
+        likerId: likerId,
+        solutionId: solutionId,
+      },
+    });
+    if (!existingLike) {
+      throw new Error("like not found!");
+    }
+
+    const liker = await prisma.user.findFirst({
+      where: {
+        id: likerId,
+      },
+    });
+    if (!liker) {
+      throw new Error("Liker not found!");
+    }
+
+    const solution = await prisma.solution.findFirst({
+      where: {
+        id: solutionId,
+      },
+    });
+    if (!solution) {
+      throw new Error("Solution not found!");
+    }
+
+    const deletedLike = await prisma.likedSolution.delete({
+      where: {
+        id: existingLike.id,
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: likerId,
+      },
+      data: {
+        likedSolutionsId: liker.likedSolutionsId.filter((id) => id !== deletedLike.id),
+      },
+    });
+
+    await prisma.solution.update({
+      where: {
+        id: solutionId,
+      },
+      data: {
+        likesId: solution.likesId.filter((id) => id !== deletedLike.id),
+      },
+    });
+
+    await pubsub.publish("SOLUTION_UNLIKED", { SolutionUnliked: deletedLike });
+    return deletedLike;
+  },
+  // Like Solution Comment
+  LikeSolutionComment: async (
+    _parent,
+    args: { solutionCommentLikeInput: SolutionCommentLikeInput },
+    _context,
+  ) => {
+    const { likerId, solutionCommentId } = args.solutionCommentLikeInput;
+    const findLiker = await prisma.user.findFirst({
+      where: {
+        id: likerId,
+      },
+    });
+    if (!findLiker) {
+      throw new Error("Liker not found!");
+    }
+
+    const findSolutionComment = await prisma.solutionComment.findFirst({
+      where: {
+        id: solutionCommentId,
+      },
+    });
+    if (!findSolutionComment) {
+      throw new Error("Solution Comment not found!");
+    }
+
+    const newLike = await prisma.likedSolutionComment.create({
+      data: {
+        likerId: likerId,
+        solutionCommentId: solutionCommentId,
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: likerId,
+      },
+      data: {
+        likedSolutionCommentsId: { push: newLike.id },
+      },
+    });
+
+    await prisma.solutionComment.update({
+      where: {
+        id: solutionCommentId,
+      },
+      data: {
+        likesId: { push: newLike.id },
+      },
+    });
+
+    await pubsub.publish("SOLUTION_COMMENT_LIKED", { SolutionCommentLiked: newLike });
+    return newLike;
+  },
+  // Unlike Solution Comment
+  UnlikeSolutionComment: async (
+    _parent,
+    args: { solutionCommentUnlikeInput: SolutionCommentLikeInput },
+    _context,
+  ) => {
+    const { likerId, solutionCommentId } = args.solutionCommentUnlikeInput;
+
+    const existingLike = await prisma.likedSolutionComment.findFirst({
+      where: {
+        likerId: likerId,
+        solutionCommentId: solutionCommentId,
+      },
+    });
+    if (!existingLike) {
+      throw new Error("like not found!");
+    }
+
+    const liker = await prisma.user.findFirst({
+      where: {
+        id: likerId,
+      },
+    });
+    if (!liker) {
+      throw new Error("Liker not found!");
+    }
+
+    const solutionComment = await prisma.solutionComment.findFirst({
+      where: {
+        id: solutionCommentId,
+      },
+    });
+    if (!solutionComment) {
+      throw new Error("Solution Comment not found!");
+    }
+
+    const deletedLike = await prisma.likedSolutionComment.delete({
+      where: {
+        id: existingLike.id,
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: likerId,
+      },
+      data: {
+        likedSolutionCommentsId: liker.likedSolutionCommentsId.filter((id) => id !== deletedLike.id),
+      },
+    });
+
+    await prisma.solutionComment.update({
+      where: {
+        id: solutionCommentId,
+      },
+      data: {
+        likesId: solutionComment.likesId.filter((id) => id !== deletedLike.id),
+      },
+    });
+
+    await pubsub.publish("SOLUTION_COMMENT_UNLIKED", { SolutionCommentUnliked: deletedLike });
+    return deletedLike;
+  },
+  // Solution End
 
   // Article Start
   CreateArticle: async (
