@@ -104,7 +104,7 @@ const typeDefs = `#graphql
 
   input ArticleCommentLikeInput {
     likerId: Int!
-    articleId: Int!
+    articleCommentId: Int!
   }
 
   ### Define Resolvers ###
