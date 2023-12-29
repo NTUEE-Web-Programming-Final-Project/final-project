@@ -71,6 +71,7 @@ const ArticleMainPage = () => {
           </div>
         </div>
       </div>
+
     </>
   );
 };
