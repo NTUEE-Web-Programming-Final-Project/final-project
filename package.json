@@ -9,5 +9,9 @@
     "backend": "cd backend && pnpm start"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "clsx": "^2.0.0",
+    "magic-sdk": "^21.4.1"
+  }
 }
