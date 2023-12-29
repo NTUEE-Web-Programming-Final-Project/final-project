@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/Common/NavBar.tsx";
 import NotFound from "./components/Common/NotFound.tsx";
 import HomePage from "./containers/HomePage.tsx";
-import Header from "./components/Common/Header.tsx";
 import Footer from "./components/Common/Footer.tsx";
 import ArticlePage from "./containers/Article/ArticlePage.tsx";
 import OverviewPage from "./containers/Article/OverviewPage.tsx";
@@ -23,7 +22,6 @@ function App() {
   return (
     <>
       <div className="border-x-green-600">
-        <Header />
         <NavBar />
         <Routes>
           <Route path="/" element={<HomePage />} />
