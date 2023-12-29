@@ -119,11 +119,11 @@ type TextAreaProps = {
 };
 function TextArea({ article, setArticle }: TextAreaProps) {
   const placeholder = `# Title`;
-  
+
   const handleInput = (e: string) => {
     // console.log(e);
     setArticle(e);
-    console.log("article:"+ {article});
+    console.log("article:" + { article });
   };
 
   return (

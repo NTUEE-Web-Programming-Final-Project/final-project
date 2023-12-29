@@ -1,4 +1,4 @@
-import {SandpackConfig} from "@mdxeditor/editor"
+import { SandpackConfig } from "@mdxeditor/editor";
 
 export const defaultSnippetContent = `
 export default function App() {
