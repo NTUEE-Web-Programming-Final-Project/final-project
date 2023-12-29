@@ -113,15 +113,15 @@ const allPlugins = (diffMarkdown: string) => [
 ];
 
 type TextAreaProps = {
-  article: string;
-  setArticle: React.Dispatch<React.SetStateAction<string>>;
-  createArticle: () => void;
+  article?: string;
+  setArticle: (s: string) => void;
 };
+
 function TextArea({ article, setArticle }: TextAreaProps) {
+  if (!article) throw new Error("article is undefined!");
   const placeholder = `# Title`;
 
   const handleInput = (e: string) => {
-    // console.log(e);
     setArticle(e);
     console.log("article:" + { article });
   };
@@ -131,7 +131,7 @@ function TextArea({ article, setArticle }: TextAreaProps) {
       <div>
         <MDXEditor
           placeholder={placeholder}
-          markdown=""
+          markdown={article}
           plugins={allPlugins("Hello world")}
           onChange={(e) => handleInput(e)}
         />

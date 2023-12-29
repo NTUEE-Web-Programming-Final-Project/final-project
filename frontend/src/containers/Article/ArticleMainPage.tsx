@@ -1,4 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import ArticleList from "../../components/Article/ArticleList";
+import { useMutation } from "@apollo/client";
+import { CREATE_ARTICLE_MUTATION } from "../../graphql";
 import { useState } from "react";
 import Sidebar from "../../components/Article/SideBar";
 
@@ -71,7 +74,6 @@ const ArticleMainPage = () => {
           </div>
         </div>
       </div>
-
     </>
   );
 };

@@ -45,8 +45,9 @@ const ALL_ARTICLES_QUERY = graphql(`
       date
       title
       content
-      topic
       tags
+      topic
+      commentsId
       likesId
     }
   }
