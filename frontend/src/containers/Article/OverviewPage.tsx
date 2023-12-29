@@ -1,6 +1,8 @@
 import { useQuery } from "@apollo/client";
 import { useParams, useNavigate } from "react-router-dom";
+
 import { ALL_ARTICLES_QUERY, ALL_LIKED_ARTICLES_QUERY } from "../../graphql";
+
 import { MDXEditor } from "@mdxeditor/editor/MDXEditor";
 import { allPlugins } from "../../components/Common/MDX/allPlugins";
 import { FunctionComponent } from "react";
@@ -8,6 +10,7 @@ import LikeButton from "../../components/Common/LikeButton.tsx";
 
 const ArticlePageOverview = () => {
   const navigate = useNavigate();
+
   const { id } = useParams();
   const likerId = 1;
   const {
@@ -28,6 +31,7 @@ const ArticlePageOverview = () => {
 
   if (allArticlesLoading) return "Loading...";
   if (allArticlesError) return `Error! ${allArticlesError.message}`;
+
 
   const articleContent =
     allArticlesData?.AllArticles?.[allArticlesData?.AllArticles?.length - 1]
