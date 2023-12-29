@@ -1,13 +1,13 @@
 import { useQuery } from "@apollo/client";
 import { useParams, useNavigate } from "react-router-dom";
-import { ALL_ARTICLE_QUERY } from "../../graphql";
+import { ALL_ARTICLES_QUERY } from "../../graphql";
 import { MDXEditor } from "@mdxeditor/editor/MDXEditor";
 import { allPlugins } from "../../components/Common/MDX/allPlugins";
 
 const ArticlePageOverview = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { loading, error, data } = useQuery(ALL_ARTICLE_QUERY);
+  const { loading, error, data } = useQuery(ALL_ARTICLES_QUERY);
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
 
