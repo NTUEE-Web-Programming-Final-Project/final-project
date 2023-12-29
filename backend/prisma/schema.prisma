@@ -82,11 +82,11 @@ model QuestionComment {
 }
 
 model Solution {
-  id             Int             @id @default(autoincrement())
+  id             Int               @id @default(autoincrement())
   date           String
-  solver         User            @relation(fields: [solverId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  solver         User              @relation(fields: [solverId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   solverId       Int
-  rootQuestion   Question        @relation(fields: [rootQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  rootQuestion   Question          @relation(fields: [rootQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   rootQuestionId Int
   content        String
   likes          LikedSolution[]
