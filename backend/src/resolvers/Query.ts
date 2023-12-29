@@ -112,7 +112,11 @@ const Query = {
     return likedQuestions;
   },
 
-  AllLikedQuestionComments: async (_parents, args: { likerId: number }, _context) => {
+  AllLikedQuestionComments: async (
+    _parents,
+    args: { likerId: number },
+    _context,
+  ) => {
     const likerId = args.likerId;
     const likes = await prisma.likedQuestionComment.findMany({
       where: {
@@ -164,7 +168,11 @@ const Query = {
     return likedSolutions;
   },
 
-  AllLikedSolutionComments: async (_parents, args: { likerId: number }, _context) => {
+  AllLikedSolutionComments: async (
+    _parents,
+    args: { likerId: number },
+    _context,
+  ) => {
     const likerId = args.likerId;
     const likes = await prisma.likedSolutionComment.findMany({
       where: {

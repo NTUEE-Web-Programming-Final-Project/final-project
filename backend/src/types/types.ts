@@ -40,19 +40,18 @@ export interface ArticleCommentLikeInput {
   articleCommentId: number;
 }
 
-
 export interface QuestionInput {
-  askerId: number
-  title: string
-  content: string
-  topic: string
-  tags: string[]
+  askerId: number;
+  title: string;
+  content: string;
+  topic: string;
+  tags: string[];
 }
 
 export interface QuestionCommentInput {
-  commenterId: number
-  rootQuestionId: number
-  content: string
+  commenterId: number;
+  rootQuestionId: number;
+  content: string;
 }
 
 export interface QuestionLikeInput {
@@ -66,15 +65,15 @@ export interface QuestionCommentLikeInput {
 }
 
 export interface SolutionInput {
-  solverId: number
-  rootQuestionId: number
-  content: string
+  solverId: number;
+  rootQuestionId: number;
+  content: string;
 }
 
 export interface SolutionCommentInput {
-  commenterId: number
-  rootSolutionId: number
-  content: string
+  commenterId: number;
+  rootSolutionId: number;
+  content: string;
 }
 
 export interface SolutionLikeInput {

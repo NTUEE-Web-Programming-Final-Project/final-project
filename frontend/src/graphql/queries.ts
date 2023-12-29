@@ -1,6 +1,7 @@
 import { graphql } from "../gql-generated";
 
-const ALL_ANNOUNCEMENT_QUERY = graphql(`
+// Announcement
+const ALL_ANNOUNCEMENTS_QUERY = graphql(`
   query AllAnnouncements {
     AllAnnouncements {
       id
@@ -11,7 +12,8 @@ const ALL_ANNOUNCEMENT_QUERY = graphql(`
   }
 `);
 
-const ALL_USER_QUERY = graphql(`
+// User
+const ALL_USERS_QUERY = graphql(`
   query AllUsers {
     AllUsers {
       id
@@ -34,7 +36,8 @@ const ALL_USER_QUERY = graphql(`
   }
 `);
 
-const ALL_ARTICLE_QUERY = graphql(`
+// Article
+const ALL_ARTICLES_QUERY = graphql(`
   query AllArticles {
     AllArticles {
       id
@@ -49,7 +52,7 @@ const ALL_ARTICLE_QUERY = graphql(`
   }
 `);
 
-const ALL_LIKE_ARTICLE_QUERY = graphql(`
+const ALL_LIKED_ARTICLES_QUERY = graphql(`
   query AllLikedArticles($likerId: Int!) {
     AllLikedArticles(likerId: $likerId) {
       id
@@ -65,7 +68,8 @@ const ALL_LIKE_ARTICLE_QUERY = graphql(`
   }
 `);
 
-const ALL_ARTICLECOMMENT_QUERY = graphql(`
+// ArticleComment
+const ALL_ARTICLECOMMENTS_QUERY = graphql(`
   query AllArticleComments {
     AllArticleComments {
       id
@@ -78,7 +82,7 @@ const ALL_ARTICLECOMMENT_QUERY = graphql(`
   }
 `);
 
-const ALL_LIKE_ARTICLECOMMENT_QUERY = graphql(`
+const ALL_LIKED_ARTICLECOMMENTS_QUERY = graphql(`
   query AllLikedArticleComments($likerId: Int!) {
     AllLikedArticleComments(likerId: $likerId) {
       id
@@ -91,11 +95,133 @@ const ALL_LIKE_ARTICLECOMMENT_QUERY = graphql(`
   }
 `);
 
+// Question
+const ALL_QUESTIONS_QUERY = graphql(`
+  query AllQuestions {
+    AllQuestions {
+      id
+      askerId
+      title
+      date
+      content
+      topic
+      tags
+      commentsId
+      solutionsId
+      likesId
+    }
+  }
+`);
+
+const ALL_LIKED_QUESTIONS_QUERY = graphql(`
+  query AllLikedQuestions($likerId: Int!) {
+    AllLikedQuestions(likerId: $likerId) {
+      id
+      askerId
+      title
+      date
+      content
+      topic
+      tags
+      commentsId
+      solutionsId
+      likesId
+    }
+  }
+`);
+
+// QuestionComment
+const ALL_QUESTIONCOMMENTS_QUERY = graphql(`
+  query AllQuestionComments {
+    AllQuestionComments {
+      id
+      commenterId
+      rootQuestionId
+      content
+      date
+    }
+  }
+`);
+
+const ALL_LIKED_QUESTIONCOMMENTS_QUERY = graphql(`
+  query AllLikedQuestionComments($likerId: Int!) {
+    AllLikedQuestionComments(likerId: $likerId) {
+      id
+      commenterId
+      rootQuestionId
+      content
+      date
+    }
+  }
+`);
+
+// Solution
+const ALL_SOLUTIONS_QUERY = graphql(`
+  query AllSolutions {
+    AllSolutions {
+      id
+      solverId
+      rootQuestionId
+      content
+      date
+      likesId
+      commentsId
+    }
+  }
+`);
+
+const ALL_LIKED_SOLUTIONS_QUERY = graphql(`
+  query AllLikedSolutions($likerId: Int!) {
+    AllLikedSolutions(likerId: $likerId) {
+      id
+      solverId
+      rootQuestionId
+      content
+      date
+      likesId
+      commentsId
+    }
+  }
+`);
+
+// SolutionComment
+const ALL_SOLUTIONCOMMENTS_QUERY = graphql(`
+  query AllSolutionComments {
+    AllSolutionComments {
+      id
+      commenterId
+      rootSolutionId
+      content
+      date
+    }
+  }
+`);
+
+const ALL_LIKED_SOLUTIONCOMMENTS_QUERY = graphql(`
+  query AllLikedSolutionComments($likerId: Int!) {
+    AllLikedSolutionComments(likerId: $likerId) {
+      id
+      commenterId
+      rootSolutionId
+      content
+      date
+    }
+  }
+`);
+
 export {
-  ALL_ANNOUNCEMENT_QUERY,
-  ALL_USER_QUERY,
-  ALL_ARTICLE_QUERY,
-  ALL_LIKE_ARTICLE_QUERY,
-  ALL_ARTICLECOMMENT_QUERY,
-  ALL_LIKE_ARTICLECOMMENT_QUERY,
+  ALL_ANNOUNCEMENTS_QUERY,
+  ALL_USERS_QUERY,
+  ALL_ARTICLES_QUERY,
+  ALL_LIKED_ARTICLES_QUERY,
+  ALL_ARTICLECOMMENTS_QUERY,
+  ALL_LIKED_ARTICLECOMMENTS_QUERY,
+  ALL_QUESTIONS_QUERY,
+  ALL_LIKED_QUESTIONS_QUERY,
+  ALL_QUESTIONCOMMENTS_QUERY,
+  ALL_LIKED_QUESTIONCOMMENTS_QUERY,
+  ALL_SOLUTIONS_QUERY,
+  ALL_LIKED_SOLUTIONS_QUERY,
+  ALL_SOLUTIONCOMMENTS_QUERY,
+  ALL_LIKED_SOLUTIONCOMMENTS_QUERY,
 };
