@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import ArticleList from "../../components/Article/ArticleList";
 import { useMutation } from "@apollo/client";
 import { CREATE_ARTICLE_MUTATION } from "../../graphql";
 
@@ -36,6 +37,7 @@ const ArticleMainPage = () => {
       <button onClick={handleWrite} className="border-2 border-black px-3 m-1">
         發文
       </button>
+      <ArticleList />
     </>
   );
 };
