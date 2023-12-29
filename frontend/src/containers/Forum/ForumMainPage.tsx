@@ -48,7 +48,7 @@ const ForumMainPage = () => {
                 </button>
 
                 <input
-                  className="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+                  className="peer h-full w-full outline-none text-sm text-gray-700"
                   type="text"
                   id="search"
                   value={search}
