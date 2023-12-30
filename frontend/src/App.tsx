@@ -26,9 +26,7 @@ const IntroductionPage = lazy(
   () => import("./containers/IntroductionPage.tsx"),
 );
 
-const ProfilePage = lazy(
-  () => import("./containers/User/ProfilePage.tsx"),
-);
+const ProfilePage = lazy(() => import("./containers/User/ProfilePage.tsx"));
 
 function App() {
   const { fetchArticles } = useArticles();

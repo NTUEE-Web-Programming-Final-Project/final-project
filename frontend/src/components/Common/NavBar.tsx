@@ -35,7 +35,7 @@ const NavBar = () => {
               About
             </div>
           </Link>
-          { user ? (
+          {user ? (
             <Link to={"/logout"}>
               <div className="text-md font-bold text-blue-700 mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2">
                 Logout
@@ -48,7 +48,7 @@ const NavBar = () => {
               </div>
             </Link>
           )}
-          { user ? (
+          {user ? (
             <Link to={"/logout"}>
               <p> {user.name} </p>
               <img src={logoURL} alt="logo" className="w-8 rounded-full" />
