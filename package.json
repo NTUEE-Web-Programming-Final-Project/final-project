@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install:all": "cd frontend && pnpm install --freeze-lockfile && cd ../backend && pnpm setup && pnpm install --freeze-lockfile ",
+    "install:all": "cd frontend && pnpm install --frozen-lockfile && cd ../backend && pnpm setup && pnpm install --frozen-lockfile ",
     "frontend": "cd frontend && pnpm build",
     "backend": "cd backend && pnpm start"
   },
