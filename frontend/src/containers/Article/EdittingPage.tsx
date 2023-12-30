@@ -12,9 +12,8 @@ function EdittingPage() {
   const { id } = useParams();
   if (!id) throw new Error("id is undefined");
   const navigate = useNavigate();
-  const [article, setArticle] = useState("# Title"); // initialize with default value
-
   const { data: allData, error: allError } = useQuery(ALL_ARTICLES_QUERY);
+  const [article, setArticle] = useState("# Title"); // initialize with default value
 
   const [updateArticle, { loading, error }] = useMutation(
     UPDATE_ARTICLE_MUTATION,
@@ -24,6 +23,7 @@ function EdittingPage() {
     if (!article) throw new Error("article is undefined!");
     if (loading) return "Submitting...";
     if (error) return `Submission error! ${error.message}`;
+    console.log(article);
     const updatedArticle = await updateArticle({
       variables: {
         updateArticleId: parseInt(id),
@@ -40,9 +40,6 @@ function EdittingPage() {
   };
 
   useEffect(() => {
-    if (!id) {
-      throw new Error("id is undefined");
-    }
     if (allError) {
       throw new Error(allError.message);
     }
@@ -52,7 +49,8 @@ function EdittingPage() {
     if (queryArticle?.content) {
       setArticle(queryArticle?.content); // update state when data is available
     }
-  }, [id, allData, allError]);
+    console.log(article);
+  }, [allData, allError]);
 
   return (
     <>

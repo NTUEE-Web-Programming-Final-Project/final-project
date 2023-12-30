@@ -32,10 +32,9 @@ const Sidebar = () => {
                   </div>
                 </div>
               </li>
-              <li></li>
               {forums.map((tag) => {
                 return (
-                  <li>
+                  <li key={tag}>
                     <Link
                       to={`/forum`}
                       // to={`/forum/${tag}`}
@@ -53,10 +52,9 @@ const Sidebar = () => {
                   </div>
                 </div>
               </li>
-              <li></li>
               {articles.map((tag) => {
                 return (
-                  <li>
+                  <li key={tag}>
                     <Link
                       to={`/article`}
                       // to={`/article/${tag}`}

@@ -24,10 +24,9 @@ const Sidebar = () => {
                   </div>
                 </div>
               </li>
-              <li></li>
               {tags.map((tag) => {
                 return (
-                  <li>
+                  <li key={tag}>
                     <Link
                       to={`/forum`}
                       // to={`/forum/${tag}`}
