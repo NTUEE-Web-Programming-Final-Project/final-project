@@ -66,3 +66,10 @@ export type ArticleComment = {
   content: string;
   likes: number[];
 };
+
+export type Announcement = {
+  id: number;
+  date: string;
+  title: string;
+  content: string;
+};

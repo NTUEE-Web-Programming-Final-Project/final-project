@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Magic } from "magic-sdk";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { ALL_USERS_QUERY, CREATE_USER_MUTATION } from "../../graphql";
 import { env } from "../../env";
@@ -25,7 +25,7 @@ const LoginPage = () => {
   const [name, setName] = useState("");
   const [studentId, setStudentId] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
-  const { user, setUser } = useContext(UserContext);
+  const { fetchUser } = useContext(UserContext);
   const queryUser = useQuery(ALL_USERS_QUERY);
   const [createUser] = useMutation(CREATE_USER_MUTATION);
 
@@ -40,6 +40,13 @@ const LoginPage = () => {
         alert("Invalid Student ID!");
         return null;
       }
+      const [findUser] = queryUser.data.AllUsers.filter(
+        (e) => e.password === email,
+      );
+      if (findUser) {
+        alert("Email already Signed up!");
+        return null;
+      }
       await magic.auth.loginWithEmailOTP({ email: email });
       createUser({
         variables: {
@@ -50,43 +57,26 @@ const LoginPage = () => {
             photoLink: "",
           },
         },
-        onCompleted: (data) => {
-          setUser({
-            id: data.id,
-            name: data.name,
-            password: data.password,
-            studentId: data.studentID,
-            photoLink: data.photoLink,
-            introduction: data.introduction,
-          });
+        onCompleted: () => {
+          fetchUser();
         },
       });
       alert("Sign Up Successful!");
     } else {
       const [findUser] = queryUser.data.AllUsers.filter(
-        (e) => e.password == email,
+        (e) => e.password === email,
       );
       if (!findUser) {
         alert("Email not registered!");
         return null;
       }
       await magic.auth.loginWithEmailOTP({ email: email });
-      setUser({
-        id: findUser.id,
-        name: findUser.name,
-        password: findUser.password,
-        studentId: findUser.studentID,
-        photoLink: findUser.photoLink,
-        introduction: findUser.introduction,
-      });
+      fetchUser();
       alert("Log In Successful!");
     }
     navigate("/");
+    window.location.reload();
   };
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   return (
     <>

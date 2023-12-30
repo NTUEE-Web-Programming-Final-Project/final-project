@@ -6,6 +6,16 @@ const Query = {
     const announcements = await prisma.announcement.findMany();
     return announcements;
   },
+
+  HomepageAnnouncements: async (_parents, _args, _context) => {
+    const announcements = await prisma.announcement.findMany({
+      take: 5,
+      orderBy: {
+        date: "desc",
+      },
+    });
+    return announcements;
+  },
   // Announcement End
 
   // User Start
@@ -18,6 +28,16 @@ const Query = {
   // Article Start
   AllArticles: async (_parents, _args, _context) => {
     const articles = await prisma.article.findMany();
+    return articles;
+  },
+
+  HomepageArticles: async (_parents, _args, _context) => {
+    const articles = await prisma.article.findMany({
+      take: 5,
+      orderBy: {
+        date: "desc",
+      },
+    });
     return articles;
   },
 
@@ -102,6 +122,16 @@ const Query = {
   // Question & Solution Start
   AllQuestions: async (parents, args, context) => {
     const questions = await prisma.question.findMany();
+    return questions;
+  },
+
+  HomepageQuestions: async (parents, args, context) => {
+    const questions = await prisma.question.findMany({
+      take: 5,
+      orderBy: {
+        date: "desc",
+      },
+    });
     return questions;
   },
 

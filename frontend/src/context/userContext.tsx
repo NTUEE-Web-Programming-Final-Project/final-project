@@ -1,14 +1,18 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useCallback } from "react";
+import { Magic } from "magic-sdk";
+import { env } from "../env";
+import { useLazyQuery } from "@apollo/client";
+import { ALL_USERS_QUERY } from "../graphql";
 import type { User } from "../../../shared/shared_types";
 
 export type UserContextType = {
   user: User | null;
-  setUser: (user: User) => void;
+  fetchUser: () => Promise<void>;
 };
 
 export const UserContext = createContext<UserContextType>({
   user: null,
-  setUser: () => {},
+  fetchUser: async () => {},
 });
 
 type Props = {
@@ -16,9 +20,29 @@ type Props = {
 };
 
 export function UserProvider({ children }: Props) {
+  const magic = new Magic(env.MAGIC_PUBLIC_API_KEY);
+  const [getUsers] = useLazyQuery(ALL_USERS_QUERY);
   const [user, setUser] = useState<User | null>(null);
+  const fetchUser = useCallback(async () => {
+    const info = await (magic.user.getInfo());
+    const email = info.email;
+    const { data } = await getUsers();
+    const [findUser] = data.AllUsers.filter(
+      (e) => e.password === email,
+    );
+    if (findUser) {
+      setUser({
+        id: findUser.id,
+        name: findUser.name,
+        password: findUser.password,
+        studentId: findUser.studentID,
+        photoLink: findUser.photoLink,
+        introduction: findUser.introduction,
+      });
+    };
+  }, []);
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, fetchUser }}>
       {children}
     </UserContext.Provider>
   );
