@@ -4,8 +4,11 @@ import NavBar from "./components/Common/NavBar.tsx";
 import NotFound from "./components/Common/NotFound.tsx";
 import HomePage from "./containers/HomePage.tsx";
 import Footer from "./components/Common/Footer.tsx";
+import { UserContext } from "./context/userContext.tsx";
+import { useContext, useEffect } from "react";
 
 const LoginPage = lazy(() => import("./containers/User/LoginPage.tsx"));
+const LogOutPage = lazy(() => import("./containers/User/LogOutPage.tsx"));
 const ArticleMainPage = lazy(
   () => import("./containers/Article/ArticleMainPage.tsx"),
 );
@@ -23,6 +26,11 @@ const IntroductionPage = lazy(
 );
 
 function App() {
+  const { fetchUser } = useContext(UserContext);
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
   return (
     <>
       <div className="bg-gray-50">
@@ -35,6 +43,15 @@ function App() {
             element={
               <Suspense fallback={<div>Loading...</div>}>
                 <LoginPage />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path="/logout"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <LogOutPage />
               </Suspense>
             }
           />
