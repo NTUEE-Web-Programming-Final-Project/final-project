@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { ALL_ARTICLE_QUERY, ALL_USER_QUERY } from "../../graphql/queries.ts";
+import { ALL_ARTICLES_QUERY, ALL_USERS_QUERY } from "../../graphql/queries.ts";
 import ArticleItem from "./ArticleItem.tsx";
 import { Article, User } from "@shared/shared_types.ts";
 
@@ -8,12 +8,12 @@ const ArticleList = () => {
     loading: article_loading,
     error: article_error,
     data: article_data,
-  } = useQuery(ALL_ARTICLE_QUERY);
+  } = useQuery(ALL_ARTICLES_QUERY);
   const {
     loading: user_loading,
     error: user_error,
     data: user_data,
-  } = useQuery(ALL_USER_QUERY);
+  } = useQuery(ALL_USERS_QUERY);
 
   if (article_loading) return "Loading...";
   if (article_error) return `Error! ${article_error.message}`;
