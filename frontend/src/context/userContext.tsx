@@ -27,10 +27,12 @@ export function UserProvider({ children }: Props) {
     const info = await magic.user.getInfo();
     const email = info.email;
     const { data } = await getUsers();
-
-    if (!data?.AllUsers) return;
-    const [findUser] = data.AllUsers.filter((e) => e?.password === email);
-
+    if (!data?.AllUsers) {
+      return;
+    }
+    const [findUser] = data.AllUsers.filter(
+      (e) => e?.password === email,
+    );
     if (findUser) {
       setUser({
         id: findUser.id,

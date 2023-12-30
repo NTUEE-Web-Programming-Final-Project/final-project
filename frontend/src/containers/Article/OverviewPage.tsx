@@ -44,14 +44,13 @@ const ArticlePageOverview = () => {
   if (allArticlesLoading) return "Loading...";
   if (allArticlesError) return `Error! ${allArticlesError.message}`;
 
-  const articleContent =
-    allArticlesData?.AllArticles?.[allArticlesData?.AllArticles?.length - 1]
-      ?.content;
-  const articleTags =
-    allArticlesData?.AllArticles?.[allArticlesData?.AllArticles?.length - 1]
-      ?.tags;
   if (!id) throw new Error("id is undefined");
   const articleId = parseInt(id);
+
+
+  const [theArticle] = allArticlesData?.AllArticles?.filter((e) => e.id === articleId)
+  const articleContent = theArticle?.content;
+  const articleTags = theArticle?.tags;
 
   if (likedArticlesLoading) return "Loading...";
   if (likedArticlesError) return `Error! ${likedArticlesError.message}`;

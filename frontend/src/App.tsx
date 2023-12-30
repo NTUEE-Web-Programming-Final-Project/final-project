@@ -4,7 +4,6 @@ import NavBar from "./components/Common/NavBar.tsx";
 import NotFound from "./components/Common/NotFound.tsx";
 import HomePage from "./containers/HomePage.tsx";
 import Footer from "./components/Common/Footer.tsx";
-import useArticles from "./context/articleContext.tsx";
 import { UserContext } from "./context/userContext.tsx";
 import EditProfilePage from "./containers/User/EditProfilePage.tsx";
 
@@ -29,10 +28,6 @@ const IntroductionPage = lazy(
 const ProfilePage = lazy(() => import("./containers/User/ProfilePage.tsx"));
 
 function App() {
-  const { fetchArticles } = useArticles();
-  useEffect(() => {
-    fetchArticles();
-  }, [fetchArticles]);
   const { fetchUser } = useContext(UserContext);
   useEffect(() => {
     fetchUser();
