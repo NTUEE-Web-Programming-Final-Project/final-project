@@ -22,7 +22,7 @@ const ForumItem = ({
   askerId,
   date,
   likes,
-  photoLink,
+  // photoLink,
   content,
   tags,
 }: ForumItemProps) => {
@@ -37,7 +37,10 @@ const ForumItem = ({
             <div className="flex justify-start my-2">
               {tags.map((tag) => (
                 //   <Link to={`/${tag}`}>
-                <span className="px-2 py-1 text-xs rounded-full dark:bg-violet-400 dark:text-gray-900 bg-sky-200">{`${tag}`}</span>
+                <span
+                  key={tag}
+                  className="px-2 py-1 text-xs rounded-full dark:bg-violet-400 dark:text-gray-900 bg-sky-200"
+                >{`${tag}`}</span>
                 // </Link>
               ))}
             </div>

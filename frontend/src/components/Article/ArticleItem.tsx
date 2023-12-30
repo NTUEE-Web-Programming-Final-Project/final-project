@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import facebookURL from "../../images/facebook.png";
+// import facebookURL from "../../images/facebook.png";
 import logoURL from "../../images/lightning.png";
 
 type ArticleItemProps = {
@@ -23,7 +23,7 @@ const ArticleItem = ({
   date,
   likes,
   photoLink,
-  content,
+  // content,
   tags,
 }: ArticleItemProps) => {
   return (

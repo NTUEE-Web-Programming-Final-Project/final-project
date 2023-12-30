@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useRef, useContext } from "react";
 // import useArticles from "../../context/articleContext.tsx";
 import { useQuery, useMutation } from "@apollo/client";
 // import useArticles from "../../context/articleContext.tsx";
@@ -44,7 +44,7 @@ function EdittingPage() {
     if (!tags) throw new Error("tags is undefined!");
     if (loading) return "Submitting...";
     if (error) return `Submission error! ${error.message}`;
-    console.log(article);
+    // console.log(article);
     const updatedArticle = await updateArticle({
       variables: {
         updateArticleId: parseInt(id),
@@ -66,7 +66,7 @@ function EdittingPage() {
   const articleId = parseInt(id);
 
   const [theArticle] = allArticlesData?.AllArticles?.filter(
-    (e) => e.id === articleId,
+    (e: { id: number }) => e.id === articleId,
   );
   const articleContent = theArticle?.content;
 

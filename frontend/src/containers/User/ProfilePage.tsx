@@ -1,9 +1,9 @@
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 // import { useState } from "react";
 import { useContext } from "react";
 import { ALL_USERS_QUERY } from "../../graphql";
 import { Link, useParams } from "react-router-dom";
-import { User } from "@shared/shared_types";
+import type { User } from "@shared/shared_types";
 import { UserContext } from "../../context/userContext";
 const ProfilePage = () => {
   const { user: me } = useContext(UserContext);
@@ -15,7 +15,7 @@ const ProfilePage = () => {
   const users = JSON.parse(JSON.stringify(data?.AllUsers));
   if (!userid) return;
   const user = users.filter((user: User) => `${user.id}` === userid)[0];
-  console.log(user);
+  // console.log(user);
   return (
     <div className="flex rounded bg-white mt-5 mb-5 justify-center">
       <div className="flex flex-row w-fit">

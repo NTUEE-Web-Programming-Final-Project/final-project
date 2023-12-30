@@ -3,7 +3,7 @@ import ArticleList from "../../components/Article/ArticleList";
 import { useMutation } from "@apollo/client";
 import { CREATE_ARTICLE_MUTATION } from "../../graphql";
 import { useState, useContext } from "react";
-import Sidebar from "../../components/Article/SideBar";
+// import Sidebar from "../../components/Article/SideBar";
 import { Search } from "lucide-react";
 import { UserContext } from "../../context/userContext";
 const ArticleMainPage = () => {
@@ -38,7 +38,7 @@ const ArticleMainPage = () => {
       navigate(`/article/${newArticle.data?.CreateArticle?.id}/edit`);
     }
   };
-//
+  //
   const tags = [
     "Life",
     "Evalutaion",
@@ -65,6 +65,7 @@ const ArticleMainPage = () => {
                 {tags.map((tag) => {
                   return (
                     <button
+                      key={tag}
                       className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
                       onClick={() => setSearchByTags(`${tag}`)}
                     >

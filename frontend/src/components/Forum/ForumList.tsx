@@ -5,7 +5,7 @@ import {
   ALL_USERS_QUERY,
 } from "../../graphql/queries.ts";
 import ForumItem from "./ForumItem.tsx";
-import { Question, User } from "@shared/shared_types.ts";
+import type { Question, User } from "@shared/shared_types.ts";
 
 type filter = {
   order: string;
@@ -56,6 +56,7 @@ const ForumList = (filter: filter) => {
             .split("T")[0];
           return (
             <ForumItem
+              key={question.id}
               id={question.id}
               title={question.title}
               asker={user.name}
@@ -78,6 +79,7 @@ const ForumList = (filter: filter) => {
             .split("T")[0];
           return (
             <ForumItem
+              key={question.id}
               id={question.id}
               title={question.title}
               asker={user.name}

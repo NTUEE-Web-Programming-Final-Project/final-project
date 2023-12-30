@@ -11,7 +11,7 @@ import Select from "../../components/Common/Select.tsx";
 
 import { MDXEditor } from "@mdxeditor/editor/MDXEditor";
 import { allPlugins } from "../../components/Common/MDX/allPlugins";
-import { FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import LikeButton from "../../components/Common/LikeButton.tsx";
 import { UserContext } from "../../context/userContext.tsx";
 import { useContext } from "react";
@@ -48,7 +48,7 @@ const ArticlePageOverview = () => {
   const articleId = parseInt(id);
 
   const [theArticle] = allArticlesData?.AllArticles?.filter(
-    (e) => e.id === articleId,
+    (e: { id: number }) => e.id === articleId,
   );
   const articleContent = theArticle?.content;
   const articleTags = theArticle?.tags;
