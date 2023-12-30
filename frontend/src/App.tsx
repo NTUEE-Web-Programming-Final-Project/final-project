@@ -18,9 +18,9 @@ const OverviewPage = lazy(
 const EdittingPage = lazy(
   () => import("./containers/Article/EdittingPage.tsx"),
 );
-const ForumMainPage = lazy(
-  () => import("./containers/Forum/ForumMainPage.tsx"),
-);
+// const ForumMainPage = lazy(
+//   () => import("./containers/Forum/ForumMainPage.tsx"),
+// );
 const IntroductionPage = lazy(
   () => import("./containers/IntroductionPage.tsx"),
 );

@@ -1,23 +1,23 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  const forums = [
-    "Freshman",
-    "Sophomore",
-    "Junior",
-    "Senior",
-    "Master",
-    "PhD",
-    "Postdoctoral",
-  ];
-  const articles = [
-    "Life",
-    "Evalutaion",
-    "ACG",
-    "Programming",
-    "Tech News",
-    "Recruit",
-  ];
+  // const forums = [
+  //   "Freshman",
+  //   "Sophomore",
+  //   "Junior",
+  //   "Senior",
+  //   "Master",
+  //   "PhD",
+  //   "Postdoctoral",
+  // ];
+  // const articles = [
+  //   "Life",
+  //   "Evalutaion",
+  //   "ACG",
+  //   "Programming",
+  //   "Tech News",
+  //   "Recruit",
+  // ];
 
   return (
     <>

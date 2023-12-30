@@ -37,12 +37,12 @@ const CommentBox = ({ rootArticleId }: CommentBoxProps) => {
     setComment("");
     if (allLoading) return <div>Loading...</div>;
     if (allError) return <div>{allError.message}</div>;
-    let queryComment = await loadExpenseStatus();
-    console.log(
-      queryComment.data?.AllArticleComments?.[
-        queryComment.data?.AllArticleComments?.length - 1
-      ]?.content,
-    );
+    const queryComment = await loadExpenseStatus();
+    // console.log(
+    //   queryComment.data?.AllArticleComments?.[
+    //     queryComment.data?.AllArticleComments?.length - 1
+    //   ]?.content,
+    // );
     window.location.reload();
   };
 

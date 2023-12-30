@@ -5,7 +5,7 @@ import {
   ALL_USERS_QUERY,
 } from "../../graphql/queries.ts";
 import ArticleItem from "./ArticleItem.tsx";
-import { Article, User } from "@shared/shared_types.ts";
+import type { Article, User } from "@shared/shared_types.ts";
 
 type ArticleListProps = {
   filter: string;
@@ -65,6 +65,7 @@ const ArticleList = ({ filter, searchByTags, search }: ArticleListProps) => {
             .split("T")[0];
           return (
             <ArticleItem
+              key={article?.id}
               id={article?.id}
               title={article?.title}
               writer={user.name}
@@ -88,6 +89,7 @@ const ArticleList = ({ filter, searchByTags, search }: ArticleListProps) => {
             .split("T")[0];
           return (
             <ArticleItem
+              key={article?.id}
               id={article?.id}
               title={article?.title}
               writer={user.name}
@@ -112,6 +114,7 @@ const ArticleList = ({ filter, searchByTags, search }: ArticleListProps) => {
             .split("T")[0];
           return (
             <ArticleItem
+              key={article?.id}
               id={article?.id}
               title={article?.title}
               writer={user.name}
@@ -136,6 +139,7 @@ const ArticleList = ({ filter, searchByTags, search }: ArticleListProps) => {
             .split("T")[0];
           return (
             <ArticleItem
+              key={article?.id}
               id={article?.id}
               title={article?.title}
               writer={user.name}

@@ -6,7 +6,12 @@ import {
   HOMEPAGE_ARTICLES_QUERY,
   HOMEPAGE_QUESTIONS_QUERY,
 } from "../graphql";
-import { Announcement, Article, Question, User } from "@shared/shared_types";
+import type {
+  Announcement,
+  Article,
+  Question,
+  User,
+} from "@shared/shared_types";
 import ArticleItem from "../components/Article/ArticleItem";
 import ForumItem from "../components/Forum/ForumItem";
 
@@ -18,7 +23,7 @@ type AnnouncementItemProps = {
 };
 
 const AnnouncementItem = ({
-  id,
+  // id,
   date,
   title,
   content,

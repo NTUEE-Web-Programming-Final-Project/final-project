@@ -1,15 +1,15 @@
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 import facebookURL from "../images/facebook.png";
 import instagramURL from "../images/instagram.png";
 import githubURL from "../images/github.png";
-import twitterURL from "../images/twitter.png";
+// import twitterURL from "../images/twitter.png";
 import Jackbear8868 from "../images/Jackbear8868.jpg";
 import jass921026 from "../images/jass921026.jpeg";
 import ChenBingWei1201 from "../images/ChenBingWei1201.png";
 
 const IntroductionPage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   return (
     <>

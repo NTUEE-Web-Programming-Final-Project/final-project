@@ -29,7 +29,7 @@ const EditProfilePage = () => {
     if (loading) return "Submitting...";
     if (error) return `Submission error! ${error.message}`;
 
-    const editedUser = await updateUser({
+    await updateUser({
       variables: {
         updateUserProfileId: parseInt(userid),
         userProfileInput: {

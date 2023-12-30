@@ -2,13 +2,13 @@ import "@mdxeditor/editor/style.css";
 import { storage } from "./firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
-import type { ForwardedRef } from "react";
+// import type { ForwardedRef } from "react";
 import { MDXEditor } from "@mdxeditor/editor/MDXEditor";
-import type { MDXEditorMethods } from "@mdxeditor/editor";
+// import type { MDXEditorMethods } from "@mdxeditor/editor";
+import type { SandpackConfig } from "@mdxeditor/editor";
 import {
   toolbarPlugin,
   codeBlockPlugin,
-  SandpackConfig,
   sandpackPlugin,
   codeMirrorPlugin,
   headingsPlugin,
