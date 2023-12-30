@@ -7,4 +7,5 @@ export const env = {
   MESSAGING_SENDER_ID: "",
   APP_ID: "",
   MEASUREMENT_ID: "",
+  MAGIC_PUBLIC_API_KEY: "",
 };

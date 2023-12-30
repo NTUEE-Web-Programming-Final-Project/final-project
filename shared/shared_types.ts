@@ -1,7 +1,7 @@
 export type User = {
   id: number;
   name: string;
-  studentid: number;
+  studentId: string;
   password: string;
   photoLink: string;
   introduction?: string;
