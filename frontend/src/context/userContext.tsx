@@ -24,13 +24,15 @@ export function UserProvider({ children }: Props) {
   const [getUsers] = useLazyQuery(ALL_USERS_QUERY);
   const [user, setUser] = useState<User | null>(null);
   const fetchUser = useCallback(async () => {
-    const info = await (magic.user.getInfo());
+    const info = await magic.user.getInfo();
     const email = info.email;
     const { data } = await getUsers();
+
     if (!data?.AllUsers) return;
     const [findUser] = data.AllUsers.filter(
       (e) => e?.password === email,
     );
+
     if (findUser) {
       setUser({
         id: findUser.id,
@@ -40,7 +42,7 @@ export function UserProvider({ children }: Props) {
         photoLink: findUser.photoLink,
         // introduction: findUser.introduction,
       });
-    };
+    }
   }, []);
   return (
     <UserContext.Provider value={{ user, fetchUser }}>

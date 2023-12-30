@@ -6,6 +6,7 @@ import HomePage from "./containers/HomePage.tsx";
 import Footer from "./components/Common/Footer.tsx";
 import useArticles from "./context/articleContext.tsx";
 import { UserContext } from "./context/userContext.tsx";
+import EditProfilePage from "./containers/User/EditProfilePage.tsx";
 
 const LoginPage = lazy(() => import("./containers/User/LoginPage.tsx"));
 const LogOutPage = lazy(() => import("./containers/User/LogOutPage.tsx"));
@@ -24,6 +25,8 @@ const ForumMainPage = lazy(
 const IntroductionPage = lazy(
   () => import("./containers/IntroductionPage.tsx"),
 );
+
+const ProfilePage = lazy(() => import("./containers/User/ProfilePage.tsx"));
 
 function App() {
   const { fetchArticles } = useArticles();
@@ -103,6 +106,23 @@ function App() {
               </Suspense>
             }
           />
+          <Route
+            path="/user/:id"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <ProfilePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/user/:id/edit"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <EditProfilePage />
+              </Suspense>
+            }
+          />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
