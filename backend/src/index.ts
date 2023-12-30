@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 import http from "http";
 import cors from "cors";
 import bodyParser from "body-parser";
@@ -46,16 +47,24 @@ const server = new ApolloServer({
   ],
 });
 await server.start();
-
-app.use(
-  "/",
-  cors<cors.CorsRequest>(),
-  bodyParser.json(),
-  expressMiddleware(server),
-);
-
-const PORT = 5000;
+if (process.env.NODE_ENV === "development") {
+  app.use(
+    "/",
+    cors<cors.CorsRequest>(),
+    bodyParser.json(),
+    expressMiddleware(server),
+  );
+}
+const port = process.env.PORT || 5000;
 // Now that our HTTP server is fully set up, we can listen to it.
-httpServer.listen(PORT, () => {
-  console.log(`🚀 Server ready at http://localhost:${PORT}/`);
+httpServer.listen(port, () => {
+  console.log(`🚀 Server ready at http://localhost:${port}/`);
 });
+
+if (process.env.NODE_ENV === "production") {
+  const __dirname = path.resolve();
+  app.use(express.static(path.join(__dirname, "../frontend", "build")));
+  app.get("/*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../frontend", "build", "index.html"));
+  });
+}
