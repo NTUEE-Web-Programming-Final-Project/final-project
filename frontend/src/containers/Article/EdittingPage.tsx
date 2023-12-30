@@ -1,10 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useRef, useContext } from "react";
 // import useArticles from "../../context/articleContext.tsx";
-import {
-  useQuery,
-  useMutation,
-} from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 // import useArticles from "../../context/articleContext.tsx";
 import { UserContext } from "../../context/userContext.tsx";
 import Select from "../../components/Common/Select.tsx";
@@ -68,7 +65,9 @@ function EdittingPage() {
 
   const articleId = parseInt(id);
 
-  const [theArticle] = allArticlesData?.AllArticles?.filter((e) => e.id === articleId);
+  const [theArticle] = allArticlesData?.AllArticles?.filter(
+    (e) => e.id === articleId,
+  );
   const articleContent = theArticle?.content;
 
   return (
@@ -81,7 +80,7 @@ function EdittingPage() {
 
         <div className="flex flex-row-reverse">
           <button
-            onClick={() => {console.log(ref.current); handleUpdate({ article: ref.current.getMarkdown(), tags: tags })}}
+            onClick={() => handleUpdate({ article, tags })}
             className="m-2 border-2 px-3 h-16 w-20 text-lginline-flex items-center py-2.5 px-4 text-xl font-medium text-center text-white rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 bg-blue-600 hover:bg-blue-700"
             disabled={user === null}
           >

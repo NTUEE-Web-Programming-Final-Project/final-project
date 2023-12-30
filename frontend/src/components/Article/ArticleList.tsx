@@ -7,12 +7,14 @@ import {
 import ArticleItem from "./ArticleItem.tsx";
 import { Article, User } from "@shared/shared_types.ts";
 
-type filter = {
-  order: string;
+type ArticleListProps = {
+  filter: string;
+  searchByTags: string;
+  search: string;
 };
 
-const ArticleList = (filter: filter) => {
-  const { order } = filter;
+const ArticleList = ({ filter, searchByTags, search }: ArticleListProps) => {
+  const order = filter;
   const {
     loading: article_loading,
     error: article_error,
@@ -43,10 +45,64 @@ const ArticleList = (filter: filter) => {
     JSON.stringify(article_like_data?.SortArticlesByLike),
   );
   const users = JSON.parse(JSON.stringify(user_data?.AllUsers));
-
+  const sortbytags = sortbytime.filter((e: { tags: string[] }) =>
+    e.tags.find((e: string) => e === searchByTags),
+  );
+  const sortbytext = sortbytime.filter((e: { title: string }) =>
+    e.title.toLowerCase().includes(search.toLowerCase()),
+  );
+  // console.log("search",search);
+  // console.log("text = ",sortbytext);
   return (
     <>
-      {order === "time" &&
+      {search !== "" &&
+        sortbytext.map((article: Article) => {
+          const user = users.filter(
+            (user: User) => user.id === article?.writerId,
+          )[0];
+          const time = new Date(Date.parse(article?.date))
+            .toISOString()
+            .split("T")[0];
+          return (
+            <ArticleItem
+              id={article?.id}
+              title={article?.title}
+              writer={user.name}
+              writerId={user.id}
+              likes={article?.likesId.length}
+              date={time}
+              content={article?.content}
+              tags={article?.tags}
+              photoLink={user.photoLink}
+            />
+          );
+        })}
+      {search == "" &&
+        searchByTags !== "" &&
+        sortbytags.map((article: Article) => {
+          const user = users.filter(
+            (user: User) => user.id === article?.writerId,
+          )[0];
+          const time = new Date(Date.parse(article?.date))
+            .toISOString()
+            .split("T")[0];
+          return (
+            <ArticleItem
+              id={article?.id}
+              title={article?.title}
+              writer={user.name}
+              writerId={user.id}
+              likes={article?.likesId.length}
+              date={time}
+              content={article?.content}
+              tags={article?.tags}
+              photoLink={user.photoLink}
+            />
+          );
+        })}
+      {search == "" &&
+        searchByTags == "" &&
+        order === "time" &&
         sortbytime.map((article: Article) => {
           const user = users.filter(
             (user: User) => user.id === article?.writerId,
@@ -68,7 +124,9 @@ const ArticleList = (filter: filter) => {
             />
           );
         })}
-      {order === "like" &&
+      {search == "" &&
+        searchByTags == "" &&
+        order === "like" &&
         sortbylikes.map((article: Article) => {
           const user = users.filter(
             (user: User) => user.id === article?.writerId,
