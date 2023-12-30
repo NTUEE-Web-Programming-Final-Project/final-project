@@ -2,7 +2,9 @@ import "@mdxeditor/editor/style.css";
 import { storage } from "./firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
+import type { ForwardedRef } from "react";
 import { MDXEditor } from "@mdxeditor/editor/MDXEditor";
+import type { MDXEditorMethods } from "@mdxeditor/editor"
 import {
   toolbarPlugin,
   codeBlockPlugin,
@@ -114,18 +116,19 @@ const allPlugins = (diffMarkdown: string) => [
 
 type TextAreaProps = {
   article?: string;
-  setArticle: (article: string) => void;
+  // setArticle: (article: string) => void;
+  editorRef: any;
 };
 
-function TextArea({ article, setArticle }: TextAreaProps) {
-  if (!article) throw new Error("article is undefined!");
+function TextArea({ article, editorRef }: TextAreaProps) {
+  if (!article) article = "";
   const placeholder = `# Title`;
 
-  const handleInput = (e: string) => {
-    setArticle(e);
-    // console.log(e);
-    // console.log("article:" + { article });
-  };
+  // const handleInput = (e: string) => {
+  //   setArticle(e);
+  //   console.log(e);
+  //   // console.log("article:" + { article });
+  // };
 
   return (
     <>
@@ -134,7 +137,7 @@ function TextArea({ article, setArticle }: TextAreaProps) {
           placeholder={placeholder}
           markdown={article}
           plugins={allPlugins("Hello world")}
-          onChange={(e) => handleInput(e)}
+          ref={editorRef}
         />
       </div>
     </>

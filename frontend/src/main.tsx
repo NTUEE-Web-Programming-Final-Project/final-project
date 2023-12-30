@@ -4,7 +4,6 @@ import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { UserProvider } from "./context/userContext.tsx";
-import { ArticleProvider } from "./context/articleContext.tsx";
 
 import { split, HttpLink } from "@apollo/client";
 import { getMainDefinition } from "@apollo/client/utilities";
@@ -44,9 +43,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <ApolloProvider client={client}>
         <UserProvider>
-          <ArticleProvider>
-            <App />
-          </ArticleProvider>
+          <App />
         </UserProvider>
       </ApolloProvider>
     </BrowserRouter>
