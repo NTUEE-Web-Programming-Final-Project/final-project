@@ -16,9 +16,28 @@ const Query = {
   // User End
 
   // Article Start
-
   AllArticles: async (_parents, _args, _context) => {
     const articles = await prisma.article.findMany();
+    return articles;
+  },
+
+  SortArticlesByTime: async (_parents, _args, _context) => {
+    const articles = await prisma.article.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    return articles;
+  },
+
+  SortArticlesByLike: async (_parents, _args, _context) => {
+    const articles = await prisma.article.findMany({
+      orderBy: {
+        likes: {
+          _count: "desc",
+        },
+      },
+    });
     return articles;
   },
   // Article End
@@ -83,6 +102,26 @@ const Query = {
   // Question & Solution Start
   AllQuestions: async (parents, args, context) => {
     const questions = await prisma.question.findMany();
+    return questions;
+  },
+
+  SortQuestionsByTime: async (parents, args, context) => {
+    const questions = await prisma.question.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    return questions;
+  },
+
+  SortQuestionsByLike: async (parents, args, context) => {
+    const questions = await prisma.question.findMany({
+      orderBy: {
+        likes: {
+          _count: "desc",
+        },
+      },
+    });
     return questions;
   },
 

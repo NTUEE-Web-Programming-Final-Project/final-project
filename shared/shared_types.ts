@@ -9,13 +9,13 @@ export type User = {
 
 export type Question = {
   id: number;
-  asker: string;
+  askerId: number;
   date: string;
   title: string;
   content: string;
   topic: string;
   tags: string[];
-  likes: number[];
+  likesId: number[];
 };
 
 export type QuestionComment = {

@@ -28,53 +28,48 @@ const ArticleItem = ({
 }: ArticleItemProps) => {
   return (
     <>
-      <div className="flex flex-row border-2 border-black m-3">
-        <div className="flex flex-col border-r-4 w-60">
-          <button className="text-3xl m-3 rounded-lg bg-gray-200 hover:bg-gray-300 ">
-            <Link to={`/article/${id}`}>{`${title}`}</Link>
-          </button>
-          <div className="flex flex-row">
-            <div className="flex m-3 justify-around">
+      <div className="dark:bg-gray-800 dark:text-gray-50 bg-white rounded-lg m-0.5">
+        <div className="container grid grid-cols-12 mx-auto dark:bg-gray-900">
+          <div className="flex flex-col p-6 col-span-full row-span-full lg:p-10">
+            <Link to={`/article/${id}`}>
+              <h1 className="text-3xl font-semibold text-start m-2 mb-0 border-b-2 border-white">{`${title}`}</h1>
+            </Link>
+            <div className="flex justify-start my-2">
               {tags.map((tag) => (
-                <Link to={`/${tag}`}>
-                  <button className="flex m-0.5 bg-gray-300 hover:bg-gray-400 rounded-lg text-base px-2">
-                    {`${tag}`}
-                  </button>
-                </Link>
+                //  <Link to={`/${tag}`}>
+                <span className="px-2 py-1 text-xs rounded-full dark:bg-violet-400 dark:text-gray-900 bg-sky-200">{`${tag}`}</span>
+                //  </Link>
               ))}
             </div>
-          </div>
-        </div>
+            <Link to={`/article/${id}`} className="flex grow flex-1 p-2">
+              <p className="flex-1">{`${content}`}</p>
+            </Link>
 
-        <div className="flex flex-col grow">
-          <div className="flex flex-row justify-between">
-            <div className="flex justify-between">
-              <Link to={`/user/${writerId}`} className="w-8 m-1">
-                <img
-                  src={facebookURL}
-                  alt="twitter link"
-                  className="rounded-full"
-                />
-              </Link>
-              <Link to={`/user/${writerId}`} className="flex self-center px-2">
-                <p>{`${writer}`}</p>
-              </Link>
-              <p className="flex self-center px-2">{`${date}`}</p>
-            </div>
-
-            <div className="flex">
-              <img src={logoURL} alt="logo" className="w-8 m-1" />
-              <p className="flex self-center px-2">{`${likes}`} likes</p>
+            <div className="flex items-center justify-between pt-2">
+              <div className="flex space-x-2">
+                <Link to={`/user/${writerId}`} className="w-8 m-1">
+                  <img
+                    src={facebookURL}
+                    alt="twitter link"
+                    className="rounded-full"
+                  />
+                </Link>
+                <Link
+                  to={`/user/${writerId}`}
+                  className="flex self-center px-2"
+                >
+                  <span className="self-center text-base text-slate-500">
+                    by {`${writer}`}
+                  </span>
+                </Link>
+                <span className="self-center text-base text-slate-500">{`${date}`}</span>
+              </div>
+              <div className="flex flex-row">
+                <img src={logoURL} alt="logo" className="w-8 m-1" />
+                <p className="flex self-center px-2">{`${likes}`} likes</p>
+              </div>
             </div>
           </div>
-          <Link
-            to={`/article/${id}`}
-            className="flex grow bg-gray-100 hover:bg-gray-200"
-          >
-            <div className="flex flex-wrap text-balance">
-              <p className="self-center px-2">{`${content}`}</p>
-            </div>
-          </Link>
         </div>
       </div>
     </>
