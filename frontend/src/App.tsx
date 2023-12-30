@@ -6,7 +6,7 @@ import HomePage from "./containers/HomePage.tsx";
 import Footer from "./components/Common/Footer.tsx";
 import useArticles from "./context/articleContext.tsx";
 import { UserContext } from "./context/userContext.tsx";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 const LoginPage = lazy(() => import("./containers/User/LoginPage.tsx"));
 const LogOutPage = lazy(() => import("./containers/User/LogOutPage.tsx"));
