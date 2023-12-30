@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ci": "^2.3.0",
     "clsx": "^2.0.0",
     "magic-sdk": "^21.4.1"
   }

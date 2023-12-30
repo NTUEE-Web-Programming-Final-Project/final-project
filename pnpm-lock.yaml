@@ -1,6 +1,13 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
+  ci:
+    specifier: ^2.3.0
+    version: 2.3.0
   clsx:
     specifier: ^2.0.0
     version: 2.0.0
@@ -233,6 +240,11 @@ packages:
       function-bind: 1.1.2
       get-intrinsic: 1.2.2
       set-function-length: 1.1.1
+    dev: false
+
+  /ci@2.3.0:
+    resolution: {integrity: sha512-0MGXkzJKkwV3enG7RUxjJKdiAkbaZ7visCjitfpCN2BQjv02KGRMxCHLv4RPokkjJ4xR33FLMAXweS+aQ0pFSQ==}
+    hasBin: true
     dev: false
 
   /cipher-base@1.0.4:
