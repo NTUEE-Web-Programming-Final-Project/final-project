@@ -253,7 +253,7 @@ const Mutation = {
         questionsId: { push: newQuestion.id },
       },
     });
-    pubsub.publish("QUESTION_CREATED", { QuestionCreated: newQuestion });
+    await pubsub.publish("QUESTION_CREATED", { QuestionCreated: newQuestion });
     return newQuestion;
   },
 
@@ -287,7 +287,7 @@ const Mutation = {
         ),
       },
     });
-    pubsub.publish("QUESTION_DELETED", { QuestionDeleted: deletedQuestion });
+    await pubsub.publish("QUESTION_DELETED", { QuestionDeleted: deletedQuestion });
     return deletedQuestion;
   },
 
@@ -321,7 +321,7 @@ const Mutation = {
         tags: tags,
       },
     });
-    pubsub.publish("QUESTION_UPDATED", { QuestionUpdated: updatedQuestion });
+    await pubsub.publish("QUESTION_UPDATED", { QuestionUpdated: updatedQuestion });
     return updatedQuestion;
   },
 
@@ -355,7 +355,7 @@ const Mutation = {
         commentsId: { push: newQuestionComment.id },
       },
     });
-    pubsub.publish("QUESTION_COMMENT_CREATED", {
+    await pubsub.publish("QUESTION_COMMENT_CREATED", {
       QuestionCommentCreated: newQuestionComment,
     });
     return newQuestionComment;
@@ -406,7 +406,7 @@ const Mutation = {
         ),
       },
     });
-    pubsub.publish("QUESTION_COMMENT_DELETED", {
+    await pubsub.publish("QUESTION_COMMENT_DELETED", {
       QuestionCommentDeleted: deletedQuestionComment,
     });
     return deletedQuestionComment;
@@ -444,7 +444,7 @@ const Mutation = {
         content: content,
       },
     });
-    pubsub.publish("QUESTION_COMMENT_UPDATED", {
+    await pubsub.publish("QUESTION_COMMENT_UPDATED", {
       QuestionCommentUpdated: updatedQuestionComment,
     });
     return updatedQuestionComment;
@@ -722,7 +722,7 @@ const Mutation = {
         solutionsId: { push: newSolution.id },
       },
     });
-    pubsub.publish("SOLUTION_CREATED", { SolutionCreated: newSolution });
+    await pubsub.publish("SOLUTION_CREATED", { SolutionCreated: newSolution });
     return newSolution;
   },
 
@@ -771,7 +771,7 @@ const Mutation = {
         ),
       },
     });
-    pubsub.publish("SOLUTION_DELETED", { SolutionDeleted: deletedSolution });
+    await pubsub.publish("SOLUTION_DELETED", { SolutionDeleted: deletedSolution });
     return deletedSolution;
   },
 
@@ -807,7 +807,7 @@ const Mutation = {
         content: content,
       },
     });
-    pubsub.publish("SOLUTION_UPDATED", { SolutionUpdated: updatedSolution });
+    await pubsub.publish("SOLUTION_UPDATED", { SolutionUpdated: updatedSolution });
     return updatedSolution;
   },
 
@@ -841,7 +841,7 @@ const Mutation = {
         commentsId: { push: newSolutionComment.id },
       },
     });
-    pubsub.publish("SOLUTION_COMMENT_CREATED", {
+    await pubsub.publish("SOLUTION_COMMENT_CREATED", {
       SolutionCommentCreated: newSolutionComment,
     });
     return newSolutionComment;
@@ -892,7 +892,7 @@ const Mutation = {
         ),
       },
     });
-    pubsub.publish("SOLUTION_COMMENT_DELETED", {
+    await pubsub.publish("SOLUTION_COMMENT_DELETED", {
       QuestionCommentDeleted: deletedSolutionComment,
     });
     return deletedSolutionComment;
@@ -930,7 +930,7 @@ const Mutation = {
         content: content,
       },
     });
-    pubsub.publish("SOLUTION_COMMENT_UPDATED", {
+    await pubsub.publish("SOLUTION_COMMENT_UPDATED", {
       SolutionCommentUpdated: updatedSolutionComment,
     });
     return updatedSolutionComment;
