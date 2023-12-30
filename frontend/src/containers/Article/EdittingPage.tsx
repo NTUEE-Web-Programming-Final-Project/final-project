@@ -81,7 +81,7 @@ function EdittingPage() {
 
         <div className="flex flex-row-reverse">
           <button
-            onClick={() => {console.log(ref.current); handleUpdate({ article: ref.current.getMarkdown(), tags: tags })}}
+            onClick={() => handleUpdate({article, tags})}
             className="m-2 border-2 px-3 h-16 w-20 text-lginline-flex items-center py-2.5 px-4 text-xl font-medium text-center text-white rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 bg-blue-600 hover:bg-blue-700"
             disabled={user === null}
           >

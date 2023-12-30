@@ -11,20 +11,18 @@ const NavBar = () => {
         <div className="flex min-x-fit justify-between border-b-0 pl-6 pr-2 border-gray-300 pb-0">
           <div className="flex items-center flex-shrink-0 text-gray-800 mr-16">
             <Link to="/" className="flex items-center">
-              <img src={logoURL} alt="logo" className="w-10" />
-              <span className="font-semibold text-2xl tracking-tight">
-                Final Project
-              </span>
+              <img src={logoURL} alt="logo" className="w-8" />
+              <span className="font-semibold text-xl tracking-tight">電壇</span>
             </Link>
           </div>
         </div>
 
         <div className="flex flex-row flex-grow align-middle justify-end px-3 px-8 overflow-x-hidden min-x-fit">
-          <Link to={"/forum"}>
+          {/* <Link to={"/forum"}>
             <div className="text-md font-bold text-blue-700 mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2 ">
               Forum
             </div>
-          </Link>
+          </Link> */}
           <Link to={"/article"}>
             <div className="text-md font-bold text-blue-700 mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2">
               Article

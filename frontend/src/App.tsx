@@ -85,14 +85,14 @@ function App() {
             }
           />
 
-          <Route
+          {/* <Route
             path="/forum"
             element={
               <Suspense fallback={<div>Loading...</div>}>
                 <ForumMainPage />
               </Suspense>
             }
-          />
+          /> */}
           <Route
             path="/introduction"
             element={
