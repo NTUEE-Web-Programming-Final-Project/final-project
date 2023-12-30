@@ -38,7 +38,7 @@ const ArticleMainPage = () => {
       navigate(`/article/${newArticle.data?.CreateArticle?.id}/edit`);
     }
   };
-
+//
   const tags = [
     "Life",
     "Evalutaion",
