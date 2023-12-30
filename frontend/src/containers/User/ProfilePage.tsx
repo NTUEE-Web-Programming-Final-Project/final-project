@@ -47,7 +47,7 @@ const ProfilePage = () => {
               </span>
             </div>
             <p className="p-1 px-4 rounded">
-              {user.introduction ? user.introduction : ":)"}
+              {user.introduction !== undefined ? user.introduction : ":)"}
             </p>
 
             <div className="flex mt-2">

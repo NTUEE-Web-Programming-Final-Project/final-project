@@ -138,6 +138,7 @@ const UPDATE_USER_PROFILE_MUTATION = graphql(`
     ) {
       id
       name
+      introduction
       studentID
       photoLink
     }

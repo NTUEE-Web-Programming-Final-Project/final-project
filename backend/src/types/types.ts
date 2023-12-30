@@ -18,7 +18,7 @@ export interface UserPasswordInput {
 
 export interface UserProfileInput {
   name: string;
-  introducion: string;
+  introduction: string;
   studentID: string;
   photoLink: string;
 }

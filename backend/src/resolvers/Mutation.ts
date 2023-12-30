@@ -201,7 +201,7 @@ const Mutation = {
     _context,
   ) => {
     const id = args.id;
-    const { name, introducion, studentID, photoLink } = args.userProfileInput;
+    const { name, introduction, studentID, photoLink } = args.userProfileInput;
     const existingUser = await prisma.user.findFirst({
       where: {
         id: id,
@@ -217,7 +217,7 @@ const Mutation = {
       },
       data: {
         name: name,
-        introduction: introducion,
+        introduction: introduction,
         studentID: studentID,
         photoLink: photoLink,
       },

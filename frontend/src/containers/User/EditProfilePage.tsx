@@ -7,7 +7,7 @@ const EditProfilePage = () => {
   const { id } = useParams();
   if (!id) throw new Error("id is undefined");
   const [name, setName] = useState("");
-  const [intro, setIntor] = useState("");
+  const [introduction, setIntroduction] = useState("");
   const [studentID, setStudentID] = useState("");
   const [photoLink, setPhotoLink] = useState("");
   const navigate = useNavigate();
@@ -17,21 +17,20 @@ const EditProfilePage = () => {
   );
 
   const handleUpdate = async () => {
-    if (!id) return;
-    if (!name) return;
-    if (!intro) return;
-    if (!studentID) return;
-    if (!photoLink) return;
+    if (!id || !name || !studentID || !photoLink || !introduction ) {
+      alert("please input all columns")
+      return;
+    };
     if (loading) return "Submitting...";
     if (error) return `Submission error! ${error.message}`;
-    console.log(name, intro);
+    
 
     const editedUser = await updateUser({
       variables: {
         updateUserProfileId: parseInt(id),
         userProfileInput: {
           name: name,
-          introduction: intro,
+          introduction: introduction,
           photoLink: photoLink,
           studentID: studentID,
         },
@@ -73,7 +72,7 @@ const EditProfilePage = () => {
               onChange={(event) => {
                 setName(event.target.value);
               }}
-              placeholder="Search something.."
+              placeholder="write here"
             />
 
             <div className="flex flex-row space-x-2">
@@ -82,9 +81,10 @@ const EditProfilePage = () => {
               </span>
             </div>
             <textarea
-              value={intro}
+              value={introduction}
+              placeholder="write here"
               onChange={(event) => {
-                setIntor(event.target.value);
+                setIntroduction(event.target.value);
               }}
             ></textarea>
             <div className="flex mt-2">
@@ -100,7 +100,7 @@ const EditProfilePage = () => {
               onChange={(event) => {
                 setStudentID(event.target.value);
               }}
-              placeholder="Search something.."
+              placeholder="write here"
             />
 
             <div className="flex mt-2">
@@ -116,7 +116,7 @@ const EditProfilePage = () => {
               onChange={(event) => {
                 setPhotoLink(event.target.value);
               }}
-              placeholder="Search something.."
+              placeholder="write here"
             />
           </div>
         </div>
