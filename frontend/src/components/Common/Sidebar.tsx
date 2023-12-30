@@ -14,8 +14,8 @@ const Sidebar = () => {
     "Life",
     "Evalutaion",
     "ACG",
-    "Programing",
-    "Tech_News",
+    "Programming",
+    "Tech News",
     "Recruit",
   ];
 

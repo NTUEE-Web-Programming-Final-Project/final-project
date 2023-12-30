@@ -1,9 +1,10 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/Common/NavBar.tsx";
 import NotFound from "./components/Common/NotFound.tsx";
 import HomePage from "./containers/HomePage.tsx";
 import Footer from "./components/Common/Footer.tsx";
+import useArticles from "./context/articleContext.tsx";
 
 const LoginPage = lazy(() => import("./containers/User/LoginPage.tsx"));
 const ArticleMainPage = lazy(
@@ -23,6 +24,10 @@ const IntroductionPage = lazy(
 );
 
 function App() {
+  const { fetchArticles } = useArticles();
+  useEffect(() => {
+    fetchArticles();
+  }, [fetchArticles]);
   return (
     <>
       <div className="bg-gray-50">
@@ -90,4 +95,4 @@ function App() {
   );
 }
 
-export default App;
+export default App as React.FC;
