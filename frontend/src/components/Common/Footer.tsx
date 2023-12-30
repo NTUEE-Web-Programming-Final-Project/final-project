@@ -28,7 +28,11 @@ const Footer = () => {
             href="https://www.instagram.com"
             className="text-gray-400 hover:text-gray-500"
           >
-            <img src={instagramURL} alt="instagram link" className="w-10 h-10" />
+            <img
+              src={instagramURL}
+              alt="instagram link"
+              className="w-10 h-10"
+            />
           </a>
           <a
             href="https://www.github.com"

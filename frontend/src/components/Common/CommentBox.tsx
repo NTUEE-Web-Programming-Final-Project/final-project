@@ -2,12 +2,15 @@ import { useState } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { CREATE_ARTICLECOMMENT_MUTATION } from "../../graphql";
 import { ALL_ARTICLECOMMENTS_QUERY } from "../../graphql";
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext";
 
 type CommentBoxProps = {
   rootArticleId: number;
 };
 
 const CommentBox = ({ rootArticleId }: CommentBoxProps) => {
+  const { user } = useContext(UserContext);
   const [comment, setComment] = useState("");
   const [loadExpenseStatus, { loading: allLoading, error: allError }] =
     useLazyQuery(ALL_ARTICLECOMMENTS_QUERY);
@@ -71,9 +74,11 @@ const CommentBox = ({ rootArticleId }: CommentBoxProps) => {
             <button
               type="submit"
               className="inline-flex items-center py-2 px-3 text-base font-medium text-center text-white rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 bg-blue-600 hover:bg-blue-700 "
+              disabled={user === null || undefined}
             >
               Post comment
             </button>
+            {(user === null || undefined) && <span>登入以留言</span>}
           </div>
         </div>
       </form>

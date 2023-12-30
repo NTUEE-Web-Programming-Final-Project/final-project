@@ -20,7 +20,7 @@ type handleUpdateProps = {
 };
 
 function EdittingPage() {
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
   // const { fetchArticles } = useArticles();
   const { id } = useParams();
   if (!id) throw new Error("id is undefined");
@@ -40,20 +40,23 @@ function EdittingPage() {
     if (loading) return "Submitting...";
     if (error) return `Submission error! ${error.message}`;
     // console.log(article);
-    if (!user) throw new Error("user not found!");
-    const updatedArticle = await updateArticle({
-      variables: {
-        updateArticleId: parseInt(id),
-        articleInput: {
-          title: article.split("\n")[0],
-          content: article,
-          tags: tags,
-          topic: " ",
-          writerId: user?.id,
+    if (user) {
+      const updatedArticle = await updateArticle({
+        variables: {
+          updateArticleId: parseInt(id),
+          articleInput: {
+            title: article.split("\n")[0],
+            content: article,
+            tags: tags,
+            topic: " ",
+            writerId: user.id,
+          },
         },
-      },
-    });
-    navigate(`/article/${updatedArticle.data?.UpdateArticle?.id}`);
+      });
+      navigate(`/article/${updatedArticle.data?.UpdateArticle?.id}`);
+    } else {
+      navigate("/");
+    }
   };
 
   // useEffect(() => {
@@ -75,12 +78,13 @@ function EdittingPage() {
         <TextArea article={article} setArticle={setArticle} />
       </div>
       <div className="flex flex-row h-10% justify-evenly">
-        <Select tags={tags} setTags={setTags}/>
+        <Select tags={tags} setTags={setTags} />
 
         <div className="flex flex-row-reverse">
           <button
-            onClick={() => handleUpdate({article, tags})}
+            onClick={() => handleUpdate({ article, tags })}
             className="m-2 border-2 px-3 h-16 w-20 text-lginline-flex items-center py-2.5 px-4 text-xl font-medium text-center text-white rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 bg-blue-600 hover:bg-blue-700"
+            disabled={user === null}
           >
             post
           </button>

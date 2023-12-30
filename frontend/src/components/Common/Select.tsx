@@ -28,7 +28,11 @@ const articleTags = [
   "Recruit",
 ];
 
-function getStyles(name: string, tagName: readonly (string | null)[], theme: Theme) {
+function getStyles(
+  name: string,
+  tagName: readonly (string | null)[],
+  theme: Theme,
+) {
   return {
     fontWeight:
       tagName.indexOf(name) === -1
@@ -51,10 +55,10 @@ const MultipleSelectChip = ({ tags, setTags }: MultipleSelectChipProps) => {
       target: { value },
     } = event;
     if (setTags)
-    setTags(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value,
-    );
+      setTags(
+        // On autofill we get a stringified value.
+        typeof value === "string" ? value.split(",") : value,
+      );
     // else
     // setTagName(
     //   // On autofill we get a stringified value.

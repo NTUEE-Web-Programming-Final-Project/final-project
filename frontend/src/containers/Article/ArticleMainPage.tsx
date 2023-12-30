@@ -8,8 +8,7 @@ import { Search } from "lucide-react";
 import { UserContext } from "../../context/userContext";
 const ArticleMainPage = () => {
   const { user } = useContext(UserContext);
-  // console.log(user);
-  if (!user) throw new Error("user not found");
+  // if (!user) console.log(user);
   const navigate = useNavigate();
   const [filter, setFilter] = useState("time");
   const [search, setSearch] = useState("");
@@ -23,18 +22,20 @@ const ArticleMainPage = () => {
     if (error) {
       return <div>{error.message}</div>;
     }
-    const newArticle = await createArticle({
-      variables: {
-        articleInput: {
-          writerId: user?.id,
-          title: "# Title",
-          content: "# Title",
-          tags: [""],
-          topic: "",
+    if (user) {
+      const newArticle = await createArticle({
+        variables: {
+          articleInput: {
+            writerId: user.id,
+            title: "# Title",
+            content: "# Title",
+            tags: [""],
+            topic: "",
+          },
         },
-      },
-    });
-    navigate(`/article/${newArticle.data?.CreateArticle?.id}/edit`);
+      });
+      navigate(`/article/${newArticle.data?.CreateArticle?.id}/edit`);
+    }
   };
   return (
     <>
@@ -77,12 +78,21 @@ const ArticleMainPage = () => {
             </div>
 
             <div className="flex justify-end">
-              <button
-                onClick={handleCreateArticle}
-                className="border-2 p-2 m-1 text-md font-bold text-black bg-gray-200 hover:text-white hover:bg-gray-400 px-4 rounded self-center"
-              >
-                發文
-              </button>
+              {user === null ? (
+                <button
+                  className="border-2 p-2 m-1 text-md font-bold text-black bg-gray-200 px-4 rounded self-center cursor-pointer"
+                  disabled
+                >
+                  請先登入
+                </button>
+              ) : (
+                <button
+                  onClick={handleCreateArticle}
+                  className="border-2 p-2 m-1 text-md font-bold text-black bg-gray-200 hover:text-white hover:bg-gray-400 px-4 rounded self-center"
+                >
+                  發文
+                </button>
+              )}
             </div>
           </div>
           <ArticleList order={filter} />

@@ -29,9 +29,7 @@ export function UserProvider({ children }: Props) {
     const { data } = await getUsers();
 
     if (!data?.AllUsers) return;
-    const [findUser] = data.AllUsers.filter(
-      (e) => e?.password === email,
-    );
+    const [findUser] = data.AllUsers.filter((e) => e?.password === email);
 
     if (findUser) {
       setUser({
