@@ -71,7 +71,7 @@ function App() {
               </Suspense>
             }
           />
-  
+
           <Route
             path="/article/:id"
             element={
@@ -107,7 +107,7 @@ function App() {
             }
           />
           <Route
-            path="/user/:id"
+            path="/user/:userid"
             element={
               <Suspense fallback={<div>Loading...</div>}>
                 <ProfilePage />

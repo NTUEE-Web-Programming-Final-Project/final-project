@@ -11,8 +11,8 @@ const NavBar = () => {
         <div className="flex min-x-fit justify-between border-b-0 pl-6 pr-2 border-gray-300 pb-0">
           <div className="flex items-center flex-shrink-0 text-gray-800 mr-16">
             <Link to="/" className="flex items-center">
-              <img src={logoURL} alt="logo" className="w-8" />
-              <span className="font-semibold text-xl tracking-tight">
+              <img src={logoURL} alt="logo" className="w-10" />
+              <span className="font-semibold text-2xl tracking-tight">
                 Final Project
               </span>
             </Link>
@@ -49,12 +49,16 @@ const NavBar = () => {
             </Link>
           )}
           {user ? (
-            <Link to={"/logout"}>
-              <p> {user.name} </p>
-              <img src={logoURL} alt="logo" className="w-8 rounded-full" />
+            <Link to={`/user/${user.id}`}>
+              {/* <p> {user.name} </p> */}
+              <img
+                src={user.photoLink}
+                alt="logo"
+                className="w-8 rounded-full"
+              />
             </Link>
           ) : (
-            <Link to={"/login"}>
+            <Link to={`/user`}>
               <img src={logoURL} alt="logo" className="w-8 rounded-full" />
             </Link>
           )}
