@@ -17,13 +17,12 @@ const EditProfilePage = () => {
   );
 
   const handleUpdate = async () => {
-    if (!id || !name || !studentID || !photoLink || !introduction ) {
-      alert("please input all columns")
+    if (!id || !name || !studentID || !photoLink || !introduction) {
+      alert("please input all columns");
       return;
-    };
+    }
     if (loading) return "Submitting...";
     if (error) return `Submission error! ${error.message}`;
-    
 
     const editedUser = await updateUser({
       variables: {
