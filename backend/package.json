@@ -13,7 +13,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:prisma": "prettier --write ./prisma/schema.prisma",
-    "deploy": "NODE_ENV=production babel-node index.ts"
+    "deploy": "NODE_ENV=production ts-node-esm ./index.ts"
   },
   "author": "",
   "license": "ISC",
