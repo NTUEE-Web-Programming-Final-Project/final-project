@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install:all": "cd frontend && pnpm install && cd ../backend && pnpm install && pnpm setup",
-    "frontend": "cd frontend && pnpm run dev",
+    "install:all": "cd frontend && pnpm install --freeze-lockfile && cd ../backend && pnpm install --freeze-lockfile && pnpm setup && cd ../shared && pnpm install --freeze-lockfile",
+    "frontend": "cd frontend && pnpm build",
     "backend": "cd backend && pnpm start"
   },
   "author": "",
