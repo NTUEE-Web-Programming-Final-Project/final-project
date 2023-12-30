@@ -108,7 +108,7 @@ const Query = {
   SortQuestionsByTime: async (parents, args, context) => {
     const questions = await prisma.question.findMany({
       orderBy: {
-        id: "desc",
+        date: "desc",
       },
     });
     return questions;

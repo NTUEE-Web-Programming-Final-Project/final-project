@@ -4,7 +4,7 @@ import logoURL from "../../images/lightning.png";
 const NavBar = () => {
   return (
     <>
-      <nav className="flex items-center justify-between bg-gray-50 py-4 px-12 shadow overflow-x-hidden">
+      <nav className="flex items-center justify-between bg-white py-4 px-12 overflow-x-hidden border-b-2">
         <div className="flex min-x-fit justify-between border-b-0 pl-6 pr-2 border-gray-300 pb-0">
           <div className="flex items-center flex-shrink-0 text-gray-800 mr-16">
             <Link to="/" className="flex items-center">
