@@ -32,7 +32,9 @@ const ArticleItem = ({
         <div className="container grid grid-cols-12 mx-auto dark:bg-gray-900">
           <div className="flex flex-col p-6 col-span-full row-span-full lg:p-10">
             <Link to={`/article/${id}`}>
-              <h1 className="text-3xl font-semibold text-start m-2 mb-0 border-b-2 border-white">{`${title}`}</h1>
+              <h1 className="text-3xl font-semibold text-start m-2 mb-0 border-b-2 border-white">{`${
+                title.split("# ")[1]
+              }`}</h1>
             </Link>
             <div className="flex justify-start my-2">
               {tags.map((tag) => (
@@ -41,10 +43,6 @@ const ArticleItem = ({
                 //  </Link>
               ))}
             </div>
-            <Link to={`/article/${id}`} className="flex grow flex-1 p-2">
-              <p className="flex-1">{`${content}`}</p>
-            </Link>
-
             <div className="flex items-center justify-between pt-2">
               <div className="flex space-x-2">
                 <Link to={`/user/${writerId}`} className="w-8 m-1">

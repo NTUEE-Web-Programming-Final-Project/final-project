@@ -1,4 +1,4 @@
-// firebase private keys
+// private keys for firebase and magic link
 export const env = {
   API_KEY: "",
   AUTH_DOMAIN: "",
