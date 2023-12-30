@@ -1,9 +1,10 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/Common/NavBar.tsx";
 import NotFound from "./components/Common/NotFound.tsx";
 import HomePage from "./containers/HomePage.tsx";
 import Footer from "./components/Common/Footer.tsx";
+import useArticles from "./context/articleContext.tsx";
 import { UserContext } from "./context/userContext.tsx";
 import { useContext, useEffect } from "react";
 
@@ -26,6 +27,10 @@ const IntroductionPage = lazy(
 );
 
 function App() {
+  const { fetchArticles } = useArticles();
+  useEffect(() => {
+    fetchArticles();
+  }, [fetchArticles]);
   const { fetchUser } = useContext(UserContext);
   useEffect(() => {
     fetchUser();
@@ -107,4 +112,4 @@ function App() {
   );
 }
 
-export default App;
+export default App as React.FC;

@@ -94,6 +94,7 @@ const ArticlePageOverview = () => {
           <CommentOverview
             content={comment?.content}
             commenterId={comment?.commenterId}
+            key={comment?.commenterId}
           />
         ))}
         <CommentBox rootArticleId={articleId} />

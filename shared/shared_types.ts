@@ -35,17 +35,29 @@ export type Solution = {
   likes: number[];
 };
 
-export type Article = {
+export type SolutionComment = {
   id: number;
-  writerId: number;
+  commenter: string;
   date: string;
-  title: string;
   content: string;
-  tags: (string | null)[];
-  topic: string;
-  commentsId: (number | null)[];
-  likesId: (number | null)[];
+  likes: number[];
 };
+
+export type Article =
+  | ({
+      __typename?: "Article" | undefined;
+      id: number;
+      writerId: number;
+      date: string;
+      title: string;
+      content: string;
+      tags: (string | null)[];
+      topic: string;
+      commentsId: (number | null)[];
+      likesId: (number | null)[];
+    } | null)[]
+  | null
+  | undefined;
 
 export type ArticleComment = {
   id: number;
