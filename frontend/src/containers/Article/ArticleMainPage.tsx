@@ -75,8 +75,8 @@ const ArticleMainPage = () => {
 
             <div className="flex justify-end">
               <button
-                onClick={handleCreateArticle}
-                className="border-2 px-3 m-1 text-md font-bold text-black bg-gray-200 mt-4 mt-0 hover:text-white hover:bg-gray-400 px-4 py-2 rounded mr-2"
+                onClick={() => navigate("/forum/draft")}
+                className="border-2 p-2 m-1 text-md font-bold text-black bg-gray-200 hover:text-white hover:bg-gray-400 px-4 rounded self-center"
               >
                 發文
               </button>

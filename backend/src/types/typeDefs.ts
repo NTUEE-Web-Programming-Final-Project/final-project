@@ -222,10 +222,12 @@ const typeDefs = `#graphql
 
   type Query {
     AllAnnouncements: [Announcement]
+    HomepageAnnouncements: [Announcement]
     AllUsers: [User]
     # Article
     AllArticles: [Article]
     AllArticleComments: [ArticleComment]
+    HomepageArticles: [Article]
     SortArticlesByTime: [Article]
     SortArticlesByLike: [Article]
     AllLikedArticles(likerId: Int!): [Article]
@@ -233,6 +235,7 @@ const typeDefs = `#graphql
     # Question
     AllQuestions: [Question]
     AllQuestionComments: [QuestionComment]
+    HomepageQuestions: [Question]
     SortQuestionsByTime: [Question]
     SortQuestionsByLike: [Question]
     AllLikedQuestions(likerId: Int!): [Question]
