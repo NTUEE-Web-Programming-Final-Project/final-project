@@ -49,6 +49,7 @@ const ProfilePage = () => {
     if (allError) return <div>{allError.message}</div>;
     let queryUser = await loadExpenseStatus();
     console.log(queryUser.data?.AllUsers);
+    console.log(queryUser.data?.AllUsers);
     window.location.reload();
   };
 
