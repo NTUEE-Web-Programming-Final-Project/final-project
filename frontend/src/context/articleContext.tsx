@@ -28,7 +28,6 @@ export function ArticleProvider({ children }: Props) {
       if (loading) return console.log("Loading...");
       if (error) return alert(`Error! ${error.message}`);
       setArticle((await getAllArticle()).data?.AllArticles);
-      console.log(article);
     } catch (err) {
       console.log(err);
       alert("Error: failed to fetch articles");

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/Common/NavBar.tsx";
 import NotFound from "./components/Common/NotFound.tsx";
@@ -6,7 +6,6 @@ import HomePage from "./containers/HomePage.tsx";
 import Footer from "./components/Common/Footer.tsx";
 import useArticles from "./context/articleContext.tsx";
 import { UserContext } from "./context/userContext.tsx";
-import { useContext, useEffect } from "react";
 
 const LoginPage = lazy(() => import("./containers/User/LoginPage.tsx"));
 const LogOutPage = lazy(() => import("./containers/User/LogOutPage.tsx"));
@@ -69,7 +68,7 @@ function App() {
               </Suspense>
             }
           />
-
+  
           <Route
             path="/article/:id"
             element={

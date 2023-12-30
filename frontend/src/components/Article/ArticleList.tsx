@@ -49,21 +49,21 @@ const ArticleList = (filter: filter) => {
       {order === "time" &&
         sortbytime.map((article: Article) => {
           const user = users.filter(
-            (user: User) => user.id === article.writerId,
+            (user: User) => user.id === article?.writerId,
           )[0];
-          const time = new Date(Date.parse(article.date))
+          const time = new Date(Date.parse(article?.date))
             .toISOString()
             .split("T")[0];
           return (
             <ArticleItem
-              id={article.id}
-              title={article.title}
+              id={article?.id}
+              title={article?.title}
               writer={user.name}
               writerId={user.id}
-              likes={article.likesId.length}
+              likes={article?.likesId.length}
               date={time}
-              content={article.content}
-              tags={article.tags}
+              content={article?.content}
+              tags={article?.tags}
               photoLink={user.photoLink}
             />
           );
@@ -71,21 +71,21 @@ const ArticleList = (filter: filter) => {
       {order === "like" &&
         sortbylikes.map((article: Article) => {
           const user = users.filter(
-            (user: User) => user.id === article.writerId,
+            (user: User) => user.id === article?.writerId,
           )[0];
-          const time = new Date(Date.parse(article.date))
+          const time = new Date(Date.parse(article?.date))
             .toISOString()
             .split("T")[0];
           return (
             <ArticleItem
-              id={article.id}
-              title={article.title}
+              id={article?.id}
+              title={article?.title}
               writer={user.name}
               writerId={user.id}
-              likes={article.likesId.length}
+              likes={article?.likesId.length}
               date={time}
-              content={article.content}
-              tags={article.tags}
+              content={article?.content}
+              tags={article?.tags}
               photoLink={user.photoLink}
             />
           );
