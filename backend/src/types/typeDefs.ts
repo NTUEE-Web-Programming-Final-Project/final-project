@@ -144,6 +144,13 @@ const typeDefs = `#graphql
     introduction: String
   }
 
+  input UserProfileInput {
+    name: String!
+    studentID: String!
+    photoLink: String!
+    introduction: String
+  }
+
   input UserPasswordInput {
     password: String!
   }
@@ -257,6 +264,7 @@ const typeDefs = `#graphql
     DeleteUser(id: Int!): User
     UpdateUser(id: Int!, userInput: UserInput!): User
     UpdateUserPassword(id: Int!, userPasswordInput: UserPasswordInput!): User
+    UpdateUserProfile(id: Int!, userProfileInput: UserProfileInput!): User
     # Article
     CreateArticle(articleInput: ArticleInput!): Article
     DeleteArticle(id: Int!): Article
