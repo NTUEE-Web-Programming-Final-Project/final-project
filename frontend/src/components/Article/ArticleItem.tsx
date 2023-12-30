@@ -39,7 +39,10 @@ const ArticleItem = ({
             <div className="flex justify-start my-2">
               {tags.map((tag) => (
                 //  <Link to={`/${tag}`}>
-                <span key={tag} className="px-2 py-1 text-xs rounded-full dark:bg-violet-400 dark:text-gray-900 bg-sky-200">{`${tag}`}</span>
+                <span
+                  key={tag}
+                  className="px-2 py-1 text-xs rounded-full dark:bg-violet-400 dark:text-gray-900 bg-sky-200"
+                >{`${tag}`}</span>
                 //  </Link>
               ))}
             </div>
