@@ -226,11 +226,15 @@ const typeDefs = `#graphql
     # Article
     AllArticles: [Article]
     AllArticleComments: [ArticleComment]
+    SortArticlesByTime: [Article]
+    SortArticlesByLike: [Article]
     AllLikedArticles(likerId: Int!): [Article]
     AllLikedArticleComments(likerId: Int!): [ArticleComment]
     # Question
     AllQuestions: [Question]
     AllQuestionComments: [QuestionComment]
+    SortQuestionsByTime: [Question]
+    SortQuestionsByLike: [Question]
     AllLikedQuestions(likerId: Int!): [Question]
     AllLikedQuestionComments(likerId: Int!): [QuestionComment]
     # Solution
