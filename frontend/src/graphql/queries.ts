@@ -12,6 +12,17 @@ const ALL_ANNOUNCEMENTS_QUERY = graphql(`
   }
 `);
 
+const HOMEPAGE_ANNOUNCEMENTS_QUERY = graphql(`
+  query HomepageAnnouncements {
+    HomepageAnnouncements {
+      id
+      title
+      date
+      content
+    }
+  }
+`);
+
 // User
 const ALL_USERS_QUERY = graphql(`
   query AllUsers {
@@ -40,6 +51,22 @@ const ALL_USERS_QUERY = graphql(`
 const ALL_ARTICLES_QUERY = graphql(`
   query AllArticles {
     AllArticles {
+      id
+      writerId
+      date
+      title
+      content
+      tags
+      topic
+      commentsId
+      likesId
+    }
+  }
+`);
+
+const HOMEPAGE_ARTICLES_QUERY = graphql(`
+  query HomepageArticles {
+    HomepageArticles {
       id
       writerId
       date
@@ -132,6 +159,23 @@ const ALL_LIKED_ARTICLECOMMENTS_QUERY = graphql(`
 const ALL_QUESTIONS_QUERY = graphql(`
   query AllQuestions {
     AllQuestions {
+      id
+      askerId
+      title
+      date
+      content
+      topic
+      tags
+      commentsId
+      solutionsId
+      likesId
+    }
+  }
+`);
+
+const HOMEPAGE_QUESTIONS_QUERY = graphql(`
+  query HomepageQuestions {
+    HomepageQuestions {
       id
       askerId
       title
@@ -278,14 +322,17 @@ const ALL_LIKED_SOLUTIONCOMMENTS_QUERY = graphql(`
 
 export {
   ALL_ANNOUNCEMENTS_QUERY,
+  HOMEPAGE_ANNOUNCEMENTS_QUERY,
   ALL_USERS_QUERY,
   ALL_ARTICLES_QUERY,
+  HOMEPAGE_ARTICLES_QUERY,
   SORT_ARTICLES_BY_TIME_QUERY,
   SORT_ARTICLES_BY_LIKE_QUERY,
   ALL_LIKED_ARTICLES_QUERY,
   ALL_ARTICLECOMMENTS_QUERY,
   ALL_LIKED_ARTICLECOMMENTS_QUERY,
   ALL_QUESTIONS_QUERY,
+  HOMEPAGE_QUESTIONS_QUERY,
   SORT_QUESTIONS_BY_TIME_QUERY,
   SORT_QUESTIONS_BY_LIKE_QUERY,
   ALL_LIKED_QUESTIONS_QUERY,
