@@ -19,13 +19,13 @@ const ArticleMainPage = () => {
             <div className="flex">
               <button
                 onClick={() => setFilter("time")}
-                className="border-2 px-3 m-1 text-md font-bold text-black bg-gray-200 mt-4 mt-0 hover:text-white hover:bg-gray-400 px-4 py-2 rounded mr-2"
+                className="border-2 p-2 m-1 text-md font-bold text-black bg-gray-200 hover:text-white hover:bg-gray-400 px-4 rounded self-center"
               >
                 最新
               </button>
               <button
                 onClick={() => setFilter("like")}
-                className="border-2 px-3 m-1 text-md font-bold text-black bg-gray-200 mt-4 mt-0 hover:text-white hover:bg-gray-400 px-4 py-2 rounded mr-2"
+                className="border-2 p-2 m-1 text-md font-bold text-black bg-gray-200 hover:text-white hover:bg-gray-400 px-4 rounded self-center"
               >
                 最多讚
               </button>
@@ -51,7 +51,7 @@ const ArticleMainPage = () => {
                 </button>
 
                 <input
-                  className="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+                  className="peer h-full w-full outline-none text-sm text-gray-700"
                   type="text"
                   id="search"
                   value={search}
@@ -66,7 +66,7 @@ const ArticleMainPage = () => {
             <div className="flex justify-end">
               <button
                 onClick={() => navigate("/article/draft")}
-                className="border-2 px-3 m-1 text-md font-bold text-black bg-gray-200 mt-4 mt-0 hover:text-white hover:bg-gray-400 px-4 py-2 rounded mr-2"
+                className="border-2 p-2 m-1 text-md font-bold text-black bg-gray-200 hover:text-white hover:bg-gray-400 px-4 rounded"
               >
                 發文
               </button>

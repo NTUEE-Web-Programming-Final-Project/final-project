@@ -14,7 +14,7 @@ const Footer = () => {
                   </a>
               </div>
           </nav> */}
-        <div className="flex justify-center mt-8 space-x-6">
+        {/* <div className="flex justify-center mt-8 space-x-6">
           <a
             href="https://www.instagram.com"
             className="text-gray-400 hover:text-gray-500"
@@ -39,7 +39,7 @@ const Footer = () => {
           >
             <img src={githubURL} alt="github link" className="w-6 h-6" />
           </a>
-        </div>
+        </div> */}
         <p className="mt-8 text-base leading-6 text-center text-gray-400">
           {/* © 2021 SomeCompany, Inc. All rights reserved. */}
           NTUEE

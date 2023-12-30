@@ -32,7 +32,6 @@ const ArticlePageOverview = () => {
   if (allArticlesLoading) return "Loading...";
   if (allArticlesError) return `Error! ${allArticlesError.message}`;
 
-
   const articleContent =
     allArticlesData?.AllArticles?.[allArticlesData?.AllArticles?.length - 1]
       ?.content;
