@@ -26,6 +26,10 @@ const IntroductionPage = lazy(
   () => import("./containers/IntroductionPage.tsx"),
 );
 
+const ProfilePage = lazy(
+  () => import("./containers/User/ProfilePage.tsx"),
+);
+
 function App() {
   const { fetchArticles } = useArticles();
   useEffect(() => {
@@ -104,6 +108,15 @@ function App() {
               </Suspense>
             }
           />
+          <Route
+            path="/user/:id"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <ProfilePage />
+              </Suspense>
+            }
+          />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

@@ -17,6 +17,7 @@ import {
   SolutionCommentInput,
   SolutionLikeInput,
   SolutionCommentLikeInput,
+  UserProfileInput,
 } from "../types/types.ts";
 
 const Mutation = {
@@ -192,6 +193,38 @@ const Mutation = {
 
     await pubsub.publish("USER_UPDATED", { UserUpdated: updatedUserPassword });
     return updatedUserPassword;
+  },
+
+  UpdateUserProfile: async (
+    _parent,
+    args: { id: number; userProfileInput: UserProfileInput },
+    _context,
+  ) => {
+    const id = args.id;
+    const { name, introducion, studentID, photoLink } = args.userProfileInput;
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        id: id,
+      },
+    });
+    if (!existingUser) {
+      throw new Error("user not found!");
+    }
+
+    const updatedUserProfile = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        name: name,
+        introduction: introducion,
+        studentID: studentID,
+        photoLink: photoLink,
+      },
+    });
+
+    await pubsub.publish("USER_UPDATED", { UserUpdated: updatedUserProfile });
+    return updatedUserProfile;
   },
   // User End
 

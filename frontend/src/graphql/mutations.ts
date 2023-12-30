@@ -127,6 +127,23 @@ const UPDATE_USER_PASSWORD_MUTATION = graphql(`
   }
 `);
 
+const UPDATE_USER_PROFILE_MUTATION = graphql(`
+  mutation UpdateUserProfile(
+    $updateUserProfileId: Int!
+    $userProfileInput: UserProfileInput!
+  ) {
+    UpdateUserProfile(
+      id: $updateUserProfileId
+      userProfileInput: $userProfileInput
+    ) {
+      id
+      name
+      studentID
+      photoLink
+    }
+  }
+`);
+
 // Article
 const CREATE_ARTICLE_MUTATION = graphql(`
   mutation CreateArticle($articleInput: ArticleInput!) {
@@ -554,6 +571,7 @@ export {
   DELETE_USER_MUTATION,
   UPDATE_USER_MUTATION,
   UPDATE_USER_PASSWORD_MUTATION,
+  UPDATE_USER_PROFILE_MUTATION,
   CREATE_ARTICLE_MUTATION,
   DELETE_ARTICLE_MUTATION,
   UPDATE_ARTICLE_MUTATION,

@@ -16,6 +16,13 @@ export interface UserPasswordInput {
   password: string;
 }
 
+export interface UserProfileInput {
+  name: string;
+  introducion: string;
+  studentID: string;
+  photoLink: string;
+}
+
 export interface ArticleInput {
   writerId: number;
   title: string;
