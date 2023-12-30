@@ -11,7 +11,7 @@ const EditProfilePage = () => {
   };
   const { userid } = useParams();
   const { user } = useContext(UserContext);
-  if (!userid) handleNotMe();
+  // if (!userid) handleNotMe();
   const [name, setName] = useState("");
   const [introduction, setIntroduction] = useState("");
   const [studentID, setStudentID] = useState("");

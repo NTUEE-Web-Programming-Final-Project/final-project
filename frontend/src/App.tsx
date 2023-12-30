@@ -110,7 +110,7 @@ function App() {
             }
           />
           <Route
-            path="/user/:id/edit"
+            path="/user/:userid/edit"
             element={
               <Suspense fallback={<div>Loading...</div>}>
                 <EditProfilePage />
