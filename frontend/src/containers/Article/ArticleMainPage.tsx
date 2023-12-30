@@ -2,11 +2,14 @@ import { useNavigate } from "react-router-dom";
 import ArticleList from "../../components/Article/ArticleList";
 import { useMutation } from "@apollo/client";
 import { CREATE_ARTICLE_MUTATION } from "../../graphql";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Sidebar from "../../components/Article/SideBar";
 import { Search } from "lucide-react";
-
+import { UserContext } from "../../context/userContext";
 const ArticleMainPage = () => {
+  const { user } = useContext(UserContext);
+  // console.log(user);
+  if (!user) throw new Error("user not found");
   const navigate = useNavigate();
   const [filter, setFilter] = useState("time");
   const [search, setSearch] = useState("");
@@ -23,7 +26,7 @@ const ArticleMainPage = () => {
     const newArticle = await createArticle({
       variables: {
         articleInput: {
-          writerId: 1,
+          writerId: user?.id,
           title: "# Title",
           content: "# Title",
           tags: [""],
@@ -75,7 +78,7 @@ const ArticleMainPage = () => {
 
             <div className="flex justify-end">
               <button
-                onClick={() => navigate("/forum/draft")}
+                onClick={handleCreateArticle}
                 className="border-2 p-2 m-1 text-md font-bold text-black bg-gray-200 hover:text-white hover:bg-gray-400 px-4 rounded self-center"
               >
                 發文

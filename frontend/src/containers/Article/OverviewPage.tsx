@@ -7,6 +7,7 @@ import {
   ALL_LIKED_ARTICLES_QUERY,
   ALL_ARTICLECOMMENTS_QUERY,
 } from "../../graphql";
+import Select from "../../components/Common/Select.tsx";
 
 import { MDXEditor } from "@mdxeditor/editor/MDXEditor";
 import { allPlugins } from "../../components/Common/MDX/allPlugins";
@@ -45,7 +46,9 @@ const ArticlePageOverview = () => {
   const articleContent =
     allArticlesData?.AllArticles?.[allArticlesData?.AllArticles?.length - 1]
       ?.content;
-
+  const articleTags  =
+    allArticlesData?.AllArticles?.[allArticlesData?.AllArticles?.length - 1]
+      ?.tags;
   if (!id) throw new Error("id is undefined");
   const articleId = parseInt(id);
 
@@ -75,12 +78,16 @@ const ArticlePageOverview = () => {
             readOnly
           />
         </div>
+        <div>
+          <Select tags={articleTags} setTags={undefined}/>
+        </div>
         <div className="flex flex-row justify-between">
           <LikeButton
             likerId={likerId}
             articleId={articleId}
             initialLiked={intialLiked}
           />
+
           <button
             onClick={() => navigate(`/article/${id}/edit`)}
             className="border-2 px-3 py-2 mr-[16%] mb-3 text-lginline-flex items-center text-lg font-medium text-center text-white rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 bg-blue-600 hover:bg-blue-700"

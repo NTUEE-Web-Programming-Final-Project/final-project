@@ -123,7 +123,7 @@ function TextArea({ article, setArticle }: TextAreaProps) {
 
   const handleInput = (e: string) => {
     setArticle(e);
-    console.log(e);
+    // console.log(e);
     // console.log("article:" + { article });
   };
 

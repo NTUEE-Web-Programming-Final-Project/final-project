@@ -19,7 +19,7 @@ const MenuProps = {
   },
 };
 
-const articles = [
+const articleTags = [
   "Life",
   "Evalutaion",
   "ACG",
@@ -28,7 +28,7 @@ const articles = [
   "Recruit",
 ];
 
-function getStyles(name: string, tagName: readonly string[], theme: Theme) {
+function getStyles(name: string, tagName: readonly (string | null)[], theme: Theme) {
   return {
     fontWeight:
       tagName.indexOf(name) === -1
@@ -37,18 +37,29 @@ function getStyles(name: string, tagName: readonly string[], theme: Theme) {
   };
 }
 
-const MultipleSelectChip = () => {
-  const theme = useTheme();
-  const [tagName, setTagName] = React.useState<string[]>([]);
+type MultipleSelectChipProps = {
+  tags: any;
+  setTags?: (tags: any) => void;
+};
 
-  const handleChange = (event: SelectChangeEvent<typeof tagName>) => {
+const MultipleSelectChip = ({ tags, setTags }: MultipleSelectChipProps) => {
+  const theme = useTheme();
+  // const [tagName, setTagName] = React.useState<string[]>(tags);
+
+  const handleChange = (event: SelectChangeEvent<typeof tags>) => {
     const {
       target: { value },
     } = event;
-    setTagName(
+    if (setTags)
+    setTags(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value,
     );
+    // else
+    // setTagName(
+    //   // On autofill we get a stringified value.
+    //   typeof value === "string" ? value.split(",") : value,
+    // );
   };
 
   return (
@@ -59,23 +70,24 @@ const MultipleSelectChip = () => {
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={tagName}
+          value={tags}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selected.map((value) => (
+              {selected.map((value: any) => (
                 <Chip key={value} label={value} />
               ))}
             </Box>
           )}
           MenuProps={MenuProps}
+          disabled={setTags ? false : true}
         >
-          {articles.map((name) => (
+          {articleTags.map((name) => (
             <MenuItem
               key={name}
               value={name}
-              style={getStyles(name, tagName, theme)}
+              style={getStyles(name, tags, theme)}
             >
               {name}
             </MenuItem>
