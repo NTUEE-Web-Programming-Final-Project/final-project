@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import logoURL from "../../images/lightning.png";
+import { UserContext } from "../../context/userContext";
+import { useContext } from "react";
 
 const NavBar = () => {
+  const { user } = useContext(UserContext);
   return (
     <>
       <nav className="flex items-center justify-between bg-white py-4 px-12 overflow-x-hidden border-b-2">
@@ -32,14 +35,29 @@ const NavBar = () => {
               About
             </div>
           </Link>
-          <Link to={"/login"}>
-            <div className="text-md font-bold text-blue-700 mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2">
-              login
-            </div>
-          </Link>
-          <Link to={"/login"}>
-            <img src={logoURL} alt="logo" className="w-8 rounded-full" />
-          </Link>
+          { user ? (
+            <Link to={"/logout"}>
+              <div className="text-md font-bold text-blue-700 mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2">
+                Logout
+              </div>
+            </Link>
+          ) : (
+            <Link to={"/login"}>
+              <div className="text-md font-bold text-blue-700 mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2">
+                Login
+              </div>
+            </Link>
+          )}
+          { user ? (
+            <Link to={"/logout"}>
+              <p> {user.name} </p>
+              <img src={logoURL} alt="logo" className="w-8 rounded-full" />
+            </Link>
+          ) : (
+            <Link to={"/login"}>
+              <img src={logoURL} alt="logo" className="w-8 rounded-full" />
+            </Link>
+          )}
         </div>
       </nav>
     </>
