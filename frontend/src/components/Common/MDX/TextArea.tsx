@@ -114,7 +114,7 @@ const allPlugins = (diffMarkdown: string) => [
 
 type TextAreaProps = {
   article?: string;
-  setArticle: (s: string) => void;
+  setArticle: (article: string) => void;
 };
 
 function TextArea({ article, setArticle }: TextAreaProps) {
@@ -123,7 +123,7 @@ function TextArea({ article, setArticle }: TextAreaProps) {
 
   const handleInput = (e: string) => {
     setArticle(e);
-    console.log("article:" + { article });
+    // console.log("article:" + { article });
   };
 
   return (

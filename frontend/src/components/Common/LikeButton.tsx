@@ -7,7 +7,7 @@ import {
   LIKE_ARTICLE_MUTATION,
   UNLIKE_ARTICLE_MUTATION,
 } from "../../graphql";
-import { useQuery, useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 
 type LikeButtonProps = {
   initialLiked?: boolean;
@@ -22,17 +22,24 @@ const LikeButton = ({ initialLiked, likerId, articleId }: LikeButtonProps) => {
   const [unlikeArticle, { loading: unlikeLoading, error: unlikeError }] =
     useMutation(UNLIKE_ARTICLE_MUTATION);
 
-  const {
-    data: articleData,
-    loading: articleLoading,
-    error: articleError,
-  } = useQuery(ALL_ARTICLES_QUERY);
-  const article = articleData?.AllArticles?.filter((a) => {
-    return a?.id === articleId;
-  })[0];
-  if (!article) throw new Error("article not found!");
-  if (articleLoading) return "Submitting...";
-  if (articleError) return `Submission error! ${articleError.message}`;
+  const { data, loading, error } = useQuery(ALL_ARTICLES_QUERY);
+  // const [loadExpenseStatus, { loading: articleLoading, error: articleError }] =
+  //   useLazyQuery(ALL_ARTICLES_QUERY);
+
+  // if (articleLoading) return "Submitting...";
+  // if (articleError) return `Submission error! ${articleError.message}`;
+  if (loading) return "Submitting...";
+  if (error) return `Submission error! ${error.message}`;
+  const article = data?.AllArticles?.find(
+    (article) => article?.id === articleId,
+  );
+
+  // const queryArticle = loadExpenseStatus();
+  // console.log(queryArticle);
+  if (!article) {
+    window.location.reload();
+    throw new Error("article not found!");
+  }
 
   const [liked, setLiked] = useState(initialLiked);
   const [likesCount, setLikesCount] = useState(article.likesId.length);
@@ -53,7 +60,7 @@ const LikeButton = ({ initialLiked, likerId, articleId }: LikeButtonProps) => {
           },
         },
       });
-      setLikesCount((c) => c - 1);
+      setLikesCount((c: number) => c - 1);
       setLiked(false);
     } else {
       if (likeLoading) return "Submitting...";
@@ -66,7 +73,7 @@ const LikeButton = ({ initialLiked, likerId, articleId }: LikeButtonProps) => {
           },
         },
       });
-      setLikesCount((c) => c + 1);
+      setLikesCount((c: number) => c + 1);
       setLiked(true);
     }
   };
@@ -74,12 +81,9 @@ const LikeButton = ({ initialLiked, likerId, articleId }: LikeButtonProps) => {
   return (
     <button
       className={cn(
-        "flex w-16 items-center gap-1 hover:text-brand mb-3",
+        "flex w-16 items-center gap-1 hover:text-brand mb-3 ml-[16%]",
         liked && "text-brand",
       )}
-      style={{
-        marginLeft: "15%",
-      }}
       onClick={handleClick}
     >
       <div

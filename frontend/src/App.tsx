@@ -4,8 +4,6 @@ import NavBar from "./components/Common/NavBar.tsx";
 import NotFound from "./components/Common/NotFound.tsx";
 import HomePage from "./containers/HomePage.tsx";
 import Footer from "./components/Common/Footer.tsx";
-// import OverviewPage from "./containers/Article/OverviewPage.tsx";
-// import EditingPage from "./containers/Article/EditingPage.tsx";
 
 const LoginPage = lazy(() => import("./containers/User/LoginPage.tsx"));
 const ArticleMainPage = lazy(
@@ -14,7 +12,9 @@ const ArticleMainPage = lazy(
 const OverviewPage = lazy(
   () => import("./containers/Article/OverviewPage.tsx"),
 );
-const EditingPage = lazy(() => import("./containers/Article/EditingPage.tsx"));
+const EdittingPage = lazy(
+  () => import("./containers/Article/EdittingPage.tsx"),
+);
 const ForumMainPage = lazy(
   () => import("./containers/Forum/ForumMainPage.tsx"),
 );
@@ -25,7 +25,7 @@ const IntroductionPage = lazy(
 function App() {
   return (
     <>
-      <div className="border-x-green-600">
+      <div className="bg-gray-50">
         <NavBar />
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -61,7 +61,7 @@ function App() {
             path="/article/:id/edit"
             element={
               <Suspense fallback={<div>Loading...</div>}>
-                <EditingPage />
+                <EdittingPage />
               </Suspense>
             }
           />

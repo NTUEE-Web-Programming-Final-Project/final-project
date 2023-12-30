@@ -31,7 +31,7 @@ const ForumMainPage = () => {
             </div>
 
             <div className="flex max-w-md mx-auto">
-              <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
+              <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-gray-50 overflow-hidden">
                 <button className="grid place-items-center h-full w-12 text-gray-300">
                   <Search />
                 </button>

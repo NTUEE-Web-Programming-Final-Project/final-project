@@ -26,7 +26,7 @@ const config: Config = {
       fontFamily: {
         // the `--noto-sans` variable is defined in `./src/app/layout.tsx`
         // now if we do `className="font-sans"` in our components, it will use Noto Sans
-        sans: [...defaultTheme.fontFamily.sans],
+        sans: ["var(--noto-sans)", ...defaultTheme.fontFamily.sans],
       },
       // these keyframes and animations are from added by shadcn/ui
       keyframes: {
