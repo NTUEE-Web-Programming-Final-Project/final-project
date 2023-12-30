@@ -13,7 +13,7 @@ const ForumMainPage = () => {
     <>
       <div className="flex flex-row flex-auto">
         <Sidebar />
-        <div className="flex flex-col flex-grow overflow-x-hidden min-h-screen">
+        <div className="flex flex-col flex-grow overflow-x-hidden min-h-screen bg-slate-100">
           <div className="flex flex-row min-h-fit justify-between bg-slate-50">
             <div className="flex">
               <button
