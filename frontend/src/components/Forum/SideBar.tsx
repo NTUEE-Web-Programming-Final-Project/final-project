@@ -14,7 +14,7 @@ const Sidebar = () => {
   return (
     <>
       <div className="min-h-screen max-w-fit flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-50 text-gray-800">
-        <div className="flex flex-col top-0 left-0 w-64 bg-white h-full border-r">
+        <div className="flex flex-col top-0 left-0 w-64 bg-gray-50 h-full border-r">
           <div className="overflow-y-auto overflow-x-hidden flex-grow">
             <ul className="flex flex-col py-4 space-y-1">
               <li className="px-5">

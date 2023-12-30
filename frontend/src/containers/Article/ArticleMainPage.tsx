@@ -10,7 +10,29 @@ const ArticleMainPage = () => {
   const navigate = useNavigate();
   const [filter, setFilter] = useState("time");
   const [search, setSearch] = useState("");
-
+  const [createArticle, { loading, error }] = useMutation(
+    CREATE_ARTICLE_MUTATION,
+  );
+  const handleCreateArticle = async () => {
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+    if (error) {
+      return <div>{error.message}</div>;
+    }
+    const newArticle = await createArticle({
+      variables: {
+        articleInput: {
+          writerId: 1,
+          title: "# Title",
+          content: "# Title",
+          tags: [""],
+          topic: "",
+        },
+      },
+    });
+    navigate(`/article/${newArticle.data?.CreateArticle?.id}/edit`);
+  };
   return (
     <>
       <div className="flex flex-row flex-auto">
@@ -33,7 +55,7 @@ const ArticleMainPage = () => {
             </div>
 
             <div className="flex max-w-md mx-auto">
-              <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
+              <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-gray-50 overflow-hidden">
                 <button className="grid place-items-center h-full w-12 text-gray-300">
                   <Search />
                 </button>
@@ -53,8 +75,8 @@ const ArticleMainPage = () => {
 
             <div className="flex justify-end">
               <button
-                onClick={() => navigate("/article/draft")}
-                className="border-2 p-2 m-1 text-md font-bold text-black bg-gray-200 hover:text-white hover:bg-gray-400 px-4 rounded"
+                onClick={handleCreateArticle}
+                className="border-2 px-3 m-1 text-md font-bold text-black bg-gray-200 mt-4 mt-0 hover:text-white hover:bg-gray-400 px-4 py-2 rounded mr-2"
               >
                 發文
               </button>

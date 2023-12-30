@@ -41,9 +41,10 @@ export type Article = {
   date: string;
   title: string;
   content: string;
+  tags: (string | null)[];
   topic: string;
-  tags: string[];
-  likesId: number[];
+  commentsId: (number | null)[];
+  likesId: (number | null)[];
 };
 
 export type ArticleComment = {
