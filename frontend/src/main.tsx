@@ -10,16 +10,20 @@ import { getMainDefinition } from "@apollo/client/utilities";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { createClient } from "graphql-ws";
 
+const uri =
+  process.env.NODE_ENV === "production" ? "/" : "http://localhost:5000/";
 const httpLink = new HttpLink({
-  uri: process.env.NODE_ENV === "production" ? "/" : "http://localhost:5000/",
+  uri: uri,
 });
+
+const url =
+  process.env.NODE_ENV === "production"
+    ? window.location.origin.replace(/^http/, "ws")
+    : "ws://localhost:5000";
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url:
-      process.env.NODE_ENV === "production"
-        ? window.location.origin.replace(/^http/, "ws")
-        : "ws://localhost:5000/",
+    url: url,
   }),
 );
 
@@ -37,7 +41,7 @@ const splitLink = split(
 
 const client = new ApolloClient({
   link: splitLink,
-  uri: process.env.NODE_ENV === "production" ? "/" : "http://localhost:5000/",
+  uri: uri,
   cache: new InMemoryCache(),
 });
 
