@@ -9,4 +9,4 @@ RUN corepack enable
 RUN npm run install:all
 RUN npm run frontend
 
-CMD ["npm run", "deploy"]
+CMD ["npm","run","deploy"]
