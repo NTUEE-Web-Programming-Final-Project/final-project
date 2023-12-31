@@ -5,7 +5,6 @@ import { useQuery, useMutation } from "@apollo/client";
 // import useArticles from "../../context/articleContext.tsx";
 import { UserContext } from "../../context/userContext.tsx";
 import Select from "../../components/Common/Select.tsx";
-
 import {
   ALL_ARTICLES_QUERY,
   UPDATE_ARTICLE_MUTATION,
@@ -23,7 +22,7 @@ function EdittingPage() {
   const { id } = useParams();
   if (!id) throw new Error("id is undefined");
   const navigate = useNavigate();
-  const ref = useRef();
+  const ref = useRef<any>();
   // const { data: allData, error: allError } = useQuery(ALL_ARTICLES_QUERY);
   // const [article, setArticle] = useState("# Title");
   // const {articles, fetchArticles} = useArticles(); // initialize with default value
@@ -65,9 +64,38 @@ function EdittingPage() {
 
   const articleId = parseInt(id);
 
+  // const [theArticle] = allArticlesData?.AllArticles?.filter(
+  //   (e: { id: number }) => e.id === articleId,
+  // );
   const [theArticle] = allArticlesData?.AllArticles?.filter(
-    (e: { id: number }) => e.id === articleId,
-  );
+    (e: {
+      __typename?: "Article" | undefined;
+      id: number;
+      writerId: number;
+      date: string;
+      title: string;
+      content: string;
+      tags: (string | null)[];
+      topic: string;
+      commentsId: (number | null)[];
+      likesId: (number | null)[];
+    } | null) => e?.id === articleId
+  ) ?? [];
+  //   (
+  //     e: {
+  //       __typename?: "Article" | undefined;
+  //       id: number;
+  //       writerId: number;
+  //       date: string;
+  //       title: string;
+  //       content: string;
+  //       tags: (string | null)[];
+  //       topic: string;
+  //       commentsId: (number | null)[];
+  //       likesId: (number | null)[];
+  //     } | null | undefined,
+  //   ) => e?.id === articleId,
+  // );
   const articleContent = theArticle?.content;
 
   return (
@@ -80,7 +108,9 @@ function EdittingPage() {
 
         <div className="flex flex-row-reverse">
           <button
-            onClick={() => handleUpdate({ article: ref.current.getMarkdown(), tags })}
+            onClick={() =>
+              handleUpdate({ article: ref.current?.getMarkdown(), tags })
+            }
             className="m-2 border-2 px-3 h-16 w-20 text-lginline-flex items-center py-2.5 px-4 text-xl font-medium text-center text-white rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 bg-blue-600 hover:bg-blue-700"
             disabled={user === null}
           >
