@@ -50,13 +50,14 @@ const server = new ApolloServer({
 await server.start();
 
 if (process.env.NODE_ENV === "development") {
-  app.use(
-    "/",
-    cors<cors.CorsRequest>(),
-    bodyParser.json(),
-    expressMiddleware(server),
-  );
+app.use(
+  "/",
+  cors<cors.CorsRequest>(),
+  bodyParser.json(),
+  expressMiddleware(server),
+);
 }
+
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
   app.use(express.static(path.join(__dirname, "../frontend", "dist")));
@@ -64,6 +65,7 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
   });
 }
+
 const port = process.env.PORT || 5000;
 // Now that our HTTP server is fully set up, we can listen to it.
 httpServer.listen(port, () => {
