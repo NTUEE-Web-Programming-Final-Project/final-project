@@ -2,8 +2,8 @@ FROM node:16-alpine
 
 EXPOSE ${PORT}
 
-COPY . /app
-WORKDIR /app
+COPY . /final-project
+WORKDIR /final-project
 
 RUN corepack enable
 RUN npm run install:all
