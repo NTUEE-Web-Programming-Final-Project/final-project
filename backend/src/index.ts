@@ -16,13 +16,7 @@ import { Mutation } from "./resolvers/Mutation.ts";
 import { Subscription } from "./resolvers/Subscription.ts";
 
 const app = express();
-if (process.env.NODE_ENV === "production") {
-  const __dirname = path.resolve();
-  app.use(express.static(path.join(__dirname, "../frontend")));
-  app.get("/*", function (req, res) {
-    res.sendFile(path.join(__dirname, "../frontend", "index.html"));
-  });
-}
+
 const resolvers = { Query, Mutation, Subscription };
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
@@ -54,6 +48,7 @@ const server = new ApolloServer({
   ],
 });
 await server.start();
+
 if (process.env.NODE_ENV === "development") {
   app.use(
     "/",
@@ -62,7 +57,13 @@ if (process.env.NODE_ENV === "development") {
     expressMiddleware(server),
   );
 }
-
+if (process.env.NODE_ENV === "production") {
+  const __dirname = path.resolve();
+  app.use(express.static(path.join(__dirname, "../frontend", "dist")));
+  app.get("/*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  });
+}
 const port = process.env.PORT || 5000;
 // Now that our HTTP server is fully set up, we can listen to it.
 httpServer.listen(port, () => {
