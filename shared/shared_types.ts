@@ -43,7 +43,7 @@ export type SolutionComment = {
   likes: number[];
 };
 
-export type Article =
+export type Articles =
   | ({
       __typename?: "Article" | undefined;
       id: number;
@@ -58,6 +58,18 @@ export type Article =
     } | null)[]
   | null
   | undefined;
+
+export type Article = {
+  id: number;
+  writerId: number;
+  date: string;
+  title: string;
+  content: string;
+  tags: string[];
+  topic: string;
+  commentsId: number[];
+  likesId: number[];
+};
 
 export type ArticleComment = {
   id: number;

@@ -2,11 +2,11 @@
   "name": "final-project",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "install:all": "cd frontend && pnpm install --frozen-lockfile && cd ../backend && pnpm install --frozen-lockfile ",
-    "frontend": "cd frontend && pnpm build",
-    "backend": "cd backend && pnpm start"
+    "install:all": "cd frontend && npm install --frozen-lockfile && cd ../backend && npm install --frozen-lockfile ",
+    "frontend": "cd frontend && npm run build",
+    "deploy": "cd backend && npm run deploy"
   },
   "author": "",
   "license": "ISC",

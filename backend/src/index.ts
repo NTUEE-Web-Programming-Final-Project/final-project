@@ -18,9 +18,9 @@ import { Subscription } from "./resolvers/Subscription.ts";
 const app = express();
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
-  app.use(express.static(path.join(__dirname, "../frontend", "build")));
+  app.use(express.static(path.join(__dirname, "../frontend")));
   app.get("/*", function (req, res) {
-    res.sendFile(path.join(__dirname, "../frontend", "build", "index.html"));
+    res.sendFile(path.join(__dirname, "../frontend", "index.html"));
   });
 }
 const resolvers = { Query, Mutation, Subscription };

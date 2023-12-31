@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:18-buster
 
 EXPOSE ${PORT}
 
@@ -6,7 +6,7 @@ COPY . /app
 WORKDIR /app
 
 RUN corepack enable
-RUN pnpm install:all
-RUN pnpm frontend
+RUN npm run install:all
+RUN npm run frontend
 
-CMD ["pnpm", "deploy"]
+CMD ["npm run", "deploy"]

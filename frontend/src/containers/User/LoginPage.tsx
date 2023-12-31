@@ -5,6 +5,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { ALL_USERS_QUERY, CREATE_USER_MUTATION } from "../../graphql";
 import { env } from "../../env";
 import { UserContext } from "../../context/userContext";
+import type { FormEvent } from "react";
 // Run: npx shadcn-ui@latest add button
 import { Button } from "../../components/Login/ui/button";
 // Run: npx shadcn-ui@latest add card
