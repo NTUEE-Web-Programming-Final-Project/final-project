@@ -287,7 +287,9 @@ const Mutation = {
         ),
       },
     });
-    await pubsub.publish("QUESTION_DELETED", { QuestionDeleted: deletedQuestion });
+    await pubsub.publish("QUESTION_DELETED", {
+      QuestionDeleted: deletedQuestion,
+    });
     return deletedQuestion;
   },
 
@@ -321,7 +323,9 @@ const Mutation = {
         tags: tags,
       },
     });
-    await pubsub.publish("QUESTION_UPDATED", { QuestionUpdated: updatedQuestion });
+    await pubsub.publish("QUESTION_UPDATED", {
+      QuestionUpdated: updatedQuestion,
+    });
     return updatedQuestion;
   },
 
@@ -771,7 +775,9 @@ const Mutation = {
         ),
       },
     });
-    await pubsub.publish("SOLUTION_DELETED", { SolutionDeleted: deletedSolution });
+    await pubsub.publish("SOLUTION_DELETED", {
+      SolutionDeleted: deletedSolution,
+    });
     return deletedSolution;
   },
 
@@ -807,7 +813,9 @@ const Mutation = {
         content: content,
       },
     });
-    await pubsub.publish("SOLUTION_UPDATED", { SolutionUpdated: updatedSolution });
+    await pubsub.publish("SOLUTION_UPDATED", {
+      SolutionUpdated: updatedSolution,
+    });
     return updatedSolution;
   },
 
