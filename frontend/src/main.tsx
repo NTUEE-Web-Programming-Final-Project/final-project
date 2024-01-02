@@ -10,16 +10,12 @@ import { getMainDefinition } from "@apollo/client/utilities";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { createClient } from "graphql-ws";
 
-const uri =
-  process.env.NODE_ENV === "production" ? "/" : "http://localhost:5000/";
+const uri = "http://localhost:5000/";
 const httpLink = new HttpLink({
   uri: uri,
 });
 
-const url =
-  process.env.NODE_ENV === "production"
-    ? window.location.origin.replace(/^http/, "ws")
-    : "ws://localhost:5000";
+const url = "ws://localhost:5000";
 
 const wsLink = new GraphQLWsLink(
   createClient({
